@@ -1,0 +1,198 @@
+
+   _____ __     ___   __ _______ _____ __  __   __  __ ____  _____  _____   ____  _____  
+  / ____|\ \   / / \ | ||__   __|_   _|\ \/ /  |  \/  |/ __ \|  __ \|  __ \ / __ \|  __ \ 
+ | (___   \ \_/ /|  \| |   | |    | |   \  /   | \  / | |  | | |__) | |__) | |  | | |__) |
+  \___ \   \   / | . ` |   | |    | |   /  \   | |\/| | |  | |  _  /|  _  /| |  | |  _  / 
+  ____) |   | |  | |\  |   | |   _| |_ / /\ \  | |  | | |__| | | \ \| | \ \| |__| | | \ \ 
+ |_____/    |_|  |_| \_|   |_|  |_____/_/  \_\ |_|  |_|\____/|_|  \_\_|  \_\\____/|_|  \_\
+                                                                                            
+                            🎃 ESCAPE GAME HALLOWEEN 🎃
+
+════════════════════════════════════════════════════════════════════════════════════════════
+
+                              ⚠️  BIENVENUE DANS L'HORREUR  ⚠️
+
+    Vous êtes piégé dans un monde de code corrompu...
+    Résolvez les énigmes de programmation pour vous échapper !
+    Mais attention... chaque erreur réveille les esprits... 👻
+
+════════════════════════════════════════════════════════════════════════════════════════════
+
+📋 MENU RAPIDE :
+
+  1️⃣  DÉMARRAGE RAPIDE
+      └─ ./start.sh (Linux/Mac) ou start.bat (Windows)
+      └─ Ou : docker-compose up --build
+      └─ Accès : http://localhost:5000
+
+  2️⃣  ÉNIGMES DISPONIBLES
+      ├─ 🐍 Python : Corrigez du code buggé
+      ├─ 🔍 F12    : Trouvez le flag caché
+      ├─ 🗃️  SQL    : Exploitez une injection SQL
+      └─ ⚙️  C      : Trouvez les erreurs de syntaxe
+
+  3️⃣  FONCTIONNALITÉS
+      ├─ ✅ Authentification complète
+      ├─ ✅ Système de score et progression
+      ├─ ✅ Leaderboard des meilleurs joueurs
+      ├─ ✅ Screamer sur mauvaise réponse
+      └─ ✅ Interface Halloween effrayante
+
+  4️⃣  TECHNOLOGIES
+      ├─ Backend  : Python + Flask + SQLAlchemy
+      ├─ Frontend : HTML5 + CSS3 + JavaScript
+      ├─ Database : SQLite
+      └─ DevOps   : Docker + Docker Compose
+
+════════════════════════════════════════════════════════════════════════════════════════════
+
+📚 DOCUMENTATION :
+
+    README.md          → Documentation complète
+    QUICK_START.md     → Démarrage en 3 étapes
+    CONTRIBUTING.md    → Guide de contribution
+    TODO.md            → Améliorations futures
+    PRESENTATION.md    → Présentation détaillée
+    RECAP.md           → Récapitulatif complet
+    CHANGELOG.md       → Historique des versions
+
+════════════════════════════════════════════════════════════════════════════════════════════
+
+🎯 SOLUTIONS DES ÉNIGMES :
+
+    Énigme 1 (Python)  → "Hello, World!"
+    Énigme 2 (F12)     → "HALLOWEEN2025"
+    Énigme 3 (SQL)     → "sp00ky_p4ssw0rd"
+    Énigme 4 (C)       → "42"
+
+    ⚠️ Essayez d'abord par vous-même ! Ces solutions sont pour débloquer en cas de besoin.
+
+════════════════════════════════════════════════════════════════════════════════════════════
+
+🐳 COMMANDES DOCKER :
+
+    Démarrer        : docker-compose up --build
+    Arrêter         : docker-compose down
+    Logs            : docker-compose logs -f
+    Rebuild         : docker-compose up --build --force-recreate
+    Shell           : docker exec -it escape-game-halloween bash
+
+════════════════════════════════════════════════════════════════════════════════════════════
+
+🎨 ARCHITECTURE :
+
+    ┌─────────────────────────────────────┐
+    │      FRONTEND (Client)              │
+    │   HTML + CSS + JavaScript           │
+    │   ├─ Interface Halloween            │
+    │   ├─ 4 Énigmes interactives         │
+    │   └─ Screamer system                │
+    └──────────────┬──────────────────────┘
+                   │ HTTP/AJAX
+    ┌──────────────▼──────────────────────┐
+    │      BACKEND (Flask)                │
+    │   ├─ API REST (8 endpoints)         │
+    │   ├─ Authentification               │
+    │   └─ Scoring & Leaderboard          │
+    └──────────────┬──────────────────────┘
+                   │ SQLAlchemy
+    ┌──────────────▼──────────────────────┐
+    │    DATABASE (SQLite)                │
+    │   ├─ Users (utilisateurs)           │
+    │   ├─ Progress (scores)              │
+    │   └─ SecretData (énigmes)           │
+    └─────────────────────────────────────┘
+
+════════════════════════════════════════════════════════════════════════════════════════════
+
+💡 CONSEILS :
+
+    🎃 Lisez attentivement les indices
+    🎃 Utilisez F12 pour inspecter le code
+    🎃 N'ayez pas peur des screamers (mais préparez-vous !)
+    🎃 Chaque énigme vaut 100 points
+    🎃 Essayez le Konami Code pour un easter egg !
+
+════════════════════════════════════════════════════════════════════════════════════════════
+
+🚨 DÉPANNAGE RAPIDE :
+
+    ❌ Port 5000 occupé
+       → Modifiez dans docker-compose.yml : "8080:5000"
+
+    ❌ Erreur de base de données
+       → rm -rf data/ && docker-compose up --build
+
+    ❌ Permission denied (Linux)
+       → sudo chown -R $USER:$USER .
+
+    ❌ Docker non installé
+       → https://docs.docker.com/get-docker/
+
+════════════════════════════════════════════════════════════════════════════════════════════
+
+📊 STATISTIQUES DU PROJET :
+
+    Fichiers créés     : 27
+    Lignes de code     : ~2000
+    Langages           : Python, HTML, CSS, JavaScript, SQL
+    Énigmes            : 4
+    Tables BDD         : 3
+    Routes API         : 8
+    Documentation      : 7 fichiers
+    Support            : Linux, Mac, Windows
+
+════════════════════════════════════════════════════════════════════════════════════════════
+
+🎓 OBJECTIFS PÉDAGOGIQUES :
+
+    ✅ Architecture web client-serveur
+    ✅ Backend avec Flask
+    ✅ Frontend HTML/CSS/JavaScript
+    ✅ Base de données relationnelle
+    ✅ API REST
+    ✅ Authentification sécurisée
+    ✅ Docker et containerisation
+    ✅ Principes de cybersécurité
+
+════════════════════════════════════════════════════════════════════════════════════════════
+
+🌟 AMÉLIORATIONS FUTURES :
+
+    Priority 1 : Ajouter images et sons
+    Priority 2 : Plus d'énigmes
+    Priority 3 : Timer par énigme
+    Priority 4 : Système de hints
+    Priority 5 : Mode multijoueur
+
+    Consultez TODO.md pour la liste complète !
+
+════════════════════════════════════════════════════════════════════════════════════════════
+
+📞 SUPPORT :
+
+    📖 Documentation : Voir README.md
+    🐛 Bugs         : Ouvrir une issue GitHub
+    💬 Questions    : Contacter l'équipe
+    🤝 Contribuer   : Voir CONTRIBUTING.md
+
+════════════════════════════════════════════════════════════════════════════════════════════
+
+🎊 CRÉDITS :
+
+    Développé avec 💀 pour Halloween 2025
+    Licence MIT - Libre d'utilisation
+    
+    Technologies : Flask, Docker, HTML/CSS/JS
+    Thème : Halloween Horror
+    Niveau : Débutant à Intermédiaire
+
+════════════════════════════════════════════════════════════════════════════════════════════
+
+                    🎃 READY TO PLAY? HAPPY HALLOWEEN! 👻
+
+                         Pour commencer :
+                    ./start.sh ou start.bat
+                  puis http://localhost:5000
+
+════════════════════════════════════════════════════════════════════════════════════════════

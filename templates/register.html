@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Inscription - Syntax Horror{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-box">
+        <h2 class="auth-title">📝 INSCRIPTION</h2>
+        <p class="auth-subtitle">Créez votre compte pour entrer dans l'horreur...</p>
+        
+        <form id="register-form" class="auth-form">
+            <div class="form-group">
+                <label for="username">
+                    <span class="label-icon">👤</span> Nom d'utilisateur
+                </label>
+                <input type="text" id="username" name="username" required 
+                       placeholder="Entrez votre pseudo" class="form-input">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">
+                    <span class="label-icon">📧</span> Email
+                </label>
+                <input type="email" id="email" name="email" required 
+                       placeholder="votre@email.com" class="form-input">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">
+                    <span class="label-icon">🔒</span> Mot de passe
+                </label>
+                <input type="password" id="password" name="password" required 
+                       placeholder="Mot de passe" class="form-input">
+            </div>
+            
+            <div class="form-group">
+                <label for="confirm-password">
+                    <span class="label-icon">🔒</span> Confirmer le mot de passe
+                </label>
+                <input type="password" id="confirm-password" name="confirm-password" required 
+                       placeholder="Confirmez le mot de passe" class="form-input">
+            </div>
+            
+            <div id="message" class="message"></div>
+            
+            <button type="submit" class="btn-primary btn-full">
+                S'INSCRIRE
+            </button>
+        </form>
+        
+        <p class="auth-switch">
+            Vous avez déjà un compte ? 
+            <a href="{{ url_for('login') }}">Connectez-vous</a>
+        </p>
+    </div>
+</div>
+
+<script>
+document.getElementById('register-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+    const messageDiv = document.getElementById('message');
+    
+    if (password !== confirmPassword) {
+        messageDiv.className = 'message error';
+        messageDiv.textContent = 'Les mots de passe ne correspondent pas !';
+        return;
+    }
+    
+    try {
+        const response = await fetch('/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, email, password })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            messageDiv.className = 'message success';
+            messageDiv.textContent = data.message;
+            setTimeout(() => {
+                window.location.href = '/login';
+            }, 1500);
+        } else {
+            messageDiv.className = 'message error';
+            messageDiv.textContent = data.message;
+        }
+    } catch (error) {
+        messageDiv.className = 'message error';
+        messageDiv.textContent = 'Erreur de connexion au serveur';
+    }
+});
+</script>
+{% endblock %}

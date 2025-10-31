@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Escape Game Halloween{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="fog-overlay"></div>
+    <div class="spiders"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="logo">🎃 SYNTAX HORROR 🎃</h1>
+            <div class="nav-links">
+                {% if current_user.is_authenticated %}
+                    <span class="user-info">👻 {{ current_user.username }}</span>
+                    <a href="{{ url_for('game') }}" class="btn-nav">Jouer</a>
+                    <a href="{{ url_for('logout') }}" class="btn-nav">Déconnexion</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn-nav">Connexion</a>
+                    <a href="{{ url_for('register') }}" class="btn-nav">Inscription</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <div id="screamer-modal" class="screamer-modal">
+        <div class="screamer-content">
+            <div class="screamer-image">💀</div>
+            <h2 class="screamer-text">MAUVAISE RÉPONSE !</h2>
+            <p class="screamer-subtitle">Vous avez réveillé les esprits...</p>
+        </div>
+    </div>
+
+    <audio id="screamer-sound" preload="auto">
+        <!-- Vous ajouterez votre fichier audio ici -->
+        <!-- <source src="{{ url_for('static', filename='sounds/scream.mp3') }}" type="audio/mpeg"> -->
+    </audio>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

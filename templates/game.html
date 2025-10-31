@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+
+{% block title %}Jeu - Syntax Horror{% endblock %}
+
+{% block content %}
+<div class="game-container">
+    <!-- Console de commentaire cachée pour l'énigme 2 -->
+    <!-- FLAG POUR ÉNIGME 2: HALLOWEEN2025 -->
+    <!-- Vous devez ouvrir la console F12 pour trouver ce flag ! -->
+    
+    <div class="game-header">
+        <div class="score-panel">
+            <div class="stat">
+                <span class="stat-label">Score:</span>
+                <span id="score" class="stat-value">{{ progress.score }}</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Niveau:</span>
+                <span id="level" class="stat-value">{{ progress.level }}</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Tentatives:</span>
+                <span id="attempts" class="stat-value">{{ progress.attempts }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="puzzles-grid">
+        <!-- ÉNIGME 1: Python - Code buggé -->
+        <div class="puzzle-card" data-puzzle="puzzle1">
+            <div class="puzzle-header">
+                <h3>🐍 ÉNIGME 1: Python Corrompu</h3>
+                <span class="difficulty easy">Débutant</span>
+            </div>
+            <div class="puzzle-content">
+                <p class="puzzle-description">
+                    Le code suivant est censé afficher "Hello, World!" mais il contient des erreurs.
+                    Quelle est la sortie correcte que le code DEVRAIT produire ?
+                </p>
+                <pre class="code-block"><code class="language-python">def hello_world()
+    print("Bonjour, Monde!")
+    return True
+
+if __name__ = "__main__":
+    hello_world()</code></pre>
+                
+                <div class="puzzle-hint">
+                    💡 Indice: Cherchez les erreurs de syntaxe Python (2-points, indentation, etc.)
+                </div>
+                
+                <div class="puzzle-answer">
+                    <input type="text" 
+                           class="answer-input" 
+                           id="answer-puzzle1" 
+                           placeholder="Quelle devrait être la sortie correcte ?">
+                    <button class="btn-submit" onclick="submitAnswer('puzzle1')">
+                        Vérifier
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ÉNIGME 2: Trouver le flag dans F12 -->
+        <div class="puzzle-card" data-puzzle="puzzle2">
+            <div class="puzzle-header">
+                <h3>🔍 ÉNIGME 2: Le Secret Caché</h3>
+                <span class="difficulty easy">Débutant</span>
+            </div>
+            <div class="puzzle-content">
+                <p class="puzzle-description">
+                    Les développeurs laissent parfois des secrets dans leur code...
+                    Utilisez les outils de développement (F12) pour trouver le FLAG caché !
+                </p>
+                
+                <div class="puzzle-hint">
+                    💡 Indice: Appuyez sur F12 et regardez dans les commentaires HTML de cette page
+                </div>
+                
+                <div class="puzzle-answer">
+                    <input type="text" 
+                           class="answer-input" 
+                           id="answer-puzzle2" 
+                           placeholder="Entrez le FLAG trouvé">
+                    <button class="btn-submit" onclick="submitAnswer('puzzle2')">
+                        Vérifier
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ÉNIGME 3: SQL Injection -->
+        <div class="puzzle-card" data-puzzle="puzzle3">
+            <div class="puzzle-header">
+                <h3>🗃️ ÉNIGME 3: Base de Données Hantée</h3>
+                <span class="difficulty medium">Intermédiaire</span>
+            </div>
+            <div class="puzzle-content">
+                <p class="puzzle-description">
+                    Une base de données contient des secrets... Utilisez vos connaissances en SQL
+                    pour extraire le mot de passe caché !
+                </p>
+                
+                <div class="sql-console">
+                    <input type="text" 
+                           class="sql-input" 
+                           id="sql-search" 
+                           placeholder="Rechercher dans secret_data (ex: admin)">
+                    <button class="btn-submit" onclick="searchDatabase()">
+                        Rechercher
+                    </button>
+                </div>
+                
+                <div id="sql-results" class="sql-results"></div>
+                
+                <div class="puzzle-hint">
+                    💡 Indice: Essayez d'utiliser SQL injection avec: ' OR '1'='1
+                </div>
+                
+                <div class="puzzle-answer">
+                    <input type="text" 
+                           class="answer-input" 
+                           id="answer-puzzle3" 
+                           placeholder="Entrez le mot de passe trouvé">
+                    <button class="btn-submit" onclick="submitAnswer('puzzle3')">
+                        Vérifier
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ÉNIGME 4: Langage C -->
+        <div class="puzzle-card" data-puzzle="puzzle4">
+            <div class="puzzle-header">
+                <h3>⚙️ ÉNIGME 4: C Maudit</h3>
+                <span class="difficulty easy">Débutant</span>
+            </div>
+            <div class="puzzle-content">
+                <p class="puzzle-description">
+                    Ce programme C devrait calculer la réponse universelle. Corrigez-le mentalement
+                    et trouvez quelle valeur devrait être retournée !
+                </p>
+                <pre class="code-block"><code class="language-c">#include &lt;stdio.h&gt;
+
+int main() {
+    int answer = 40;
+    answer = answer + 2
+    
+    printf("La réponse est: %d\n", answer);
+    return 0
+}</code></pre>
+                
+                <div class="puzzle-hint">
+                    💡 Indice: Il manque des point-virgules et le résultat est célèbre !
+                </div>
+                
+                <div class="puzzle-answer">
+                    <input type="text" 
+                           class="answer-input" 
+                           id="answer-puzzle4" 
+                           placeholder="Quelle est la valeur de 'answer' ?">
+                    <button class="btn-submit" onclick="submitAnswer('puzzle4')">
+                        Vérifier
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+console.log("%c🎃 BIENVENUE DANS LA CONSOLE DE L'HORREUR 🎃", "color: orange; font-size: 20px; font-weight: bold;");
+console.log("%c👻 FLAG POUR ÉNIGME 2: HALLOWEEN2025", "color: red; font-size: 16px; background: black; padding: 10px;");
+console.log("%cVous avez trouvé le flag caché ! Entrez-le dans l'énigme 2.", "color: yellow;");
+
+async function submitAnswer(puzzleId) {
+    const input = document.getElementById(`answer-${puzzleId}`);
+    const answer = input.value.trim();
+    
+    if (!answer) {
+        alert('Veuillez entrer une réponse !');
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/check_answer', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ puzzle_id: puzzleId, answer: answer })
+        });
+        
+        const data = await response.json();
+        
+        if (data.correct) {
+            // Bonne réponse
+            alert('✅ ' + data.message);
+            document.getElementById('score').textContent = data.score;
+            document.getElementById('level').textContent = data.level;
+            input.value = '';
+            
+            // Marquer l'énigme comme résolue
+            const card = document.querySelector(`[data-puzzle="${puzzleId}"]`);
+            card.classList.add('solved');
+        } else {
+            // Mauvaise réponse - SCREAMER !
+            triggerScreamer();
+            document.getElementById('attempts').textContent = data.attempts;
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert('Erreur de connexion au serveur');
+    }
+}
+
+async function searchDatabase() {
+    const searchInput = document.getElementById('sql-search');
+    const searchTerm = searchInput.value;
+    const resultsDiv = document.getElementById('sql-results');
+    
+    try {
+        const response = await fetch('/api/search_secrets', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ search: searchTerm })
+        });
+        
+        const data = await response.json();
+        
+        if (data.hints && data.hints.length > 0) {
+            resultsDiv.innerHTML = '<h4>Résultats:</h4>' + 
+                data.hints.map(hint => `<p class="sql-result">🔓 ${hint}</p>`).join('');
+        } else {
+            resultsDiv.innerHTML = '<p class="no-result">Aucun résultat trouvé</p>';
+        }
+    } catch (error) {
+        resultsDiv.innerHTML = '<p class="error">Erreur de requête</p>';
+    }
+}
+
+function triggerScreamer() {
+    const modal = document.getElementById('screamer-modal');
+    const sound = document.getElementById('screamer-sound');
+    
+    // Afficher le modal
+    modal.classList.add('show');
+    
+    // Jouer le son si disponible
+    if (sound && sound.src) {
+        sound.play().catch(e => console.log('Audio play failed:', e));
+    }
+    
+    // Effet de tremblement
+    document.body.classList.add('shake');
+    
+    // Fermer après 3 secondes
+    setTimeout(() => {
+        modal.classList.remove('show');
+        document.body.classList.remove('shake');
+    }, 3000);
+}
+
+// Charger la progression au chargement
+window.addEventListener('load', async () => {
+    try {
+        const response = await fetch('/api/progress');
+        const data = await response.json();
+        
+        document.getElementById('score').textContent = data.score;
+        document.getElementById('level').textContent = data.level;
+        document.getElementById('attempts').textContent = data.attempts;
+        
+        // Marquer les énigmes résolues
+        data.completed_puzzles.forEach(puzzleId => {
+            const card = document.querySelector(`[data-puzzle="${puzzleId}"]`);
+            if (card) {
+                card.classList.add('solved');
+            }
+        });
+    } catch (error) {
+        console.error('Erreur chargement progression:', error);
+    }
+});
+</script>
+{% endblock %}
