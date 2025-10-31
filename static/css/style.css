@@ -708,9 +708,30 @@ body::before {
 
 .narrative-portrait {
     font-size: 4rem;
-    min-width: 80px;
+    min-width: 100px;
     text-align: center;
     filter: drop-shadow(0 0 10px rgba(139, 0, 0, 0.8));
+}
+
+.narrative-portrait .portrait-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid var(--blood-red);
+    object-fit: cover;
+    box-shadow: 0 0 20px rgba(139, 0, 0, 0.8);
+    animation: portraitGlow 2s ease-in-out infinite;
+}
+
+@keyframes portraitGlow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(139, 0, 0, 0.8);
+        border-color: var(--blood-red);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(139, 0, 0, 1), 0 0 40px rgba(139, 0, 0, 0.6);
+        border-color: #cc0000;
+    }
 }
 
 .narrative-content {

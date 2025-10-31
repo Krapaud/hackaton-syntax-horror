@@ -54,11 +54,13 @@
 
     <!-- Dialogue narratif -->
     <div id="narrative-box" class="narrative-box">
-        <div class="narrative-portrait">�</div>
+        <div class="narrative-portrait">
+            <img src="{{ url_for('static', filename='images/undead_developer.png') }}" alt="Undead Developer" class="portrait-img">
+        </div>
         <div class="narrative-content">
-            <div class="narrative-name">SYSTÈME</div>
+            <div class="narrative-name">Claude Sonnet</div>
             <div id="narrative-text" class="narrative-text">
-                Bienvenue dans la salle des serveurs. Analysez chaque terminal avec attention...
+                Étranger... Je suis Claude Sonnet, développeur mort il y a des années...
             </div>
         </div>
         <div class="narrative-continue" onclick="hideNarrative()">
@@ -320,18 +322,43 @@ function startGame() {
         gameMain.style.opacity = '0';
         setTimeout(() => {
             gameMain.style.opacity = '1';
-            showNarrative('Bienvenue dans la salle des serveurs abandonnée... Résolvez les 4 énigmes pour vous échapper.');
+            // Séquence narrative d'introduction
+            showIntroNarrative();
         }, 50);
     }, 500);
 }
 
+// Séquence narrative d'introduction en deux parties
+let narrativeStep = 0;
+function showIntroNarrative() {
+    if (narrativeStep === 0) {
+        showNarrative(
+            "Étranger... Je suis Claude Sonnet, développeur mort il y a des années dans ce complexe maudit. " +
+            "Mon esprit est piégé ici, condamné à errer parmi les serveurs corrompus... " +
+            "Mais je peux vous aider à sortir vivant. Écoutez-moi attentivement...",
+            true // Premier message
+        );
+        narrativeStep = 1;
+    } else if (narrativeStep === 1) {
+        showNarrative(
+            "Quatre salles vous séparent de la liberté. Chacune contient une énigme de programmation corrompue. " +
+            "Résolvez-les pour déverrouiller la porte suivante. " +
+            "⚠️ ATTENTION : Chaque erreur réveille les entités qui hantent ce lieu... " +
+            "Un screamer vous rappellera qu'ici, les erreurs ont des conséquences. Bonne chance, étranger.",
+            false // Deuxième message
+        );
+        narrativeStep = 0; // Reset pour les prochains appels
+    }
+}
+
 // Afficher un dialogue narratif
-function showNarrative(text, portrait = '💀') {
+function showNarrative(text, isIntroSequence = false) {
     const narrativeBox = document.getElementById('narrative-box');
     const narrativeText = document.getElementById('narrative-text');
-    const narrativePortrait = narrativeBox.querySelector('.narrative-portrait');
     
-    narrativePortrait.textContent = portrait;
+    // Stocker si c'est une séquence d'intro
+    narrativeBox.dataset.introSequence = isIntroSequence;
+    
     narrativeText.textContent = '';
     narrativeBox.classList.add('show');
     
@@ -350,7 +377,16 @@ function showNarrative(text, portrait = '💀') {
 // Cacher le dialogue
 function hideNarrative() {
     const narrativeBox = document.getElementById('narrative-box');
+    const isIntroSequence = narrativeBox.dataset.introSequence === 'true';
+    
     narrativeBox.classList.remove('show');
+    
+    // Si c'est la séquence d'intro, afficher le message suivant
+    if (isIntroSequence && narrativeStep === 1) {
+        setTimeout(() => {
+            showIntroNarrative();
+        }, 500);
+    }
 }
 
 // Écouter la touche Entrée pour fermer le dialogue
