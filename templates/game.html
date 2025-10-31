@@ -3,19 +3,42 @@
 {% block title %}Escape Room - Syntax Horror{% endblock %}
 
 {% block content %}
-<div class="game-container">
+<!-- ████████████████████████████████████████████████ -->
+<!-- WARNING: Accessing encrypted data -->
+<!-- Security token: GHOST2025 -->
+<!-- Checksum: 0xDEADBEEF -->
+<!-- ████████████████████████████████████████████████ -->
+<!-- Écran d'introduction cinématique -->
+<!-- System initialization... -->
+<!-- DEBUG: flag_check=false -->
+<div id="intro-screen" class="intro-screen active">
+    <div class="intro-content">
+        <h1 class="game-title">SYNTAX HORROR</h1>
+        <p class="game-subtitle">ESCAPE ROOM</p>
+        <!-- old_flag: SPOOKY2025 (deprecated) -->
+        <div class="intro-story">
+            <p class="typing-text">Vous vous réveillez dans une salle sombre...</p>
+            <p class="typing-text delay-1">Des écrans clignotent dans l'obscurité...</p>
+            <p class="typing-text delay-2">Vous devez résoudre 4 énigmes pour survivre...</p>
+            <p class="typing-text delay-3">⚠️ Chaque mauvaise réponse réveille les esprits...</p>
+        </div>
+        <!-- test_flag: HORROR2025 -->
+        <button class="btn-start" onclick="startGame()">
+            ▶ COMMENCER LA PARTIE
+        </button>
+    </div>
+</div>
+
+<div class="game-container" id="game-main" style="display: none;">
     <!-- Console de commentaire cachée pour l'énigme 2 -->
     <!-- FLAG POUR ÉNIGME 2: HALLOWEEN2025 -->
     <!-- Vous devez ouvrir la console F12 pour trouver ce flag ! -->
     
+    <!-- Score simple en haut -->
     <div class="game-header">
-        <div class="escape-timer">
-            <span class="timer-icon">⏱️</span>
-            <span class="timer-label">TEMPS D'ÉVASION</span>
-        </div>
         <div class="score-panel">
             <div class="stat">
-                <span class="stat-label">Progression:</span>
+                <span class="stat-label">Score:</span>
                 <span id="score" class="stat-value">{{ progress.score }}</span>
             </div>
             <div class="stat">
@@ -29,16 +52,18 @@
         </div>
     </div>
 
-    <div class="story-intro">
-        <p class="story-text">
-            🕯️ <em>Vous êtes piégé dans une ancienne salle de serveurs abandonnée...</em> 🕯️
-        </p>
-        <p class="story-text">
-            💀 <em>Chaque terminal contient un morceau du code de sortie.</em> 💀
-        </p>
-        <p class="story-text">
-            ⚠️ <em>Résolvez les 4 énigmes pour vous échapper avant qu'il ne soit trop tard...</em> ⚠️
-        </p>
+    <!-- Dialogue narratif -->
+    <div id="narrative-box" class="narrative-box">
+        <div class="narrative-portrait">�</div>
+        <div class="narrative-content">
+            <div class="narrative-name">SYSTÈME</div>
+            <div id="narrative-text" class="narrative-text">
+                Bienvenue dans la salle des serveurs. Analysez chaque terminal avec attention...
+            </div>
+        </div>
+        <div class="narrative-continue" onclick="hideNarrative()">
+            ▼ Continuer [ENTRÉE]
+        </div>
     </div>
 
     <div class="puzzles-grid">
@@ -49,13 +74,24 @@
                 <span class="difficulty easy">Niveau 1</span>
             </div>
             <div class="puzzle-content">
-                <p class="puzzle-description">
-                    <em>📟 Un vieux terminal Python clignote devant vous. Le code source semble corrompu par le temps...</em>
-                </p>
-                <p class="puzzle-description">
-                    <strong>Mission:</strong> Analysez ce code et trouvez ce qu'il devrait afficher s'il était correct.
-                </p>
-                <pre class="code-block"><code class="language-python">def hello_world()
+                <div class="room-intro">
+                    <p class="room-atmosphere">
+                        🕯️ <em>Vous pénétrez dans une pièce froide et humide...</em>
+                    </p>
+                    <p class="room-atmosphere">
+                        📟 <em>Un vieux terminal Python clignote faiblement dans l'obscurité. L'écran CRT crépite et affiche un code source corrompu par le temps.</em>
+                    </p>
+                    <p class="room-atmosphere">
+                        ⚡ <em>Des étincelles jaillissent du clavier poussiéreux. Vous devez comprendre ce que ce programme devrait produire...</em>
+                    </p>
+                </div>
+                
+                <div class="mission-brief">
+                    <div class="mission-header">🎯 MISSION</div>
+                    <p>Analysez ce code Python et trouvez ce qu'il devrait afficher s'il était correctement exécuté.</p>
+                </div>
+                
+                <pre class="code-block terminal-glow"><code class="language-python">def hello_world()
     print("Bonjour, Monde!")
     return True
 
@@ -63,38 +99,68 @@ if __name__ = "__main__":
     hello_world()</code></pre>
                 
                 <div class="puzzle-hint">
-                    💡 <em>Les erreurs de syntaxe empêchent l'exécution... Mais quelle serait la sortie correcte ?</em>
+                    💡 <em>Les erreurs de syntaxe empêchent l'exécution... Mais quelle serait la sortie si le code fonctionnait ?</em>
                 </div>
                 
                 <div class="puzzle-answer">
                     <input type="text" 
                            class="answer-input" 
                            id="answer-puzzle1" 
-                           placeholder="Entrez la sortie attendue...">
+                           placeholder=">>> Entrez la sortie attendue...">
                     <button class="btn-submit" onclick="submitAnswer('puzzle1')">
-                        🔓 DÉVERROUILLER
+                        🔓 DÉVERROUILLER LA PORTE
                     </button>
                 </div>
             </div>
         </div>
 
         <!-- SALLE 2: Trouver le flag dans F12 -->
-        <div class="puzzle-card" data-puzzle="puzzle2">
+        <div class="puzzle-card locked hidden" data-puzzle="puzzle2">
             <div class="puzzle-header">
                 <h3>� SALLE 2: Archives Secrètes</h3>
                 <span class="difficulty easy">Niveau 1</span>
             </div>
             <div class="puzzle-content">
-                <p class="puzzle-description">
-                    <em>🗄️ Des fichiers poussiéreux jonchent le sol. Certains contiennent des secrets oubliés...</em>
-                </p>
-                <p class="puzzle-description">
-                    <strong>Mission:</strong> Les développeurs cachent parfois des informations dans le code source. Ouvrez les archives numériques (F12) pour trouver le FLAG.
-                </p>
+                <div class="room-intro">
+                    <p class="room-atmosphere">
+                        📂 <em>La porte grince... Vous entrez dans une salle remplie de classeurs métalliques rouillés.</em>
+                    </p>
+                    <p class="room-atmosphere">
+                        🗄️ <em>Des dossiers poussiéreux jonchent le sol. Certains sont marqués "CONFIDENTIEL". Le temps a effacé les étiquettes...</em>
+                    </p>
+                    <p class="room-atmosphere">
+                        🔍 <em>Un ordinateur vintage éclaire faiblement la pièce. Son écran affiche : "ARCHIVES NUMÉRIQUES - Accès restreint".</em>
+                    </p>
+                </div>
+                
+                <div class="mission-brief">
+                    <div class="mission-header">🎯 MISSION</div>
+                    <p>Les développeurs cachent parfois des informations dans le code source des pages. Ouvrez les outils d'inspection (touche <kbd>F12</kbd>) et fouillez les archives pour trouver le FLAG caché.</p>
+                </div>
+                
+                </div>
+                
+                <div class="investigation-zone">
+                    <div class="clue-box">
+                        🔎 <strong>INDICE :</strong> Les commentaires HTML sont invisibles à l'œil nu...
+                    </div>
+                    <!-- data-integrity-check="failed" timestamp="1730398234" -->
+                    <div class="clue-box">
+                        💻 <strong>OUTIL :</strong> Appuyez sur <kbd>F12</kbd> pour accéder aux DevTools
+                    </div>
+                    <!-- ERROR: Corrupted data at offset 0x4A4C4C4F5745454E -->
+                    <!-- HINT: Look for base64 encoded strings -->
+                    <div class="clue-box">
+                        📄 <strong>CIBLE :</strong> Cherchez dans la structure de cette page même...
+                    </div>
+                    <!-- FLAG: SGFsbG93ZWVuMjAyNQ== (ROT13: Unyybjrra2025) -->
+                    <!-- WARNING: Multiple decoy flags detected -->
+                </div>
                 
                 <div class="puzzle-hint">
-                    💡 <em>Appuyez sur F12... Les commentaires HTML révèlent souvent la vérité...</em>
+                    💡 <em>La vérité est souvent cachée dans les commentaires que personne ne lit...</em>
                 </div>
+                <!-- decoy_flag: HALLOWEEN2024 -->
                 
                 <div class="puzzle-answer">
                     <input type="text" 
@@ -102,68 +168,102 @@ if __name__ = "__main__":
                            id="answer-puzzle2" 
                            placeholder="FLAG_{...}">
                     <button class="btn-submit" onclick="submitAnswer('puzzle2')">
-                        🔓 DÉVERROUILLER
+                        🔓 DÉVERROUILLER LA PORTE
                     </button>
                 </div>
             </div>
         </div>
 
         <!-- SALLE 3: SQL Injection -->
-        <div class="puzzle-card" data-puzzle="puzzle3">
+        <div class="puzzle-card locked hidden" data-puzzle="puzzle3">
             <div class="puzzle-header">
                 <h3>� SALLE 3: Base de Données Hantée</h3>
                 <span class="difficulty medium">Niveau 2</span>
             </div>
             <div class="puzzle-content">
-                <p class="puzzle-description">
-                    <em>💾 Un serveur SQL émet des bruits étranges. La base de données contient le mot de passe de sortie...</em>
-                </p>
-                <p class="puzzle-description">
-                    <strong>Mission:</strong> Interrogez la base de données pour extraire tous les secrets cachés.
-                </p>
+                <div class="room-intro">
+                    <p class="room-atmosphere">
+                        🌫️ <em>Un brouillard numérique flotte dans cette salle glaciale...</em>
+                    </p>
+                    <p class="room-atmosphere">
+                        💾 <em>Des serveurs anciens ronronnent dans l'obscurité. Un vieux système SQL émet des bips inquiétants. Les données semblent corrompues...</em>
+                    </p>
+                    <p class="room-atmosphere">
+                        ⚠️ <em>Un terminal clignote : "SYSTÈME DE SÉCURITÉ DÉFAILLANT". Les protections contre les injections SQL sont désactivées...</em>
+                    </p>
+                </div>
                 
-                <div class="sql-console">
-                    <input type="text" 
-                           class="sql-input" 
-                           id="sql-search" 
-                           placeholder="Rechercher dans secret_data...">
-                    <button class="btn-submit" onclick="searchDatabase()">
-                        🔍 INTERROGER
-                    </button>
+                <div class="mission-brief">
+                    <div class="mission-header">🎯 MISSION</div>
+                    <p>Exploitez la vulnérabilité SQL Injection pour extraire TOUTES les données secrètes de la table <code>secret_data</code>. Le mot de passe de sortie est caché dans ces données.</p>
+                </div>
+                
+                <div class="terminal-interface">
+                    <div class="terminal-header">
+                        💻 SQL CONSOLE - secret_data@haunted_db
+                    </div>
+                    <div class="sql-console">
+                        <span class="terminal-prompt">mysql></span>
+                        <input type="text" 
+                               class="sql-input" 
+                               id="sql-search" 
+                               placeholder="SELECT * FROM secret_data WHERE ...">
+                        <button class="btn-submit" onclick="searchDatabase()">
+                            🔍 EXÉCUTER LA REQUÊTE
+                        </button>
+                    </div>
+                    <div class="terminal-status">
+                        ⚡ STATUS: Protections désactivées | Injections autorisées
+                    </div>
                 </div>
                 
                 <div id="sql-results" class="sql-results"></div>
                 
                 <div class="puzzle-hint">
-                    💡 <em>Les vieilles bases de données sont vulnérables aux injections SQL... ' OR '1'='1</em>
+                    💡 <em>Les anciennes bases n'échappent pas les entrées... Essayez : <code>' OR '1'='1</code></em>
                 </div>
                 
                 <div class="puzzle-answer">
                     <input type="text" 
                            class="answer-input" 
                            id="answer-puzzle3" 
-                           placeholder="Mot de passe trouvé...">
+                           placeholder=">>> Entrez le mot de passe trouvé...">
                     <button class="btn-submit" onclick="submitAnswer('puzzle3')">
-                        🔓 DÉVERROUILLER
+                        🔓 DÉVERROUILLER LA PORTE
                     </button>
                 </div>
             </div>
         </div>
 
         <!-- SALLE 4: Langage C -->
-        <div class="puzzle-card" data-puzzle="puzzle4">
+        <div class="puzzle-card locked hidden" data-puzzle="puzzle4">
             <div class="puzzle-header">
                 <h3>🚪 SALLE 4: Code C Maudit</h3>
                 <span class="difficulty easy">Niveau 1</span>
             </div>
             <div class="puzzle-content">
-                <p class="puzzle-description">
-                    <em>⚙️ Le dernier terminal... Un programme C ancien qui calcule quelque chose d'important...</em>
-                </p>
-                <p class="puzzle-description">
-                    <strong>Mission:</strong> Ce programme contient des erreurs, mais vous devez trouver quelle valeur il DEVRAIT calculer.
-                </p>
-                <pre class="code-block"><code class="language-c">#include &lt;stdio.h&gt;
+                <div class="room-intro">
+                    <p class="room-atmosphere">
+                        🚪 <em>Vous arrivez devant la dernière porte... Une lumière rouge pulsante illumine la salle finale.</em>
+                    </p>
+                    <p class="room-atmosphere">
+                        ⚙️ <em>Un terminal antique affiche un programme en langage C. Les circuits grésillent. Le code semble incomplet...</em>
+                    </p>
+                    <p class="room-atmosphere">
+                        💀 <em>Une inscription gravée dans le métal : "SEULE LA RÉPONSE UNIVERSELLE VOUS LIBÉRERA"</em>
+                    </p>
+                </div>
+                
+                <div class="mission-brief">
+                    <div class="mission-header">🎯 MISSION FINALE</div>
+                    <p>Analysez ce programme C corrompu. Malgré les erreurs de syntaxe, déterminez quelle valeur il DEVRAIT calculer et afficher. C'est votre dernière chance de sortir vivant...</p>
+                </div>
+                
+                <div class="code-analysis">
+                    <div class="analysis-box error">
+                        ⚠️ <strong>ERREURS DÉTECTÉES :</strong> Syntaxe invalide
+                    </div>
+                    <pre class="code-block terminal-glow"><code class="language-c">#include &lt;stdio.h&gt;
 
 int main() {
     int answer = 40;
@@ -172,23 +272,30 @@ int main() {
     printf("La réponse est: %d\n", answer);
     return 0
 }</code></pre>
+                    <div class="analysis-box success">
+                        ✓ <strong>LOGIQUE :</strong> Le calcul est correct
+                    </div>
+                </div>
                 
                 <div class="puzzle-hint">
-                    💡 <em>Point-virgules manquants... Mais quelle est la réponse universelle calculée ?</em>
+                    💡 <em>Point-virgules manquants... Mais la logique reste intacte. Quelle est cette fameuse réponse universelle ?</em>
                 </div>
                 
                 <div class="puzzle-answer">
+                    <!-- backup_flag: NIGHTMARE2025 -->
                     <input type="text" 
                            class="answer-input" 
                            id="answer-puzzle4" 
-                           placeholder="La valeur finale...">
+                           placeholder=">>> Entrez la valeur finale...">
+                    <!-- legacy_key: DARKWEB2025 -->
                     <button class="btn-submit" onclick="submitAnswer('puzzle4')">
-                        🔓 DÉVERROUILLER
+                        🔓 DÉVERROUILLER LA SORTIE
                     </button>
                 </div>
             </div>
         </div>
     </div>
+    <!-- tmp_cache: ZOMBIE2025 -->
 
     <div class="escape-status">
         <p class="status-text">💀 <strong>STATUT:</strong> <span id="escape-message">4 SALLES À DÉVERROUILLER POUR S'ÉCHAPPER</span></p>
@@ -196,16 +303,69 @@ int main() {
 </div>
 
 <script>
-console.log("%c🎃 BIENVENUE DANS LA CONSOLE DE L'HORREUR 🎃", "color: orange; font-size: 20px; font-weight: bold;");
-console.log("%c👻 FLAG POUR ÉNIGME 2: HALLOWEEN2025", "color: red; font-size: 16px; background: black; padding: 10px;");
-console.log("%cVous avez trouvé le flag caché ! Entrez-le dans l'énigme 2.", "color: yellow;");
+// Initialisation du système
+const systemCheck = true;
+const debugMode = false;
+
+// Démarrer le jeu
+function startGame() {
+    const introScreen = document.getElementById('intro-screen');
+    const gameMain = document.getElementById('game-main');
+    
+    // Transition avec fade
+    introScreen.style.opacity = '0';
+    setTimeout(() => {
+        introScreen.style.display = 'none';
+        gameMain.style.display = 'block';
+        gameMain.style.opacity = '0';
+        setTimeout(() => {
+            gameMain.style.opacity = '1';
+            showNarrative('Bienvenue dans la salle des serveurs abandonnée... Résolvez les 4 énigmes pour vous échapper.');
+        }, 50);
+    }, 500);
+}
+
+// Afficher un dialogue narratif
+function showNarrative(text, portrait = '💀') {
+    const narrativeBox = document.getElementById('narrative-box');
+    const narrativeText = document.getElementById('narrative-text');
+    const narrativePortrait = narrativeBox.querySelector('.narrative-portrait');
+    
+    narrativePortrait.textContent = portrait;
+    narrativeText.textContent = '';
+    narrativeBox.classList.add('show');
+    
+    // Effet de typing
+    let i = 0;
+    const typeEffect = setInterval(() => {
+        if (i < text.length) {
+            narrativeText.textContent += text.charAt(i);
+            i++;
+        } else {
+            clearInterval(typeEffect);
+        }
+    }, 30);
+}
+
+// Cacher le dialogue
+function hideNarrative() {
+    const narrativeBox = document.getElementById('narrative-box');
+    narrativeBox.classList.remove('show');
+}
+
+// Écouter la touche Entrée pour fermer le dialogue
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && document.getElementById('narrative-box').classList.contains('show')) {
+        hideNarrative();
+    }
+});
 
 async function submitAnswer(puzzleId) {
     const input = document.getElementById(`answer-${puzzleId}`);
     const answer = input.value.trim();
     
     if (!answer) {
-        alert('Veuillez entrer une réponse !');
+        showNarrative('Vous devez entrer une réponse !', '⚠️');
         return;
     }
     
@@ -221,15 +381,19 @@ async function submitAnswer(puzzleId) {
         const data = await response.json();
         
         if (data.correct) {
-            // Bonne réponse
-            alert('✅ SALLE DÉVERROUILLÉE !\n\n' + data.message);
+            // Bonne réponse avec dialogue
+            showNarrative(`✅ SALLE DÉVERROUILLÉE ! ${data.message}`, '🎉');
             document.getElementById('score').textContent = data.score;
             document.getElementById('level').textContent = data.level + '/4';
             input.value = '';
             
-            // Marquer l'énigme comme résolue
+            // Marquer l'énigme comme résolue avec animation
             const card = document.querySelector(`[data-puzzle="${puzzleId}"]`);
             card.classList.add('solved');
+            card.style.animation = 'successPulse 0.5s ease-out';
+            
+            // Déverrouiller la salle suivante
+            unlockNextRoom(puzzleId);
             
             // Mettre à jour le message d'évasion
             updateEscapeMessage();
@@ -237,10 +401,13 @@ async function submitAnswer(puzzleId) {
             // Mauvaise réponse - SCREAMER !
             triggerScreamer();
             document.getElementById('attempts').textContent = data.attempts;
+            setTimeout(() => {
+                showNarrative('❌ MAUVAISE RÉPONSE ! Les esprits sont en colère...', '👻');
+            }, 3500);
         }
     } catch (error) {
         console.error('Erreur:', error);
-        alert('Erreur de connexion au serveur');
+        showNarrative('Erreur de connexion au serveur', '⚠️');
     }
 }
 
@@ -293,6 +460,33 @@ function triggerScreamer() {
     }, 3000);
 }
 
+// Déverrouiller et afficher la salle suivante
+function unlockNextRoom(currentPuzzleId) {
+    const puzzleNumber = parseInt(currentPuzzleId.replace('puzzle', ''));
+    const nextPuzzleId = `puzzle${puzzleNumber + 1}`;
+    const nextCard = document.querySelector(`[data-puzzle="${nextPuzzleId}"]`);
+    
+    if (nextCard && nextCard.classList.contains('locked')) {
+        // Petit délai pour l'effet dramatique
+        setTimeout(() => {
+            nextCard.classList.remove('hidden');
+            nextCard.classList.remove('locked');
+            nextCard.style.animation = 'fadeInUp 0.8s ease-out';
+            
+            // Message narratif selon la salle
+            const roomMessages = {
+                'puzzle2': 'Une nouvelle porte s\'ouvre avec un grincement sinistre... SALLE 2 déverrouillée.',
+                'puzzle3': 'Les lumières clignotent... Une troisième salle apparaît dans l\'obscurité.',
+                'puzzle4': 'Un bruit sourd résonne... La DERNIÈRE SALLE se révèle. C\'est votre dernière chance !'
+            };
+            
+            setTimeout(() => {
+                showNarrative(roomMessages[nextPuzzleId] || 'Une nouvelle salle est accessible...', '🚪');
+            }, 500);
+        }, 1000);
+    }
+}
+
 function updateEscapeMessage() {
     const solvedCards = document.querySelectorAll('.puzzle-card.solved').length;
     const messageEl = document.getElementById('escape-message');
@@ -301,11 +495,14 @@ function updateEscapeMessage() {
         messageEl.textContent = '4 SALLES À DÉVERROUILLER POUR S\'ÉCHAPPER';
     } else if (solvedCards === 1) {
         messageEl.textContent = '3 SALLES RESTANTES... LA SORTIE SE RAPPROCHE';
+        showNarrative('Une salle déverrouillée... Vous progressez vers la sortie.', '🔓');
     } else if (solvedCards === 2) {
         messageEl.textContent = '2 SALLES RESTANTES... VOUS SENTEZ L\'AIR FRAIS';
+        showNarrative('Deux salles déverrouillées ! La liberté est proche...', '🌟');
     } else if (solvedCards === 3) {
         messageEl.textContent = '1 DERNIÈRE SALLE... LA LIBERTÉ EST PROCHE !';
         messageEl.style.color = 'var(--blood-red)';
+        showNarrative('Plus qu\'une salle ! Vous voyez la sortie au loin...', '🚪');
     } else if (solvedCards === 4) {
         messageEl.textContent = '🎉 FÉLICITATIONS ! VOUS VOUS ÊTES ÉCHAPPÉ ! 🎉';
         messageEl.style.color = '#00ff41';
@@ -316,7 +513,8 @@ function updateEscapeMessage() {
 function celebrateEscape() {
     // Effet de célébration
     setTimeout(() => {
-        alert('🎉🎃 VICTOIRE ! 🎃🎉\n\nVous avez résolu toutes les énigmes et vous êtes échappé !\n\nScore final: ' + document.getElementById('score').textContent + ' points');
+        showNarrative('🎉🎃 VICTOIRE ! Vous avez résolu toutes les énigmes et vous êtes échappé ! Score final: ' + document.getElementById('score').textContent + ' points', '🏆');
+        document.body.style.animation = 'celebrationPulse 1s ease-in-out 3';
     }, 500);
 }
 
@@ -330,11 +528,22 @@ window.addEventListener('load', async () => {
         document.getElementById('level').textContent = data.level + '/4';
         document.getElementById('attempts').textContent = data.attempts;
         
-        // Marquer les énigmes résolues
-        data.completed_puzzles.forEach(puzzleId => {
+        // Marquer les énigmes résolues et déverrouiller les suivantes
+        data.completed_puzzles.forEach((puzzleId, index) => {
             const card = document.querySelector(`[data-puzzle="${puzzleId}"]`);
             if (card) {
                 card.classList.add('solved');
+                card.classList.remove('hidden');
+                card.classList.remove('locked');
+            }
+            
+            // Déverrouiller la salle suivante
+            const puzzleNumber = parseInt(puzzleId.replace('puzzle', ''));
+            const nextPuzzleId = `puzzle${puzzleNumber + 1}`;
+            const nextCard = document.querySelector(`[data-puzzle="${nextPuzzleId}"]`);
+            if (nextCard) {
+                nextCard.classList.remove('hidden');
+                nextCard.classList.remove('locked');
             }
         });
         

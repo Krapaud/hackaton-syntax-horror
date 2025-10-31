@@ -576,11 +576,180 @@ body::before {
     max-width: 1400px;
     margin: 0 auto;
     padding: 2rem;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Écran d'introduction cinématique */
+.intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(139, 0, 0, 0.2) 100%);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.intro-screen.active {
+    display: flex;
+}
+
+.intro-content {
+    text-align: center;
+    max-width: 800px;
+    padding: 3rem;
+}
+
+.game-title {
+    font-family: 'Nosifer', cursive;
+    font-size: 5rem;
+    color: var(--blood-red);
+    text-shadow: 
+        0 0 20px var(--blood-red),
+        0 0 40px var(--blood-red),
+        0 5px 15px rgba(0, 0, 0, 0.9);
+    margin-bottom: 1rem;
+    animation: bloodPulse 2s ease-in-out infinite;
+}
+
+.game-subtitle {
+    font-size: 2rem;
+    color: var(--corpse-grey);
+    letter-spacing: 8px;
+    margin-bottom: 3rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+.intro-story {
+    margin: 3rem 0;
+}
+
+.typing-text {
+    font-size: 1.3rem;
+    color: var(--bone-white);
+    margin: 1.5rem 0;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out forwards;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
+}
+
+.typing-text.delay-1 {
+    animation-delay: 1s;
+}
+
+.typing-text.delay-2 {
+    animation-delay: 2s;
+}
+
+.typing-text.delay-3 {
+    animation-delay: 3s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.btn-start {
+    margin-top: 3rem;
+    padding: 1.5rem 3rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: linear-gradient(180deg, var(--blood-red) 0%, var(--dark-blood) 100%);
+    color: white;
+    border: 2px solid rgba(139, 0, 0, 0.8);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 5px 20px rgba(139, 0, 0, 0.5);
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 4s forwards;
+}
+
+.btn-start:hover {
+    background: linear-gradient(180deg, #a00000 0%, var(--blood-red) 100%);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(139, 0, 0, 0.8);
+}
+
+/* Dialogue narratif style jeu vidéo */
+.narrative-box {
+    position: fixed;
+    bottom: -300px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 900px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.98) 0%, rgba(13, 13, 13, 0.98) 100%);
+    border: 2px solid rgba(139, 0, 0, 0.8);
+    padding: 2rem;
+    z-index: 9999;
+    display: flex;
+    gap: 1.5rem;
+    box-shadow: 0 -5px 30px rgba(139, 0, 0, 0.6);
+    transition: bottom 0.5s ease-out;
+}
+
+.narrative-box.show {
+    bottom: 20px;
+}
+
+.narrative-portrait {
+    font-size: 4rem;
+    min-width: 80px;
+    text-align: center;
+    filter: drop-shadow(0 0 10px rgba(139, 0, 0, 0.8));
+}
+
+.narrative-content {
+    flex: 1;
+}
+
+.narrative-name {
+    font-family: 'Nosifer', cursive;
+    font-size: 1.2rem;
+    color: var(--blood-red);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 5px rgba(139, 0, 0, 0.8);
+}
+
+.narrative-text {
+    font-size: 1.1rem;
+    color: var(--bone-white);
+    line-height: 1.6;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.narrative-continue {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    font-size: 0.9rem;
+    color: #888;
+    animation: blink 1.5s ease-in-out infinite;
+    cursor: pointer;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
 }
 
 .game-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-bottom: 2rem;
     padding: 1.5rem;
@@ -705,6 +874,16 @@ body::before {
         0 4px 15px rgba(0, 0, 0, 0.8),
         inset 0 0 20px rgba(0, 0, 0, 0.7);
     position: relative;
+}
+
+.puzzle-card.hidden {
+    display: none !important;
+}
+
+.puzzle-card.locked {
+    opacity: 0.3;
+    pointer-events: none;
+    filter: grayscale(100%) blur(2px);
 }
 
 .puzzle-card:hover {
@@ -1015,6 +1194,32 @@ body::before {
     animation: fadeIn 0.8s ease-out;
 }
 
+/* Animation de succès */
+@keyframes successPulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 10px 40px rgba(0, 255, 65, 0.6);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(0, 100, 0, 0.4);
+    }
+}
+
+/* Animation de célébration */
+@keyframes celebrationPulse {
+    0%, 100% {
+        filter: hue-rotate(0deg) brightness(1);
+    }
+    50% {
+        filter: hue-rotate(90deg) brightness(1.3);
+    }
+}
+
 /* Scrollbar personnalisée - Style horreur */
 ::-webkit-scrollbar {
     width: 10px;
@@ -1034,4 +1239,270 @@ body::before {
 ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, #a00000 0%, var(--blood-red) 100%);
     box-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
+}
+
+/* ===== ENHANCED PUZZLE ROOM STYLES ===== */
+
+/* Room atmosphere intro */
+.room-intro {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 0, 0, 0.8) 100%);
+    border-left: 4px solid var(--blood-red);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+}
+
+.room-atmosphere {
+    color: var(--corpse-grey);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    font-style: italic;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.room-atmosphere:last-child {
+    margin-bottom: 0;
+}
+
+/* Mission briefing */
+.mission-brief {
+    background: rgba(139, 0, 0, 0.15);
+    border: 2px solid rgba(139, 0, 0, 0.4);
+    padding: 1.2rem;
+    margin: 1.5rem 0;
+    border-radius: 4px;
+    position: relative;
+}
+
+.mission-brief::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--blood-red), transparent);
+    animation: scanLine 2s linear infinite;
+}
+
+.mission-header {
+    font-family: 'Creepster', cursive;
+    font-size: 1.3rem;
+    color: var(--blood-red);
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(139, 0, 0, 0.6);
+}
+
+.mission-brief p {
+    color: var(--bone-white);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.mission-brief code {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 2px 6px;
+    border-radius: 2px;
+    color: #00ff41;
+    font-family: 'Courier New', monospace;
+}
+
+/* Terminal glow effect */
+.terminal-glow {
+    box-shadow: 
+        inset 0 2px 10px rgba(0, 0, 0, 0.9),
+        0 0 20px rgba(0, 255, 65, 0.2),
+        0 0 40px rgba(0, 255, 65, 0.1);
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    animation: terminalPulse 3s ease-in-out infinite;
+}
+
+@keyframes terminalPulse {
+    0%, 100% {
+        box-shadow: 
+            inset 0 2px 10px rgba(0, 0, 0, 0.9),
+            0 0 20px rgba(0, 255, 65, 0.2),
+            0 0 40px rgba(0, 255, 65, 0.1);
+    }
+    50% {
+        box-shadow: 
+            inset 0 2px 10px rgba(0, 0, 0, 0.9),
+            0 0 30px rgba(0, 255, 65, 0.3),
+            0 0 60px rgba(0, 255, 65, 0.2);
+    }
+}
+
+/* Investigation zone (for F12 puzzle) */
+.investigation-zone {
+    background: rgba(0, 20, 40, 0.3);
+    border: 1px dashed rgba(100, 149, 237, 0.4);
+    padding: 1.2rem;
+    margin: 1.5rem 0;
+    border-radius: 4px;
+}
+
+.clue-box {
+    background: rgba(0, 0, 0, 0.6);
+    border-left: 3px solid rgba(100, 149, 237, 0.6);
+    padding: 0.8rem 1rem;
+    margin: 0.8rem 0;
+    color: var(--corpse-grey);
+    font-size: 0.95rem;
+}
+
+.clue-box strong {
+    color: rgba(100, 149, 237, 0.9);
+    margin-right: 0.5rem;
+}
+
+.clue-box kbd {
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(100, 149, 237, 0.5);
+    border-radius: 3px;
+    padding: 2px 8px;
+    font-family: 'Courier New', monospace;
+    color: rgba(100, 149, 237, 1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    font-size: 0.9rem;
+}
+
+/* Terminal interface (for SQL puzzle) */
+.terminal-interface {
+    background: linear-gradient(135deg, rgba(0, 20, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 100%);
+    border: 2px solid rgba(0, 255, 65, 0.3);
+    border-radius: 4px;
+    padding: 0;
+    margin: 1.5rem 0;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 255, 65, 0.2);
+}
+
+.terminal-header {
+    background: rgba(0, 0, 0, 0.9);
+    border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+    padding: 0.6rem 1rem;
+    color: #00ff41;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.terminal-prompt {
+    color: #00ff41;
+    font-family: 'Courier New', monospace;
+    margin-right: 0.5rem;
+    font-weight: bold;
+}
+
+.terminal-status {
+    background: rgba(0, 0, 0, 0.6);
+    border-top: 1px solid rgba(0, 255, 65, 0.2);
+    padding: 0.5rem 1rem;
+    color: rgba(255, 140, 0, 0.9);
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+}
+
+/* Code analysis boxes (for C puzzle) */
+.code-analysis {
+    margin: 1.5rem 0;
+}
+
+.analysis-box {
+    padding: 0.8rem 1rem;
+    margin: 1rem 0;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.analysis-box.error {
+    background: rgba(139, 0, 0, 0.2);
+    border: 1px solid rgba(139, 0, 0, 0.5);
+    color: #ff6b6b;
+}
+
+.analysis-box.success {
+    background: rgba(0, 100, 0, 0.2);
+    border: 1px solid rgba(0, 255, 65, 0.5);
+    color: #00ff41;
+}
+
+.analysis-box strong {
+    font-weight: 600;
+}
+
+/* Enhanced SQL console */
+.sql-console {
+    padding: 1rem;
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.sql-input {
+    flex: 1;
+    min-width: 250px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(0, 255, 65, 0.4);
+    color: #00ff41;
+    padding: 0.8rem 1rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+}
+
+.sql-input:focus {
+    outline: none;
+    border-color: #00ff41;
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+}
+
+/* Scan line animation */
+@keyframes scanLine {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .room-intro {
+        padding: 1rem;
+    }
+    
+    .mission-brief {
+        padding: 1rem;
+    }
+    
+    .mission-header {
+        font-size: 1.1rem;
+    }
+    
+    .investigation-zone {
+        padding: 1rem;
+    }
+    
+    .terminal-interface {
+        margin: 1rem 0;
+    }
+    
+    .sql-console {
+        flex-direction: column;
+    }
+    
+    .sql-input {
+        width: 100%;
+    }
 }

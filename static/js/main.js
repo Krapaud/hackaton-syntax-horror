@@ -1,8 +1,9 @@
 // Effets visuels et animations
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('%c🎃 SYNTAX HORROR - Escape Game 🎃', 'color: orange; font-size: 20px; font-weight: bold; text-shadow: 2px 2px black;');
-    console.log('%cBienvenue dans le jeu ! Ouvrez bien les yeux...', 'color: #ff6b00;');
+    // Initialisation du système
+    console.log('%c⚠️ SYSTEM CORRUPTED', 'color: red; font-size: 12px; font-family: monospace;');
+    console.log('%cLoading assets...', 'color: #666;');
     
     // Créer des araignées animées
     createSpiders();
@@ -298,12 +299,18 @@ window.addEventListener('load', () => {
 
 // Console personnalisée pour les énigmes
 if (window.location.pathname.includes('/game')) {
-    console.log('%c═══════════════════════════════════════', 'color: #ff6b00');
-    console.log('%c  🎃 CONSOLE DE DEBUG - ESCAPE GAME 🎃  ', 'color: orange; font-size: 16px; font-weight: bold');
-    console.log('%c═══════════════════════════════════════', 'color: #ff6b00');
-    console.log('%c', 'font-size: 1px; padding: 50px 100px; background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGV4dCB4PSIxMCIgeT0iNTAiIGZvbnQtc2l6ZT0iMzAiIGZpbGw9IiNmZjZiMDAiPvCfjogg8J+OgyDwn46EPC90ZXh0Pjwvc3ZnPg==);');
-    console.log('%cCherchez bien... des secrets se cachent ici...', 'color: #8b0000; font-style: italic');
-    console.log('%c═══════════════════════════════════════', 'color: #ff6b00');
+    // Faux messages de debug
+    console.log('%c[SYSTEM] Loading game modules...', 'color: #666; font-family: monospace;');
+    console.log('%c[WARN] Deprecated API detected', 'color: #ff8800; font-family: monospace;');
+    console.log('%c[ERROR] Cache corrupted at 0x7F3A', 'color: #cc0000; font-family: monospace;');
+    console.log('%c[INFO] Session initialized', 'color: #00aa00; font-family: monospace;');
+    // Ajouter de faux flags dans les propriétés
+    window._debugInfo = {
+        version: '1.0.3',
+        build: 'SPOOKY-BUILD-2025',
+        hint: 'Try looking in the HTML structure',
+        decoy: 'ESCAPE2025'
+    };
 }
 
 // Protection contre la triche (désactiver le clic droit en mode prod)
