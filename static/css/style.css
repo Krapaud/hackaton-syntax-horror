@@ -533,37 +533,42 @@ body::before {
 
 .message {
     padding: 1rem;
-    border-radius: 5px;
+    border-radius: 0;
     text-align: center;
     font-weight: bold;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
 }
 
 .message.success {
-    background: rgba(0, 255, 65, 0.2);
-    border: 2px solid var(--success-color);
-    color: var(--success-color);
+    background: rgba(0, 100, 0, 0.2);
+    border: 1px solid rgba(0, 100, 0, 0.6);
+    color: #00ff41;
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
 }
 
 .message.error {
-    background: rgba(255, 0, 51, 0.2);
-    border: 2px solid var(--error-color);
-    color: var(--error-color);
+    background: rgba(139, 0, 0, 0.2);
+    border: 1px solid var(--blood-red);
+    color: var(--blood-red);
+    text-shadow: 0 0 5px rgba(139, 0, 0, 0.5);
 }
 
 .auth-switch {
     text-align: center;
     margin-top: 1rem;
-    color: var(--text-color);
+    color: #888;
 }
 
 .auth-switch a {
-    color: var(--primary-color);
+    color: var(--blood-red);
     text-decoration: none;
     font-weight: bold;
+    transition: all 0.3s;
 }
 
 .auth-switch a:hover {
-    color: var(--secondary-color);
+    color: #a00000;
+    text-shadow: 0 0 5px rgba(139, 0, 0, 0.5);
 }
 
 /* Page de jeu - Style sombre et terrifiant */
@@ -583,6 +588,80 @@ body::before {
     border: 1px solid rgba(139, 0, 0, 0.5);
     border-radius: 0;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+}
+
+.escape-timer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.timer-icon {
+    font-size: 2rem;
+    filter: drop-shadow(0 0 10px rgba(139, 0, 0, 0.8));
+}
+
+.timer-label {
+    font-size: 0.9rem;
+    color: var(--blood-red);
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.story-intro {
+    background: linear-gradient(180deg, rgba(13, 13, 13, 0.98) 0%, rgba(0, 0, 0, 0.99) 100%);
+    border: 1px solid rgba(139, 0, 0, 0.6);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    box-shadow: 
+        0 0 30px rgba(139, 0, 0, 0.3),
+        inset 0 0 30px rgba(0, 0, 0, 0.8);
+}
+
+.story-text {
+    color: var(--corpse-grey);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin: 0.75rem 0;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
+}
+
+.story-text em {
+    color: var(--bone-white);
+}
+
+.escape-status {
+    background: rgba(139, 0, 0, 0.1);
+    border: 1px solid rgba(139, 0, 0, 0.4);
+    padding: 1.5rem;
+    margin-top: 2rem;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(139, 0, 0, 0.3);
+}
+
+.status-text {
+    color: var(--corpse-grey);
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.status-text strong {
+    color: var(--blood-red);
+    letter-spacing: 2px;
+}
+
+#escape-message {
+    color: var(--bone-white);
+    font-family: 'Courier New', monospace;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
 }
 
 .score-panel {
@@ -617,20 +696,30 @@ body::before {
 }
 
 .puzzle-card {
-    background: rgba(26, 26, 26, 0.95);
-    border: 2px solid var(--primary-color);
-    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(13, 13, 13, 0.98) 0%, rgba(0, 0, 0, 0.99) 100%);
+    border: 1px solid rgba(139, 0, 0, 0.5);
+    border-radius: 0;
     padding: 2rem;
     transition: all 0.3s;
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.8),
+        inset 0 0 20px rgba(0, 0, 0, 0.7);
+    position: relative;
 }
 
 .puzzle-card:hover {
-    box-shadow: 0 10px 30px rgba(255, 107, 0, 0.5);
+    border-color: rgba(139, 0, 0, 0.8);
+    box-shadow: 
+        0 8px 25px rgba(139, 0, 0, 0.4),
+        inset 0 0 30px rgba(139, 0, 0, 0.1);
+    transform: translateY(-3px);
 }
 
 .puzzle-card.solved {
-    border-color: var(--success-color);
-    background: rgba(0, 255, 65, 0.05);
+    border-color: rgba(0, 100, 0, 0.6);
+    box-shadow: 
+        0 4px 15px rgba(0, 100, 0, 0.4),
+        inset 0 0 20px rgba(0, 100, 0, 0.1);
 }
 
 .puzzle-card.solved::before {
@@ -638,16 +727,14 @@ body::before {
     position: absolute;
     top: 10px;
     right: 10px;
-    background: var(--success-color);
-    color: black;
+    background: rgba(0, 100, 0, 0.8);
+    color: #00ff41;
     padding: 0.25rem 0.75rem;
-    border-radius: 5px;
+    border-radius: 0;
     font-weight: bold;
     font-size: 0.8rem;
-}
-
-.puzzle-card {
-    position: relative;
+    border: 1px solid rgba(0, 255, 65, 0.5);
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
 }
 
 .puzzle-header {
@@ -660,25 +747,29 @@ body::before {
 }
 
 .puzzle-header h3 {
-    color: var(--primary-color);
+    color: var(--blood-red);
     font-size: 1.5rem;
+    text-shadow: 0 2px 8px rgba(139, 0, 0, 0.8);
 }
 
 .difficulty {
     padding: 0.25rem 0.75rem;
-    border-radius: 5px;
+    border-radius: 0;
     font-size: 0.9rem;
     font-weight: bold;
+    border: 1px solid;
 }
 
 .difficulty.easy {
-    background: rgba(0, 255, 65, 0.2);
-    color: var(--success-color);
+    background: rgba(0, 100, 0, 0.2);
+    color: #00ff41;
+    border-color: rgba(0, 255, 65, 0.5);
 }
 
 .difficulty.medium {
-    background: rgba(255, 165, 0, 0.2);
-    color: orange;
+    background: rgba(139, 69, 0, 0.2);
+    color: #ff8c00;
+    border-color: rgba(255, 140, 0, 0.5);
 }
 
 .puzzle-description {
@@ -760,7 +851,7 @@ body::before {
     transform: translateY(-2px);
 }
 
-/* Console SQL */
+/* Console SQL - Style terminal sombre */
 .sql-console {
     display: flex;
     gap: 1rem;
@@ -768,22 +859,26 @@ body::before {
 }
 
 .sql-results {
-    background: rgba(0, 0, 0, 0.7);
-    border: 1px solid var(--primary-color);
-    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(139, 0, 0, 0.3);
+    border-radius: 0;
     padding: 1rem;
     margin: 1rem 0;
     min-height: 50px;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.9);
+    font-family: 'Courier New', monospace;
 }
 
 .sql-result {
-    color: var(--success-color);
+    color: #00ff41;
     margin: 0.5rem 0;
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
 }
 
 .no-result, .error {
-    color: var(--error-color);
+    color: var(--blood-red);
     font-style: italic;
+    text-shadow: 0 0 5px rgba(139, 0, 0, 0.5);
 }
 
 /* Modal Screamer - Terrifiant */
@@ -902,36 +997,41 @@ body::before {
     }
 }
 
-/* Animations de chargement */
+/* Animations de chargement sombres */
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
+        filter: blur(5px);
     }
     to {
         opacity: 1;
         transform: translateY(0);
+        filter: blur(0);
     }
 }
 
 .puzzle-card, .feature-card, .auth-box {
-    animation: fadeIn 0.5s ease-out;
+    animation: fadeIn 0.8s ease-out;
 }
 
-/* Scrollbar personnalisée */
+/* Scrollbar personnalisée - Style horreur */
 ::-webkit-scrollbar {
-    width: 12px;
+    width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--dark-bg);
+    background: var(--deep-black);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.9);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
-    border-radius: 6px;
+    background: linear-gradient(180deg, var(--blood-red) 0%, var(--dark-blood) 100%);
+    border-radius: 0;
+    border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--secondary-color);
+    background: linear-gradient(180deg, #a00000 0%, var(--blood-red) 100%);
+    box-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
 }
