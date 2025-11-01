@@ -240,6 +240,11 @@ async function submitAnswer(puzzleId) {
             card.classList.add('solved');
             card.style.animation = 'successPulse 0.5s ease-out';
             
+            // Afficher le message narratif de succès personnalisé
+            setTimeout(() => {
+                showSuccessNarrative(puzzleId);
+            }, 800);
+            
             // Si c'est la salle 5 (enveloppe), proposer le téléchargement
             if (puzzleId === 'puzzle5') {
                 setTimeout(() => {
@@ -377,6 +382,51 @@ async function updateEscapeMessage() {
 
 // Afficher un message narratif avec effet de typing
 let narrativeTypeEffect = null; // Stocker l'intervalle de typing
+
+// Messages de succès du narrateur pour chaque salle
+const successNarratives = {
+    'puzzle1': "Impressionnant... Vous avez déchiffré mon code Python corrompu. " +
+               "Même avec les erreurs de syntaxe, vous avez compris la logique. " +
+               "Vous commencez à comprendre comment fonctionne cet endroit maudit... " +
+               "Mais ce n'était que le début. Les prochaines salles seront bien plus difficiles.",
+    
+    'puzzle2': "Excellent travail... Vous avez trouvé le flag caché dans les archives. " +
+               "Décoder l'hexadécimal, c'est une compétence précieuse ici. " +
+               "Les développeurs cachaient leurs secrets de cette façon... " +
+               "Moi-même j'ai laissé des traces cryptées partout avant de mourir. Continuez.",
+    
+    'puzzle3': "Fascinant... Vous maîtrisez l'art de l'injection SQL. " +
+               "Cette base de données hantée n'avait aucune chance face à vous. " +
+               "Les protections étaient désactivées, mais fallait-il encore le savoir... " +
+               "Vous êtes à mi-chemin. Les entités qui rôdent ici vous observent avec intérêt.",
+    
+    'puzzle4': "Brillant ! Le code C maudit a révélé ses secrets. " +
+               "42... La réponse universelle à la vie, l'univers et le reste. " +
+               "Douglas Adams serait fier. Même dans ce cauchemar, l'humour des développeurs persiste... " +
+               "Il ne reste plus que deux salles. La fin approche.",
+    
+    'puzzle5': "Remarquable... Vous avez déchiffré l'énigme de Freddy Krueger. " +
+               "FRI13TH... Vendredi 13. Le jour où il est mort, le jour où il est né à nouveau. " +
+               "Les fichiers cryptés ne peuvent rien vous cacher. " +
+               "Vous êtes si proche de la liberté maintenant...",
+    
+    'puzzle6': "INCROYABLE ! Vous avez trouvé tous les fragments cachés dans les archives corrompues ! " +
+               "Texte invisible, éléments cachés en CSS, texte microscopique, couleurs camouflées... " +
+               "Rien ne vous échappe. DARK-CODE-2025-HORROR... Les mots qui résonnent dans ce complexe maudit. " +
+               "Vous avez terminé la dernière épreuve. La porte de sortie s'ouvre enfin..."
+};
+
+function showSuccessNarrative(puzzleId) {
+    const message = successNarratives[puzzleId] || 
+                    "Bien joué... Une salle de plus déverrouillée. Continuez votre progression.";
+    
+    showNarrativeMessage(message, () => {
+        // Après la fermeture du narrateur, déverrouiller visuellement la prochaine salle
+        if (window.roomManager) {
+            // La salle suivante est déjà déverrouillée par unlockNextRoom
+        }
+    });
+}
 
 function showNarrativeMessage(text, callback) {
     const narrativeBox = document.getElementById('narrative-box');
