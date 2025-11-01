@@ -672,7 +672,7 @@ window.addEventListener('load', async () => {
 <audio id="sound-2" preload="auto"><source src="{{ url_for('static', filename='sounds/floorcracking-84506.mp3') }}" type="audio/mpeg"></audio>
 <audio id="sound-3" preload="auto"><source src="{{ url_for('static', filename='sounds/haunted-steps-428208.mp3') }}" type="audio/mpeg"></audio>
 <audio id="sound-4" preload="auto"><source src="{{ url_for('static', filename='sounds/piano-strings-pluck-brukowskij-7-7-00-06.mp3') }}" type="audio/mpeg"></audio>
-<audio id="sound-5" preload="auto"><source src="{{ url_for('static', filename='sounds/scary-piano-dissonant-notes-joshua-chivers-2-2-00-04.mp3') }}" type="audio/mpeg"></audio>
+<audio id="sound-5" preload="auto"><source src="{{ url_for('static', filename='sounds/scream-90747.mp3') }}" type="audio/mpeg"></audio>
 
 <script>
     // Gestion de l'ambiance sonore aléatoire
@@ -701,8 +701,8 @@ window.addEventListener('load', async () => {
         selectedSound.play().catch(e => console.log('Audio play failed:', e));
         
         // Programmer le prochain son avec un délai complètement aléatoire
-        // Entre 3 et 25 secondes
-        const nextDelay = 3000 + Math.random() * 22000;
+        // Entre 15 et 45 secondes
+        const nextDelay = 5000 + Math.random() * 15000;
         soundInterval = setTimeout(playRandomSound, nextDelay);
     };
 
