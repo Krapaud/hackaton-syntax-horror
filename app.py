@@ -184,6 +184,12 @@ def leaderboard():
         'level': player[2]
     } for player in top_players])
 
+@app.route('/static/data/rooms.json')
+def rooms_data():
+    """Servir le fichier JSON des salles"""
+    from flask import send_from_directory
+    return send_from_directory('data', 'rooms.json')
+
 # Énigme SQL - endpoint vulnérable intentionnellement pour l'énigme
 @app.route('/api/search_secrets', methods=['POST'])
 @login_required

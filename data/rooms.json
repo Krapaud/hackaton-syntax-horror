@@ -1,0 +1,83 @@
+{
+  "rooms": [
+    {
+      "id": "puzzle1",
+      "title": "🐍 SALLE 1: Terminal Python Corrompu",
+      "difficulty": "easy",
+      "difficultyLabel": "Niveau 1",
+      "atmosphere": [
+        "🕯️ <em>Vous pénétrez dans une pièce froide et humide...</em>",
+        "📟 <em>Un vieux terminal Python clignote faiblement dans l'obscurité. L'écran CRT crépite et affiche un code source corrompu par le temps.</em>",
+        "⚡ <em>Des étincelles jaillissent du clavier poussiéreux. Vous devez comprendre ce que ce programme devrait produire...</em>"
+      ],
+      "mission": "Analysez ce code Python et trouvez ce qu'il devrait afficher s'il était correctement exécuté.",
+      "codeBlock": {
+        "language": "python",
+        "code": "def hello_world():\n    print(\"Bonjour, Monde!\")\n    return True\n\nif __name__ = \"__main__\":\n    hello_world()"
+      },
+      "hint": "💡 <em>Les erreurs de syntaxe empêchent l'exécution... Mais quelle serait la sortie si le code fonctionnait ?</em>",
+      "placeholder": ">>> Entrez la sortie attendue...",
+      "buttonText": "🔓 DÉVERROUILLER LA PORTE"
+    },
+    {
+      "id": "puzzle2",
+      "title": "🔍 SALLE 2: Archives Secrètes",
+      "difficulty": "easy",
+      "difficultyLabel": "Niveau 1",
+      "atmosphere": [
+        "📂 <em>La porte grince... Vous entrez dans une salle remplie de classeurs métalliques rouillés.</em>",
+        "🗄️ <em>Des dossiers poussiéreux jonchent le sol. Certains sont marqués \"CONFIDENTIEL\". Le temps a effacé les étiquettes...</em>",
+        "🔍 <em>Un ordinateur vintage éclaire faiblement la pièce. Son écran affiche : \"ARCHIVES NUMÉRIQUES - Accès restreint\".</em>"
+      ],
+      "mission": "Les développeurs cachent parfois des informations dans le code source des pages. Ouvrez les outils d'inspection (touche <kbd>F12</kbd>) et fouillez les archives pour trouver le FLAG caché.",
+      "specialContent": "investigation",
+      "clues": [
+        "🔎 <strong>INDICE :</strong> Les commentaires HTML sont invisibles à l'œil nu...",
+        "💻 <strong>OUTIL :</strong> Appuyez sur <kbd>F12</kbd> pour accéder aux DevTools",
+        "📄 <strong>CIBLE :</strong> Cherchez dans la structure de cette page même..."
+      ],
+      "hint": "💡 <em>La vérité est souvent cachée dans les commentaires que personne ne lit...</em>",
+      "placeholder": "FLAG_{...}",
+      "buttonText": "🔓 DÉVERROUILLER LA PORTE"
+    },
+    {
+      "id": "puzzle3",
+      "title": "💾 SALLE 3: Base de Données Hantée",
+      "difficulty": "medium",
+      "difficultyLabel": "Niveau 2",
+      "atmosphere": [
+        "🌫️ <em>Un brouillard numérique flotte dans cette salle glaciale...</em>",
+        "💾 <em>Des serveurs anciens ronronnent dans l'obscurité. Un vieux système SQL émet des bips inquiétants. Les données semblent corrompues...</em>",
+        "⚠️ <em>Un terminal clignote : \"SYSTÈME DE SÉCURITÉ DÉFAILLANT\". Les protections contre les injections SQL sont désactivées...</em>"
+      ],
+      "mission": "Exploitez la vulnérabilité SQL Injection pour extraire TOUTES les données secrètes de la table <code>secret_data</code>. Le mot de passe de sortie est caché dans ces données.",
+      "specialContent": "sql",
+      "hint": "💡 <em>Les anciennes bases n'échappent pas les entrées... Essayez : <code>' OR '1'='1</code></em>",
+      "placeholder": ">>> Entrez le mot de passe trouvé...",
+      "buttonText": "🔓 DÉVERROUILLER LA PORTE"
+    },
+    {
+      "id": "puzzle4",
+      "title": "🚪 SALLE 4: Code C Maudit",
+      "difficulty": "easy",
+      "difficultyLabel": "Niveau 1",
+      "atmosphere": [
+        "🚪 <em>Vous arrivez devant la dernière porte... Une lumière rouge pulsante illumine la salle finale.</em>",
+        "⚙️ <em>Un terminal antique affiche un programme en langage C. Les circuits grésillent. Le code semble incomplet...</em>",
+        "💀 <em>Une inscription gravée dans le métal : \"SEULE LA RÉPONSE UNIVERSELLE VOUS LIBÉRERA\"</em>"
+      ],
+      "mission": "Analysez ce programme C corrompu. Malgré les erreurs de syntaxe, déterminez quelle valeur il DEVRAIT calculer et afficher. C'est votre dernière chance de sortir vivant...",
+      "codeBlock": {
+        "language": "c",
+        "code": "#include <stdio.h>\n\nint main() {\n    int answer = 40;\n    answer = answer + 2\n    \n    printf(\"La réponse est: %d\\n\", answer);\n    return 0\n}"
+      },
+      "codeAnalysis": [
+        "⚠️ <strong>ERREURS DÉTECTÉES :</strong> Syntaxe invalide",
+        "✓ <strong>LOGIQUE :</strong> Le calcul est correct"
+      ],
+      "hint": "💡 <em>Point-virgules manquants... Mais la logique reste intacte. Quelle est cette fameuse réponse universelle ?</em>",
+      "placeholder": ">>> Entrez la valeur finale...",
+      "buttonText": "🔓 DÉVERROUILLER LA SORTIE"
+    }
+  ]
+}

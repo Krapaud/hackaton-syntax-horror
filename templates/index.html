@@ -2,63 +2,37 @@
 
 {% block content %}
 <div class="hero-section">
-    <div class="glitch-text" data-text="BIENVENUE">BIENVENUE</div>
-    <h2 class="subtitle">DANS L'ESCAPE GAME DE L'HORREUR</h2>
+    <div class="glitch-text" data-text="BIENVENUE">404</div>
+    <br>
+    <div class="glitch-text" data-text="BIENVENUE">SOULS NOT FOUND</div>
+    <h2 class="subtitle">L'ESCAPE GAME DE L'HORREUR</h2>
     
     <div class="intro-box">
         <p class="intro-text">
-            🕷️ Vous êtes piégé dans un monde de code corrompu... 🕷️
+            Vous êtes piégé dans un monde de code corrompu...
         </p>
         <p class="intro-text">
-            👻 Résolvez les énigmes de programmation pour vous échapper 👻
+            Résolvez les énigmes de programmation pour vous échapper
         </p>
         <p class="intro-text">
-            ⚠️ Mais attention... chaque erreur réveille les esprits ⚠️
+            Mais attention... chaque erreur réveille les esprits
         </p>
     </div>
 
     <div class="cta-buttons">
         {% if current_user.is_authenticated %}
             <a href="{{ url_for('game') }}" class="btn-primary">
-                <span class="btn-icon">🎮</span> COMMENCER L'AVENTURE
+                COMMENCER L'AVENTURE
             </a>
         {% else %}
             <a href="{{ url_for('register') }}" class="btn-primary">
-                <span class="btn-icon">📝</span> S'INSCRIRE
+                S'INSCRIRE
             </a>
             <a href="{{ url_for('login') }}" class="btn-secondary">
-                <span class="btn-icon">🔑</span> SE CONNECTER
+                SE CONNECTER
             </a>
         {% endif %}
     </div>
-
-    <div class="leaderboard-preview">
-        <h3>🏆 TOP JOUEURS 🏆</h3>
-        <div id="leaderboard-container"></div>
-    </div>
 </div>
 
-<script>
-// Charger le leaderboard
-fetch('/api/leaderboard')
-    .then(response => response.json())
-    .then(data => {
-        const container = document.getElementById('leaderboard-container');
-        if (data.length === 0) {
-            container.innerHTML = '<p class="no-data">Aucun joueur pour le moment...</p>';
-            return;
-        }
-        
-        const html = data.map((player, index) => `
-            <div class="leaderboard-entry">
-                <span class="rank">#${index + 1}</span>
-                <span class="player-name">${player.username}</span>
-                <span class="player-score">${player.score} pts</span>
-                <span class="player-level">Niveau ${player.level}</span>
-            </div>
-        `).join('');
-        
-        container.innerHTML = html;
-    });
-</script>
 {% endblock %}
