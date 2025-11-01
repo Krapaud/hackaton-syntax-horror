@@ -570,20 +570,8 @@ window.addEventListener('load', async () => {
         const response = await fetch('/api/progress');
         const data = await response.json();
         
-        // Si l'utilisateur a déjà de la progression (a déjà joué), passer l'intro
-        const hasSeenIntro = localStorage.getItem('hasSeenIntro') === 'true';
-        const hasProgress = data.completed_puzzles && data.completed_puzzles.length > 0;
-        
-        if (hasSeenIntro || hasProgress) {
-            // Passer directement au jeu sans animation
-            const introScreen = document.getElementById('intro-screen');
-            const gameMain = document.getElementById('game-main');
-            introScreen.style.display = 'none';
-            gameMain.style.display = 'block';
-        } else {
-            // Afficher l'intro normalement
-            showIntroMessage(introMessages[0]);
-        }
+        // Toujours afficher l'intro (débloquer le narrateur)
+        showIntroMessage(introMessages[0]);
         
         // Mettre à jour le message d'évasion
         updateEscapeMessage();
