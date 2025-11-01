@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: escape-game-halloween
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./data:/app/data
+      - ./static:/app/static
+      - ./templates:/app/templates
+    environment:
+      - FLASK_ENV=production
+      - SECRET_KEY=your-secret-key-change-in-production
+    restart: unless-stopped
+    networks:
+      - escape-game-network
+
+networks:
+  escape-game-network:
+    driver: bridge
+
+volumes:
+  data:

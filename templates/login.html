@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Connexion - Syntax Horror{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-box">
+        <h2 class="auth-title">CONNEXION</h2>
+        <p class="auth-subtitle">Entrez dans le monde de l'horreur...</p>
+        
+        <form id="login-form" class="auth-form">
+            <div class="form-group">
+                <label for="username">
+                    <span class="label-icon"></span> Nom d'utilisateur
+                </label>
+                <input type="text" id="username" name="username" required 
+                       placeholder="Entrez votre pseudo" class="form-input">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">
+                    <span class="label-icon"></span> Mot de passe
+                </label>
+                <input type="password" id="password" name="password" required 
+                       placeholder="Mot de passe" class="form-input">
+            </div>
+            
+            <div id="message" class="message"></div>
+            
+            <button type="submit" class="btn-primary btn-full">
+                SE CONNECTER
+            </button>
+        </form>
+        
+        <p class="auth-switch">
+            Pas encore de compte ? 
+            <a href="{{ url_for('register') }}">Inscrivez-vous</a>
+        </p>
+    </div>
+</div>
+
+<script>
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const messageDiv = document.getElementById('message');
+    
+    try {
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            messageDiv.className = 'message success';
+            messageDiv.textContent = data.message;
+            setTimeout(() => {
+                window.location.href = '/game';
+            }, 1000);
+        } else {
+            messageDiv.className = 'message error';
+            messageDiv.textContent = data.message;
+        }
+    } catch (error) {
+        messageDiv.className = 'message error';
+        messageDiv.textContent = 'Erreur de connexion au serveur';
+    }
+});
+</script>
+{% endblock %}

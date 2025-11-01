@@ -1,0 +1,103 @@
+{
+  "rooms": [
+    {
+      "id": "puzzle1",
+      "title": "SALLE 1: Terminal Python Corrompu",
+      "atmosphere": [
+        "<em>Vous pénétrez dans une pièce froide et humide...</em>",
+        "<em>Un vieux terminal Python clignote faiblement dans l'obscurité. L'écran CRT crépite et affiche un code source étrange qui mélange du texte inversé et un chiffrement mystérieux.</em>",
+        "<em>Des étincelles jaillissent du clavier poussiéreux. Le code semble déchiffrer un message secret en plusieurs étapes...</em>"
+      ],
+      "mission": "Ce programme déchiffre un message crypté en plusieurs étapes : inversion de texte et décalage César. Analysez le code et trouvez quel mot secret apparaîtrait si le programme s'exécutait correctement. Entrez ce mot en MAJUSCULES.",
+      "codeBlock": {
+        "language": "python",
+        "code": "# Message crypté\nmsg = \"QRLWRS\"[::-1]  # Inversion\n\n# Décalage César -3\nresult = \"\"\nfor c in msg\n    if c.isupper():\n        result += chr((ord(c) - 3 - 65) % 26 + 65)\nprint(\"Secret:\", result)"
+      },
+      "placeholder": ">>> Entrez le mot secret...",
+      "buttonText": "DÉVERROUILLER LA PORTE"
+    },
+    {
+      "id": "puzzle2",
+      "title": "SALLE 2: Archives Secrètes",
+      "atmosphere": [
+        "<em>La porte grince... Vous entrez dans une salle remplie de classeurs métalliques rouillés.</em>",
+        "<em>Des dossiers poussiéreux jonchent le sol. Certains sont marqués \"CONFIDENTIEL\". Le temps a effacé les étiquettes...</em>",
+        "<em>Un ordinateur vintage éclaire faiblement la pièce. Son écran affiche : \"ARCHIVES NUMÉRIQUES - Accès restreint\". Des codes hexadécimaux défilent à l'écran...</em>"
+      ],
+      "mission": "Les développeurs cachent parfois des informations dans le code source HTML des pages web, parfois encodées pour plus de sécurité. Ouvrez les outils de développement (<kbd>F12</kbd> ou clic-droit > Inspecter) et explorez le code HTML de cette salle. Le FLAG est caché en format hexadécimal parmi de nombreux faux codes.",
+      "specialContent": "investigation",
+      "clues": [
+        "<strong>INDICE :</strong> Les commentaires HTML (<!-- -->) sont invisibles à l'écran mais visibles dans le code source",
+        "<strong>OUTIL :</strong> Appuyez sur <kbd>F12</kbd> puis allez dans l'onglet 'Éléments' ou 'Inspector'",
+        "<strong>CIBLE :</strong> Cherchez dans la structure HTML de cette carte puzzle, pas dans le code général de la page",
+        "<strong>ASTUCE :</strong> Faites clic-droit sur cette carte > 'Inspecter l'élément' pour voir directement son code",
+        "<strong>ENCODAGE :</strong> Le vrai flag est encodé en HEXADÉCIMAL (format: 0x...). Utilisez un convertisseur HEX vers ASCII en ligne"
+      ],
+      "placeholder": "FLAG_{...}",
+      "buttonText": "DÉVERROUILLER LA PORTE"
+    },
+    {
+      "id": "puzzle3",
+      "title": "SALLE 3: Base de Données Hantée",
+      "atmosphere": [
+        "<em>Un brouillard numérique flotte dans cette salle glaciale...</em>",
+        "<em>Des serveurs anciens ronronnent dans l'obscurité. Un vieux système SQL émet des bips inquiétants. Les données semblent corrompues...</em>",
+        "<em>Un terminal clignote : \"SYSTÈME DE SÉCURITÉ DÉFAILLANT\". Les protections contre les injections SQL sont désactivées...</em>"
+      ],
+      "mission": "Exploitez la vulnérabilité SQL Injection pour extraire TOUTES les données secrètes de la table <code>secret_data</code>. Tapez une requête SQL complète dans le terminal pour interroger la base de données. Le mot de passe de sortie est caché dans ces données.",
+      "specialContent": "sql",
+      "placeholder": ">>> Entrez le mot de passe trouvé...",
+      "buttonText": "DÉVERROUILLER LA PORTE"
+    },
+    {
+      "id": "puzzle4",
+      "title": "SALLE 4: Rébus du Code Maudit",
+      "atmosphere": [
+        "<em>Vous entrez dans une salle étrange où des symboles flottent dans l'air...</em>",
+        "<em>Des images de films d'horreur se mélangent à du code de programmation. Un mystérieux rébus apparaît sur l'écran...</em>",
+        "<em>Une voix chuchote : \"DÉCHIFFREZ LE MESSAGE... PROGRAMMATION ET HORREUR NE FONT QU'UN\"</em>"
+      ],
+      "mission": "Décodez ce rébus qui mélange termes de programmation et films d'horreur. Chaque ligne de code représente une syllabe ou un mot. Assemblez-les pour trouver le titre d'un film d'horreur culte !",
+      "codeBlock": {
+        "language": "python",
+        "code": "# RÉBUS HORRIFIQUE - Trouvez le film\nimport silence\n\nclass Of:\n    pass\n\nlambs = []\n\n# Réponse: ?"
+      },
+      "placeholder": ">>> Entrez le titre du film (sans espaces)...",
+      "buttonText": "DÉVERROUILLER LA SORTIE"
+    },
+    {
+      "id": "puzzle5",
+      "title": "SALLE 5: Message Crypté",
+      "atmosphere": [
+        "<em>Un terminal clignote faiblement dans l'obscurité...</em>",
+        "<em>Un message s'affiche : \"FICHIER CRYPTÉ DÉTECTÉ - TÉLÉCHARGEMENT DISPONIBLE\"</em>",
+        "<em>Vous devez télécharger le fichier secret, le lire, et entrer le mot de passe qu'il contient...</em>"
+      ],
+      "mission": "Un fichier crypté contient un mot de passe vital. <strong>1)</strong> Cliquez sur le bouton pour télécharger <code>lettre_enigme.txt</code>. <strong>2)</strong> Ouvrez le fichier et lisez-le attentivement. <strong>3)</strong> Trouvez le mot de passe caché dans le fichier. <strong>4)</strong> Entrez ce mot de passe ci-dessous pour déverrouiller la salle.",
+      "specialContent": "download",
+      "placeholder": ">>> Entrez le mot de passe du fichier...",
+      "buttonText": "DÉVERROUILLER LA SALLE"
+    },
+    {
+      "id": "puzzle6",
+      "title": "SALLE 6: Archives Cryptées",
+      "atmosphere": [
+        "<em>Vous entrez dans une archive corrompue remplie de textes maudits...</em>",
+        "<em>Des fragments d'informations sont cachés partout : texte invisible, éléments en display:none, texte microscopique...</em>",
+        "<em>Un message s'affiche : \"4 FRAGMENTS CACHÉS - TROUVEZ-LES TOUS POUR SORTIR\"</em>"
+      ],
+      "mission": "Explorez cette archive numérique corrompue. Les informations sont cachées de différentes manières : <strong>1)</strong> Texte invisible à sélectionner, <strong>2)</strong> Éléments CSS cachés (F12), <strong>3)</strong> Texte minuscule, <strong>4)</strong> Couleurs camouflées. Trouvez les 4 fragments.",
+      "specialContent": "archives",
+      "clues": [
+        "<strong>TECHNIQUE 1 :</strong> Sélectionnez le texte avec votre souris pour révéler du contenu invisible",
+        "<strong>TECHNIQUE 2 :</strong> Ouvrez F12 (DevTools), cherchez les commentaires HTML et les éléments cachés",
+        "<strong>TECHNIQUE 3 :</strong> Certains textes sont microscopiques (zoom du navigateur peut aider)",
+        "<strong>TECHNIQUE 4 :</strong> Du texte peut être de la même couleur que le fond (sélectionnez tout)",
+        "<strong>FORMAT :</strong> Le mot de passe final est : FRAGMENT1-FRAGMENT2-FRAGMENT3-FRAGMENT4",
+        "<strong>ATTENTION :</strong> Il y a des leurres ! Cherchez bien les vrais fragments"
+      ],
+      "placeholder": "XXXX-XXXX-XXXX-XXXXX",
+      "buttonText": "DÉVERROUILLER LA SORTIE"
+    }
+  ]
+}

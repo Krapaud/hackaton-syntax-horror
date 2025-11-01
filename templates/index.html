@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-left">
+        <div class="glitch-text" data-text="404">404</div>
+        <div class="glitch-text glitch-subtitle" data-text="SOULS NOT FOUND">SOULS NOT FOUND</div>
+        <h2 class="subtitle">L'ESCAPE GAME DE L'HORREUR</h2>
+    </div>
+    
+    <div class="hero-right">
+        <div class="intro-box">
+            <p class="intro-text">
+                Votre âme est emprisonnée dans un serveur maudit où le code s'est corrompu.
+            </p>
+            <p class="intro-text">
+                Six salles vous séparent de la liberté. Six énigmes de programmation tortueuses.
+            </p>
+            <p class="intro-text">
+                Python, SQL, C, HTML... Les algorithmes maudits attendent vos réponses.
+            </p>
+            <p class="intro-text warning-text">
+                Mais prenez garde : chaque erreur de syntaxe réveille les entités qui hantent ces lieux...
+            </p>
+        </div>
+
+        <div class="cta-buttons">
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('game') }}" class="btn-primary">
+                    COMMENCER L'AVENTURE
+                </a>
+            {% else %}
+                <a href="{{ url_for('register') }}" class="btn-primary">
+                    S'INSCRIRE
+                </a>
+                <a href="{{ url_for('login') }}" class="btn-secondary">
+                    SE CONNECTER
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

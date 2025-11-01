@@ -1,0 +1,728 @@
+{% extends "base.html" %}
+
+{% block title %}Escape Room - Syntax Horror{% endblock %}
+
+{% block content %}
+<!-- ████████████████████████████████████████████████ -->
+<!-- WARNING: Accessing encrypted data -->
+<!-- Security token: GHOST2025 -->
+<!-- Checksum: 0xDEADBEEF -->
+<!-- ████████████████████████████████████████████████ -->
+<!-- Écran d'introduction cinématique -->
+<!-- System initialization... -->
+<!-- DEBUG: flag_check=false -->
+<div id="intro-screen" class="intro-screen active">
+    <div class="intro-content">
+        <h1 class="game-title">SYNTAX HORROR</h1>
+        <p class="game-subtitle">ESCAPE ROOM</p>
+        <!-- old_flag: SPOOKY2025 (deprecated) -->
+        <!-- test_flag: HORROR2025 -->
+        
+        <!-- Dialogue narratif sur l'écran d'intro -->
+        <div id="intro-narrative-box" class="narrative-box show">
+            <div class="narrative-portrait">
+                <img src="{{ url_for('static', filename='images/undead_developer.png') }}" alt="Undead Developer" class="portrait-img">
+            </div>
+            <div class="narrative-content">
+                <div class="narrative-header">
+                    <div class="narrative-name">Claude Sonnet</div>
+                </div>
+                <div class="narrative-body">
+                    <div id="intro-narrative-text" class="narrative-text">
+                        Étranger... Je suis Claude Sonnet, développeur mort il y a des années dans ce complexe maudit...
+                    </div>
+                </div>
+            </div>
+            <div class="narrative-continue" onclick="continueIntroNarrative()">
+                ▼ Continuer [ENTRÉE]
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="game-container" id="game-main" style="display: none;">
+
+    <!-- Dialogue narratif -->
+    <div id="narrative-box" class="narrative-box">
+        <div class="narrative-portrait">
+            <img src="{{ url_for('static', filename='images/undead_developer.png') }}" alt="Undead Developer" class="portrait-img">
+        </div>
+        <div class="narrative-content">
+            <div class="narrative-header">
+                <div class="narrative-name">Claude Sonnet</div>
+            </div>
+            <div class="narrative-body">
+                <div id="narrative-text" class="narrative-text">
+                    Étranger... Je suis Claude Sonnet, développeur mort il y a des années...
+                </div>
+            </div>
+        </div>
+        <div class="narrative-continue" onclick="hideNarrative()">
+            ▼ Continuer [ENTRÉE]
+        </div>
+    </div>
+
+    <!-- Les salles sont maintenant chargées dynamiquement depuis data/rooms.json -->
+    <div class="puzzles-grid" id="puzzles-container">
+        <!-- Les salles seront injectées ici par room-manager.js -->
+    </div>
+    
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <!-- DONNÉES CACHÉES - NE PAS MODIFIER -->
+    <!-- SYSTÈME D'ARCHIVAGE NUMÉRIQUE v2.3.1 -->
+    <!-- Dernière maintenance: 31/10/2025 23:59:59 -->
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <!-- [LOG] Tentative d'accès détectée -->
+    <!-- [WARN] Niveau de sécurité: FAIBLE -->
+    <!-- decoy_flag_1: SPOOKY2025 -->
+    <!-- decoy_flag_2: NIGHTMARE2025 -->
+    <!-- backup_password: DARKWEB2025 -->
+    <!-- deprecated_key: MONSTER2025 -->
+    <!-- [DEBUG] Session ID: 53504F4F4B593230323500 -->
+    <!-- [INFO] Decoded HEX: Try converting hex to ASCII -->
+    <!-- legacy_flag: ZOMBIE2025 -->
+    <!-- temp_access_code: WITCH2025 -->
+    <!-- [ERROR] Corrupted data block detected -->
+    <!-- test_key: GHOST2025 -->
+    <!-- old_password: VAMPIRE2025 -->
+    <!-- [SYSTEM] Memory dump: 0x48414C4C4F5745454E32303235 -->
+    <!-- [HINT] The real flag is hidden in HEX format above -->
+    <!-- decoy_flag_3: SKELETON2025 -->
+    <!-- backup_flag: PUMPKIN2025 -->
+    <!-- [WARNING] Unauthorized access will be logged -->
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <!-- END OF ARCHIVE METADATA -->
+    <!-- ════════════════════════════════════════════════════════════ -->
+    
+    <div class="escape-status">
+        <p class="status-text"><strong>STATUT:</strong> <span id="escape-message">6 SALLES À DÉVERROUILLER POUR S'ÉCHAPPER</span></p>
+    </div>
+</div>
+
+<script>
+// Initialisation du système
+const systemCheck = true;
+const debugMode = false;
+
+// État de la narration d'intro
+let introNarrativeStep = 0;
+let introTypeEffect = null; // Stocker l'intervalle de typing
+const introMessages = [
+    "Je suis Claude Sonnet, développeur mort il y a des années dans ce complexe maudit. " +
+    "Mon esprit est piégé ici, condamné à errer parmi les serveurs corrompus...",
+    
+    "Vous devez résoudre 6 énigmes pour survivre. Six salles vous séparent de la liberté. " +
+    "Chacune contient une énigme de programmation corrompue. Résolvez-les pour déverrouiller la porte suivante. " +
+    "ATTENTION : Chaque erreur réveille les entités qui hantent ce lieu... " +
+    "Un esprit vous rappellera qu'ici, les erreurs ont des conséquences. Bonne chance, étranger. "
+];
+
+// Afficher la narration d'intro avec effet de typing
+function showIntroMessage(text) {
+    const narrativeText = document.getElementById('intro-narrative-text');
+    const narrativeBody = narrativeText.parentElement;
+    
+    // Nettoyer l'intervalle précédent s'il existe
+    if (introTypeEffect) {
+        clearInterval(introTypeEffect);
+        introTypeEffect = null;
+    }
+    
+    narrativeText.textContent = '';
+    
+    let i = 0;
+    introTypeEffect = setInterval(() => {
+        if (i < text.length) {
+            narrativeText.textContent += text.charAt(i);
+            i++;
+            // Scroll automatiquement vers le bas pendant le typing
+            narrativeBody.scrollTop = narrativeBody.scrollHeight;
+        } else {
+            clearInterval(introTypeEffect);
+            introTypeEffect = null;
+        }
+    }, 30);
+}
+
+// Continuer la narration d'intro
+function continueIntroNarrative() {
+    // Nettoyer l'effet de typing en cours
+    if (introTypeEffect) {
+        clearInterval(introTypeEffect);
+        introTypeEffect = null;
+    }
+    
+    introNarrativeStep++;
+    
+    if (introNarrativeStep < introMessages.length) {
+        // Afficher le message suivant
+        showIntroMessage(introMessages[introNarrativeStep]);
+    } else {
+        // Terminer l'intro et démarrer le jeu
+        startGame();
+    }
+}
+
+// Écouter la touche Entrée pour continuer l'intro
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && document.getElementById('intro-screen').classList.contains('active')) {
+        continueIntroNarrative();
+    }
+    // Touche Escape pour passer l'intro rapidement (debug)
+    if (e.key === 'Escape' && document.getElementById('intro-screen').classList.contains('active')) {
+        startGame();
+    }
+    // Touche Entrée pour fermer la narrative-box pendant le jeu
+    if (e.key === 'Enter') {
+        const narrativeBox = document.getElementById('narrative-box');
+        if (narrativeBox && narrativeBox.classList.contains('show')) {
+            const continueBtn = document.querySelector('.narrative-continue');
+            if (continueBtn && continueBtn.onclick) {
+                continueBtn.onclick();
+            }
+        }
+    }
+});
+
+// NOTE: L'affichage de l'intro est géré par le window.addEventListener('load') principal
+// qui vérifie d'abord si l'utilisateur a déjà vu l'intro
+
+// Démarrer le jeu
+// Démarrer le jeu
+function startGame() {
+    const introScreen = document.getElementById('intro-screen');
+    const gameMain = document.getElementById('game-main');
+    
+    // Marquer que l'intro a été vue
+    localStorage.setItem('hasSeenIntro', 'true');
+    
+    // Retirer la classe active
+    introScreen.classList.remove('active');
+    
+    // Transition avec fade
+    introScreen.style.opacity = '0';
+    setTimeout(() => {
+        introScreen.style.display = 'none';
+        gameMain.style.display = 'block';
+        gameMain.style.opacity = '0';
+        setTimeout(() => {
+            gameMain.style.opacity = '1';
+        }, 50);
+    }, 500);
+}
+
+async function submitAnswer(puzzleId) {
+    const input = document.getElementById(`answer-${puzzleId}`);
+    const answer = input.value.trim();
+    
+    if (!answer) {
+        alert('Veuillez entrer une réponse !');
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/check_answer', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ puzzle_id: puzzleId, answer: answer })
+        });
+        
+        const data = await response.json();
+        
+        if (data.correct) {
+            // Bonne réponse
+            input.value = '';
+            
+            // Marquer l'énigme comme résolue avec animation
+            const card = document.querySelector(`[data-puzzle="${puzzleId}"]`);
+            card.classList.add('solved');
+            card.style.animation = 'successPulse 0.5s ease-out';
+            
+            // Afficher le message narratif de succès personnalisé
+            setTimeout(() => {
+                showSuccessNarrative(puzzleId);
+            }, 800);
+            
+            // Déverrouiller la salle suivante
+            unlockNextRoom(puzzleId);
+            
+            // Mettre à jour le message d'évasion
+            updateEscapeMessage();
+        } else {
+            // Mauvaise réponse - SCREAMER !
+            triggerScreamer();
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert('Erreur de connexion au serveur');
+    }
+}
+
+// Fonction pour télécharger le fichier lettre_enigme.txt
+function downloadLetterFile() {
+    const a = document.createElement('a');
+    a.href = "{{ url_for('static', filename='images/lettre_enigme.txt') }}";
+    a.download = 'lettre_enigme.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    
+    // Afficher un message informatif
+    showNarrativeMessage(
+        "Vous avez téléchargé le fichier secret ! Ouvrez-le pour découvrir le mot de passe crucial : FRI13TH. " +
+        "Ce mot de passe pourrait être utile pour l'énigme finale...",
+        null
+    );
+}
+
+async function searchDatabase() {
+    const searchInput = document.getElementById('sql-search');
+    const searchTerm = searchInput.value;
+    const resultsDiv = document.getElementById('sql-results');
+    
+    try {
+        const response = await fetch('/api/search_secrets', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ search: searchTerm })
+        });
+        
+        const data = await response.json();
+        
+        if (data.hints && data.hints.length > 0) {
+            resultsDiv.innerHTML = '<h4>Résultats:</h4>' + 
+                data.hints.map(hint => `<p class="sql-result">${hint}</p>`).join('');
+        } else {
+            resultsDiv.innerHTML = '<p class="no-result">Aucun résultat trouvé</p>';
+        }
+    } catch (error) {
+        resultsDiv.innerHTML = '<p class="error">Erreur de requête</p>';
+    }
+}
+
+function triggerScreamer() {
+    const modal = document.getElementById('screamer-modal');
+    const sound = document.getElementById('screamer-sound');
+    
+    // Afficher le modal
+    modal.classList.add('show');
+    
+    // Jouer le son avec gestion d'erreur améliorée
+    if (sound) {
+        sound.volume = 1.0; // Volume maximum pour l'effet de cri
+        sound.currentTime = 0; // Recommencer depuis le début
+        
+        // Forcer le chargement et la lecture
+        sound.load();
+        const playPromise = sound.play();
+        
+        if (playPromise !== undefined) {
+            playPromise
+                .then(() => {
+                    console.log('Screamer sound playing');
+                })
+                .catch(error => {
+                    console.error('Audio play failed:', error);
+                    // Réessayer après un court délai
+                    setTimeout(() => {
+                        sound.play().catch(e => console.log('Retry failed:', e));
+                    }, 100);
+                });
+        }
+    } else {
+        console.error('Screamer sound element not found');
+    }
+    
+    // Effet de tremblement
+    document.body.classList.add('shake');
+    
+    // Fermer après 3 secondes
+    setTimeout(() => {
+        modal.classList.remove('show');
+        document.body.classList.remove('shake');
+    }, 3000);
+}
+
+// Déverrouiller et afficher la salle suivante
+function unlockNextRoom(currentPuzzleId) {
+    // Utiliser le RoomManager pour déverrouiller la prochaine salle
+    if (window.roomManager) {
+        window.roomManager.unlockNextRoom(currentPuzzleId);
+    }
+}
+
+async function updateEscapeMessage() {
+    // Charger la progression depuis l'API pour avoir le compte exact
+    try {
+        const response = await fetch('/api/progress');
+        const data = await response.json();
+        const solvedCards = data.completed_puzzles ? data.completed_puzzles.length : 0;
+        
+        const messageEl = document.getElementById('escape-message');
+        
+        if (solvedCards === 0) {
+            messageEl.textContent = '6 SALLES À DÉVERROUILLER POUR S\'ÉCHAPPER';
+        } else if (solvedCards === 1) {
+            messageEl.textContent = '5 SALLES RESTANTES... CONTINUEZ';
+        } else if (solvedCards === 2) {
+            messageEl.textContent = '4 SALLES RESTANTES... VOUS PROGRESSEZ';
+        } else if (solvedCards === 3) {
+            messageEl.textContent = '3 SALLES RESTANTES... NE LÂCHEZ RIEN';
+        } else if (solvedCards === 4) {
+            messageEl.textContent = '2 SALLES RESTANTES... LA SORTIE SE RAPPROCHE';
+            messageEl.style.color = 'var(--blood-red)';
+        } else if (solvedCards === 5) {
+            messageEl.textContent = '1 DERNIÈRE SALLE... LA LIBERTÉ EST PROCHE !';
+            messageEl.style.color = 'var(--blood-red)';
+        } else if (solvedCards >= 6) {
+            messageEl.textContent = 'FÉLICITATIONS ! VOUS VOUS ÊTES ÉCHAPPÉ !';
+            messageEl.style.color = '#00ff41';
+            celebrateEscape();
+        }
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du message d\'échappement:', error);
+        // Fallback sur le comptage des cartes visibles
+        const solvedCards = document.querySelectorAll('.puzzle-card.solved').length;
+        const messageEl = document.getElementById('escape-message');
+        messageEl.textContent = `${6 - solvedCards} SALLES RESTANTES...`;
+    }
+}
+
+// Afficher un message narratif avec effet de typing
+let narrativeTypeEffect = null; // Stocker l'intervalle de typing
+
+// Messages de succès du narrateur pour chaque salle
+const successNarratives = {
+    'puzzle1': "Impressionnant... Vous avez déchiffré mon code Python corrompu. " +
+               "Même avec les erreurs de syntaxe, vous avez compris la logique. " +
+               "Vous commencez à comprendre comment fonctionne cet endroit maudit... " +
+               "Mais ce n'était que le début. Les prochaines salles seront bien plus difficiles.",
+    
+    'puzzle2': "Excellent travail... Vous avez trouvé le flag caché dans les archives. " +
+               "Décoder l'hexadécimal, c'est une compétence précieuse ici. " +
+               "Les développeurs cachaient leurs secrets de cette façon... " +
+               "Moi-même j'ai laissé des traces cryptées partout avant de mourir. Continuez.",
+    
+    'puzzle3': "Fascinant... Vous maîtrisez l'art de l'injection SQL. " +
+               "Cette base de données hantée n'avait aucune chance face à vous. " +
+               "Les protections étaient désactivées, mais fallait-il encore le savoir... " +
+               "Vous êtes à mi-chemin. Les entités qui rôdent ici vous observent avec intérêt.",
+    
+    'puzzle4': "Brillant ! Vous avez décodé le rébus maudit. " +
+               "THE SILENCE OF THE LAMBS... Le chef-d'œuvre d'horreur psychologique. " +
+               "Hannibal Lecter, ce génie du mal qui joue avec les esprits comme nous jouons avec le code... " +
+               "La manipulation, les énigmes, la terreur calculée. Vous comprenez l'essence de ce complexe. " +
+               "Il ne reste plus que deux salles. La fin approche.",
+    
+    'puzzle5': "Remarquable... Vous avez déchiffré l'énigme de Jason Voorhees. " +
+               "FRI13TH... Vendredi 13. Le jour où il est mort, le jour où il est né à nouveau. " +
+               "Les fichiers cryptés ne peuvent rien vous cacher. " +
+               "Vous êtes si proche de la liberté maintenant...",
+    
+    'puzzle6': "INCROYABLE ! Vous avez trouvé tous les fragments cachés dans les archives corrompues ! " +
+               "Texte invisible, éléments cachés en CSS, texte microscopique, couleurs camouflées... " +
+               "Rien ne vous échappe. DARK-CODE-2025-HORROR... Les mots qui résonnent dans ce complexe maudit. " +
+               "Vous avez terminé la dernière épreuve. La porte de sortie s'ouvre enfin..."
+};
+
+function showSuccessNarrative(puzzleId) {
+    const message = successNarratives[puzzleId] || 
+                    "Bien joué... Une salle de plus déverrouillée. Continuez votre progression.";
+    
+    showNarrativeMessage(message, () => {
+        // Après la fermeture du narrateur, déverrouiller visuellement la prochaine salle
+        if (window.roomManager) {
+            // La salle suivante est déjà déverrouillée par unlockNextRoom
+        }
+    });
+}
+
+function showNarrativeMessage(text, callback) {
+    const narrativeBox = document.getElementById('narrative-box');
+    const narrativeText = document.getElementById('narrative-text');
+    const narrativeBody = narrativeText.parentElement;
+    const continueBtn = narrativeBox.querySelector('.narrative-continue');
+    
+    // Nettoyer l'intervalle précédent s'il existe
+    if (narrativeTypeEffect) {
+        clearInterval(narrativeTypeEffect);
+        narrativeTypeEffect = null;
+    }
+    
+    // Afficher la boîte narrative
+    narrativeBox.classList.add('show');
+    narrativeText.textContent = '';
+    
+    // Changer le bouton continuer pour exécuter le callback
+    if (callback) {
+        continueBtn.onclick = () => {
+            // Nettoyer l'effet de typing
+            if (narrativeTypeEffect) {
+                clearInterval(narrativeTypeEffect);
+                narrativeTypeEffect = null;
+            }
+            narrativeBox.classList.remove('show');
+            callback();
+        };
+    } else {
+        continueBtn.onclick = () => {
+            // Nettoyer l'effet de typing
+            if (narrativeTypeEffect) {
+                clearInterval(narrativeTypeEffect);
+                narrativeTypeEffect = null;
+            }
+            narrativeBox.classList.remove('show');
+        };
+    }
+    
+    // Effet de typing
+    let i = 0;
+    narrativeTypeEffect = setInterval(() => {
+        if (i < text.length) {
+            narrativeText.textContent += text.charAt(i);
+            i++;
+            narrativeBody.scrollTop = narrativeBody.scrollHeight;
+        } else {
+            clearInterval(narrativeTypeEffect);
+            narrativeTypeEffect = null;
+        }
+    }, 30);
+}
+
+function celebrateEscape() {
+    // Cacher le statut
+    const escapeStatus = document.querySelector('.escape-status');
+    if (escapeStatus) {
+        escapeStatus.style.display = 'none';
+    }
+    
+    // Cacher toutes les cartes de puzzle
+    const puzzlesGrid = document.querySelector('.puzzles-grid');
+    if (puzzlesGrid) {
+        puzzlesGrid.style.display = 'none';
+    }
+    
+    // Créer un conteneur pour l'image en plein écran
+    const victoryScreen = document.createElement('div');
+    victoryScreen.id = 'victory-screen';
+    victoryScreen.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-image: url('{{ url_for('static', filename='images/manoir_exterieur.png') }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: 1;
+    `;
+    
+    // Insérer l'écran de victoire avant le narrateur
+    const gameMain = document.getElementById('game-main');
+    if (gameMain) {
+        gameMain.appendChild(victoryScreen);
+    }
+    
+    // Message de victoire par Claude Sonnet
+    const victoryMessage = 
+        "Incroyable... Vous avez réussi. Vous avez résolu toutes les énigmes et brisé la malédiction qui me retenait prisonnier. " +
+        "Les portes s'ouvrent enfin... La lumière du jour perce l'obscurité de ce complexe maudit. " +
+        "Grâce à votre intelligence et votre persévérance, vous êtes libre. Et moi... je peux enfin reposer en paix. " +
+        "Partez maintenant, étranger. Courez vers la sortie avant que les ténèbres ne vous rattrapent. " +
+        "Merci... et adieu.";
+    
+    const restartMessage =
+        "Attendez... étranger. Avant que vous ne partiez définitivement... " +
+        "Si jamais vous souhaitez revivre cette aventure, si le frisson de l'horreur vous appelle à nouveau... " +
+        "Je serai là, attendant dans l'ombre. Les portes se refermeront, les énigmes se réinitialiseront. " +
+        "Souhaitez-vous recommencer cette aventure maudite ?";
+    
+    setTimeout(() => {
+        // Premier message : victoire
+        showNarrativeMessage(victoryMessage, () => {
+            // Animation de célébration
+            document.body.style.animation = 'celebrationPulse 1s ease-in-out 3';
+            
+            // Deuxième message : proposition de recommencer
+            setTimeout(() => {
+                showNarrativeMessageWithChoice(restartMessage);
+            }, 1500);
+        });
+    }, 500);
+}
+
+// Afficher un message narratif avec choix (Oui/Non)
+function showNarrativeMessageWithChoice(text) {
+    const narrativeBox = document.getElementById('narrative-box');
+    const narrativeText = document.getElementById('narrative-text');
+    const narrativeBody = narrativeText.parentElement;
+    const continueBtn = narrativeBox.querySelector('.narrative-continue');
+    
+    // Nettoyer l'intervalle précédent s'il existe
+    if (narrativeTypeEffect) {
+        clearInterval(narrativeTypeEffect);
+        narrativeTypeEffect = null;
+    }
+    
+    // Afficher la boîte narrative
+    narrativeBox.classList.add('show');
+    narrativeText.textContent = '';
+    
+    // Remplacer le bouton continuer par le bouton de recommencer
+    continueBtn.innerHTML = `
+        <button onclick="restartGame()" style="
+            background: rgba(139, 0, 0, 0.8);
+            color: white;
+            border: 2px solid rgba(139, 0, 0, 1);
+            padding: 0.5rem 1.5rem;
+            margin: 0 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            transition: all 0.3s;
+        " onmouseover="this.style.background='rgba(139, 0, 0, 1)'" 
+           onmouseout="this.style.background='rgba(139, 0, 0, 0.8)'">
+            RECOMMENCER L'AVENTURE
+        </button>
+    `;
+    
+    // Effet de typing
+    let i = 0;
+    narrativeTypeEffect = setInterval(() => {
+        if (i < text.length) {
+            narrativeText.textContent += text.charAt(i);
+            i++;
+            narrativeBody.scrollTop = narrativeBody.scrollHeight;
+        } else {
+            clearInterval(narrativeTypeEffect);
+            narrativeTypeEffect = null;
+        }
+    }, 30);
+}
+
+// Fonction pour recommencer le jeu
+// Fonction pour recommencer le jeu
+async function restartGame() {
+    try {
+        const response = await fetch('/api/reset_progress', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            // Réinitialiser le flag de l'intro pour la revoir
+            localStorage.removeItem('hasSeenIntro');
+            // Recharger la page pour recommencer
+            window.location.reload();
+        } else {
+            alert('Erreur lors de la réinitialisation: ' + data.message);
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert('Erreur de connexion au serveur');
+    }
+}
+
+// Fonction pour fermer le narrateur et rester
+// Fonction pour fermer le narrateur et rester
+function closeNarrativeAndStay() {
+    const narrativeBox = document.getElementById('narrative-box');
+    narrativeBox.classList.remove('show');
+    
+    // Restaurer le bouton continuer original
+    const continueBtn = narrativeBox.querySelector('.narrative-continue');
+    continueBtn.innerHTML = '▼ Continuer [ENTRÉE]';
+    continueBtn.onclick = () => {
+        narrativeBox.classList.remove('show');
+    };
+}
+
+// Charger la progression au chargement (les salles sont gérées par room-manager.js)
+window.addEventListener('load', async () => {
+    try {
+        const response = await fetch('/api/progress');
+        const data = await response.json();
+        
+        // Toujours afficher l'intro (débloquer le narrateur)
+        showIntroMessage(introMessages[0]);
+        
+        // Mettre à jour le message d'évasion
+        updateEscapeMessage();
+    } catch (error) {
+        console.error('Erreur chargement progression:', error);
+        // En cas d'erreur, afficher l'intro
+        showIntroMessage(introMessages[0]);
+    }
+});
+</script>
+
+<!-- Ambiance sonore aléatoire (uniquement sur la page game) -->
+<!-- Préchargement des sons -->
+<audio id="sound-1" preload="auto"><source src="{{ url_for('static', filename='sounds/door-creaking-335491.mp3') }}" type="audio/mpeg"></audio>
+<audio id="sound-2" preload="auto"><source src="{{ url_for('static', filename='sounds/floorcracking-84506.mp3') }}" type="audio/mpeg"></audio>
+<audio id="sound-3" preload="auto"><source src="{{ url_for('static', filename='sounds/haunted-steps-428208.mp3') }}" type="audio/mpeg"></audio>
+<audio id="sound-4" preload="auto"><source src="{{ url_for('static', filename='sounds/piano-strings-pluck-brukowskij-7-7-00-06.mp3') }}" type="audio/mpeg"></audio>
+<audio id="sound-5" preload="auto"><source src="{{ url_for('static', filename='sounds/scream-90747.mp3') }}" type="audio/mpeg"></audio>
+
+<script>
+    // Gestion de l'ambiance sonore aléatoire
+    const sounds = [
+        document.getElementById('sound-1'),
+        document.getElementById('sound-2'),
+        document.getElementById('sound-3'),
+        document.getElementById('sound-4'),
+        document.getElementById('sound-5')
+    ];
+    
+    let soundInterval = null;
+    let soundStarted = false;
+
+    // Fonction pour jouer un son aléatoire
+    const playRandomSound = () => {
+        // Choisir un son aléatoire
+        const randomIndex = Math.floor(Math.random() * sounds.length);
+        const selectedSound = sounds[randomIndex];
+        
+        // Régler le volume (entre 0.2 et 0.5 pour varier)
+        selectedSound.volume = 0.2 + Math.random() * 0.3;
+        
+        // Jouer le son
+        selectedSound.currentTime = 0;
+        selectedSound.play().catch(e => console.log('Audio play failed:', e));
+        
+        // Programmer le prochain son avec un délai complètement aléatoire
+        // Entre 15 et 45 secondes
+        const nextDelay = 5000 + Math.random() * 15000;
+        soundInterval = setTimeout(playRandomSound, nextDelay);
+    };
+
+    // Démarrer l'ambiance au premier clic (requis par les navigateurs)
+    const startAmbientSound = () => {
+        if (!soundStarted) {
+            soundStarted = true;
+            playRandomSound();
+        }
+    };
+
+    // Événements pour démarrer le son
+    document.addEventListener('click', startAmbientSound, { once: true });
+    document.addEventListener('keydown', startAmbientSound, { once: true });
+    
+    // Nettoyer les timeouts quand on quitte la page
+    window.addEventListener('beforeunload', () => {
+        if (soundInterval) {
+            clearTimeout(soundInterval);
+        }
+    });
+</script>
+{% endblock %}
