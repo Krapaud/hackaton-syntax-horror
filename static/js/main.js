@@ -63,41 +63,10 @@ function createSpiders() {
     }
 }
 
-// Curseur personnalisé effrayant
+// Curseur personnalisé effrayant - DÉSACTIVÉ
 function createCustomCursor() {
-    const cursor = document.createElement('div');
-    cursor.className = 'custom-cursor';
-    cursor.style.cssText = `
-        position: fixed;
-        width: 20px;
-        height: 20px;
-        border: 2px solid #ff6b00;
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 10000;
-        transition: all 0.1s;
-        display: none;
-    `;
-    document.body.appendChild(cursor);
-    
-    document.addEventListener('mousemove', (e) => {
-        cursor.style.display = 'block';
-        cursor.style.left = e.clientX - 10 + 'px';
-        cursor.style.top = e.clientY - 10 + 'px';
-    });
-    
-    // Effet sur les liens et boutons
-    const interactiveElements = document.querySelectorAll('a, button, input, .btn-submit');
-    interactiveElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            cursor.style.transform = 'scale(2)';
-            cursor.style.background = 'rgba(255, 107, 0, 0.3)';
-        });
-        el.addEventListener('mouseleave', () => {
-            cursor.style.transform = 'scale(1)';
-            cursor.style.background = 'transparent';
-        });
-    });
+    // Curseur personnalisé désactivé
+    return;
 }
 
 // Sons d'ambiance (optionnel si vous ajoutez des fichiers audio)
