@@ -127,37 +127,6 @@ class RoomManager {
             </div>
         `;
         
-        // Ajouter des commentaires HTML cachés spécialement pour la salle 2 (investigation)
-        if (room.id === 'puzzle2' && room.specialContent === 'investigation') {
-            content += `
-                <!-- ════════════════════════════════════════════════════════════ -->
-                <!-- SYSTÈME D'ARCHIVAGE NUMÉRIQUE v2.3.1 -->
-                <!-- Dernière maintenance: 31/10/2025 23:59:59 -->
-                <!-- ════════════════════════════════════════════════════════════ -->
-                <!-- [LOG] Tentative d'accès détectée -->
-                <!-- [WARN] Niveau de sécurité: FAIBLE -->
-                <!-- decoy_flag_1: SPOOKY2025 -->
-                <!-- decoy_flag_2: NIGHTMARE2025 -->
-                <!-- backup_password: DARKWEB2025 -->
-                <!-- deprecated_key: MONSTER2025 -->
-                <!-- [DEBUG] Session ID: 53504F4F4B593230323500 -->
-                <!-- [INFO] Decoded HEX: Try converting hex to ASCII -->
-                <!-- legacy_flag: ZOMBIE2025 -->
-                <!-- temp_access_code: WITCH2025 -->
-                <!-- [ERROR] Corrupted data block detected -->
-                <!-- test_key: GHOST2025 -->
-                <!-- old_password: VAMPIRE2025 -->
-                <!-- [SYSTEM] Memory dump: 0x48414C4C4F5745454E32303235 -->
-                <!-- [HINT] The real flag is hidden in HEX format above -->
-                <!-- decoy_flag_3: SKELETON2025 -->
-                <!-- backup_flag: PUMPKIN2025 -->
-                <!-- [WARNING] Unauthorized access will be logged -->
-                <!-- ════════════════════════════════════════════════════════════ -->
-                <!-- END OF ARCHIVE METADATA -->
-                <!-- ════════════════════════════════════════════════════════════ -->
-            `;
-        }
-        
         // Contenu spécial selon le type
         content += this.createSpecialContent(room);
         
