@@ -3,48 +3,43 @@
     {
       "id": "puzzle1",
       "title": "SALLE 1: Terminal Python Corrompu",
-      "difficulty": "easy",
-      "difficultyLabel": "Niveau 1",
       "atmosphere": [
         "<em>Vous pénétrez dans une pièce froide et humide...</em>",
         "<em>Un vieux terminal Python clignote faiblement dans l'obscurité. L'écran CRT crépite et affiche un code source corrompu par le temps.</em>",
-        "<em>Des étincelles jaillissent du clavier poussiéreux. Vous devez comprendre ce que ce programme devrait produire...</em>"
+        "<em>Des étincelles jaillissent du clavier poussiéreux. Un algorithme étrange semble compter quelque chose d'inquiétant...</em>"
       ],
-      "mission": "Analysez ce code Python et trouvez ce qu'il devrait afficher s'il était correctement exécuté.",
+      "mission": "Ce programme compte les lettres d'un mot maudit. Analysez le code et déterminez quel nombre il afficherait s'il était correctement exécuté.",
       "codeBlock": {
         "language": "python",
-        "code": "def hello_world():\n    print(\"Bonjour, Monde!\")\n    return True\n\nif __name__ = \"__main__\":\n    hello_world()"
+        "code": "def count_letters():\n    word = \"HALLOWEEN\"\n    count = 0\n    \n    for letter in word\n        if letter == 'L' or letter == 'E'\n            count += 1\n    \n    print(count)\n    return count\n\nif __name__ = \"__main__\":\n    count_letters()"
       },
-      "hint": "<em>Les erreurs de syntaxe empêchent l'exécution... Mais quelle serait la sortie si le code fonctionnait ?</em>",
-      "placeholder": ">>> Entrez la sortie attendue...",
+      "hint": "<em>Combien de fois les lettres 'L' et 'E' apparaissent-elles dans le mot 'HALLOWEEN' ? Les erreurs de syntaxe n'affectent pas la logique...</em>",
+      "placeholder": ">>> Entrez le nombre...",
       "buttonText": "DÉVERROUILLER LA PORTE"
     },
     {
       "id": "puzzle2",
       "title": "SALLE 2: Archives Secrètes",
-      "difficulty": "easy",
-      "difficultyLabel": "Niveau 1",
       "atmosphere": [
         "<em>La porte grince... Vous entrez dans une salle remplie de classeurs métalliques rouillés.</em>",
         "<em>Des dossiers poussiéreux jonchent le sol. Certains sont marqués \"CONFIDENTIEL\". Le temps a effacé les étiquettes...</em>",
         "<em>Un ordinateur vintage éclaire faiblement la pièce. Son écran affiche : \"ARCHIVES NUMÉRIQUES - Accès restreint\".</em>"
       ],
-      "mission": "Les développeurs cachent parfois des informations dans le code source des pages. Ouvrez les outils d'inspection (touche <kbd>F12</kbd>) et fouillez les archives pour trouver le FLAG caché.",
+      "mission": "Les développeurs cachent parfois des informations dans le code source HTML des pages web. Ouvrez les outils de développement (<kbd>F12</kbd> ou clic-droit > Inspecter) et explorez le code HTML de cette salle pour trouver le FLAG caché dans les commentaires.",
       "specialContent": "investigation",
       "clues": [
-        "<strong>INDICE :</strong> Les commentaires HTML sont invisibles à l'œil nu...",
-        "<strong>OUTIL :</strong> Appuyez sur <kbd>F12</kbd> pour accéder aux DevTools",
-        "<strong>CIBLE :</strong> Cherchez dans la structure de cette page même..."
+        "<strong>INDICE :</strong> Les commentaires HTML (<!-- -->) sont invisibles à l'écran mais visibles dans le code source",
+        "<strong>OUTIL :</strong> Appuyez sur <kbd>F12</kbd> puis allez dans l'onglet 'Éléments' ou 'Inspector'",
+        "<strong>CIBLE :</strong> Cherchez dans la structure HTML de cette carte puzzle, pas dans le code général de la page",
+        "<strong>ASTUCE :</strong> Faites clic-droit sur cette carte > 'Inspecter l'élément' pour voir directement son code"
       ],
-      "hint": "<em>La vérité est souvent cachée dans les commentaires que personne ne lit...</em>",
+      "hint": "<em>La vérité est cachée dans les commentaires HTML de cette salle. Cherchez des balises qui commencent par <!-- ... Il y a aussi des faux flags pour vous tromper !</em>",
       "placeholder": "FLAG_{...}",
       "buttonText": "DÉVERROUILLER LA PORTE"
     },
     {
       "id": "puzzle3",
       "title": "SALLE 3: Base de Données Hantée",
-      "difficulty": "medium",
-      "difficultyLabel": "Niveau 2",
       "atmosphere": [
         "<em>Un brouillard numérique flotte dans cette salle glaciale...</em>",
         "<em>Des serveurs anciens ronronnent dans l'obscurité. Un vieux système SQL émet des bips inquiétants. Les données semblent corrompues...</em>",
@@ -59,8 +54,6 @@
     {
       "id": "puzzle4",
       "title": "SALLE 4: Code C Maudit",
-      "difficulty": "easy",
-      "difficultyLabel": "Niveau 1",
       "atmosphere": [
         "<em>Vous arrivez devant la dernière porte... Une lumière rouge pulsante illumine la salle finale.</em>",
         "<em>Un terminal antique affiche un programme en langage C. Les circuits grésillent. Le code semble incomplet...</em>",

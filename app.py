@@ -7,6 +7,12 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['PERMANENT_SESSION_LIFETIME'] = 86400  # 24 heures
+app.config['SESSION_COOKIE_SECURE'] = False  # True en production avec HTTPS
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['REMEMBER_COOKIE_DURATION'] = 86400  # 24 heures
 # Utiliser un chemin absolu pour la base de données
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data', 'escape_game.db')
@@ -95,7 +101,8 @@ def login():
         user = User.query.filter_by(username=username).first()
         
         if user and user.check_password(password):
-            login_user(user)
+            login_user(user, remember=True)
+            session.permanent = True
             return jsonify({'success': True, 'message': 'Connexion réussie'})
         
         return jsonify({'success': False, 'message': 'Identifiants invalides'}), 401
@@ -137,7 +144,7 @@ def check_answer():
     
     # Définition des réponses correctes pour chaque énigme
     correct_answers = {
-        'puzzle1': 'Hello, World!',  # Énigme Python - correction de code
+        'puzzle1': '5',  # Énigme Python - compter les lettres L et E dans HALLOWEEN
         'puzzle2': 'HALLOWEEN2025',  # Flag caché dans la console F12
         'puzzle3': 'sp00ky_p4ssw0rd',  # Énigme SQL - mot de passe dans BDD
         'puzzle4': '42',  # Énigme C - correction de syntaxe
@@ -183,6 +190,33 @@ def leaderboard():
         'score': player[1],
         'level': player[2]
     } for player in top_players])
+
+@app.route('/api/reset_progress', methods=['POST'])
+@login_required
+def reset_progress():
+    """Réinitialise la progression de l'utilisateur pour recommencer le jeu"""
+    try:
+        progress = Progress.query.filter_by(user_id=current_user.id).first()
+        if progress:
+            progress.completed_puzzles = ''
+            progress.score = 0
+            progress.level = 1
+            progress.attempts = 0
+            db.session.commit()
+            return jsonify({
+                'success': True,
+                'message': 'Progression réinitialisée avec succès'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'message': 'Progression introuvable'
+            }), 404
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': f'Erreur: {str(e)}'
+        }), 500
 
 @app.route('/static/data/rooms.json')
 def rooms_data():

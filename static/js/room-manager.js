@@ -169,11 +169,21 @@ class RoomManager {
         
         // Investigation (F12)
         if (room.specialContent === 'investigation') {
+            content += '<!-- ████████████████████████████████████████████████ -->';
+            content += '<!-- ARCHIVES SÉCURISÉES - ACCÈS RESTREINT -->';
+            content += '<!-- FLAG POUR ÉNIGME 2: HALLOWEEN2025 -->';
+            content += '<!-- Vous l\'avez trouvé ! Entrez ce code dans le champ de réponse -->';
+            content += '<!-- ████████████████████████████████████████████████ -->';
             content += '<div class="investigation-zone">';
+            content += '<!-- decoy_flag: SPOOKY2025 -->';
+            content += '<!-- backup_key: NIGHTMARE2025 -->';
             room.clues.forEach(clue => {
                 content += `<div class="clue-box">${clue}</div>`;
             });
+            content += '<!-- old_password: DARKWEB2025 -->';
+            content += '<!-- test_key: ZOMBIE2025 -->';
             content += '</div>';
+            content += '<!-- HINT: Le vrai FLAG commence toujours par le mot de l\'événement -->';
         }
         
         // SQL Terminal
@@ -270,6 +280,11 @@ class RoomManager {
                     }
                 }
             });
+            
+            // Mettre à jour le message d'état après avoir chargé la progression
+            if (typeof updateEscapeMessage === 'function') {
+                updateEscapeMessage();
+            }
             
         } catch (error) {
             console.error('[RoomManager] Erreur chargement progression:', error);

@@ -41,9 +41,6 @@
 </div>
 
 <div class="game-container" id="game-main" style="display: none;">
-    <!-- Console de commentaire cachée pour l'énigme 2 -->
-    <!-- FLAG POUR ÉNIGME 2: HALLOWEEN2025 -->
-    <!-- Vous devez ouvrir la console F12 pour trouver ce flag ! -->
 
     <!-- Dialogue narratif -->
     <div id="narrative-box" class="narrative-box">
@@ -69,20 +66,6 @@
     <div class="puzzles-grid">
         <!-- Les salles seront injectées ici par room-manager.js -->
     </div>
-    
-    <!-- Commentaires cachés pour l'énigme 2 (FLAG) -->
-    <!-- FLAG POUR ÉNIGME 2: HALLOWEEN2025 -->
-    <!-- Vous devez ouvrir la console F12 pour trouver ce flag ! -->
-    <!-- data-integrity-check="failed" timestamp="1730398234" -->
-    <!-- ERROR: Corrupted data at offset 0x4A4C4C4F5745454E -->
-    <!-- HINT: Look for base64 encoded strings -->
-    <!-- FLAG: SGFsbG93ZWVuMjAyNQ== (ROT13: Unyybjrra2025) -->
-    <!-- WARNING: Multiple decoy flags detected -->
-    <!-- decoy_flag: HALLOWEEN2024 -->
-    <!-- backup_flag: NIGHTMARE2025 -->
-    <!-- legacy_key: DARKWEB2025 -->
-    <!-- tmp_cache: ZOMBIE2025 -->
-    <!-- tmp_cache: ZOMBIE2025 -->
 
     <div class="escape-status">
         <p class="status-text"><strong>STATUT:</strong> <span id="escape-message">4 SALLES À DÉVERROUILLER POUR S'ÉCHAPPER</span></p>
@@ -96,6 +79,7 @@ const debugMode = false;
 
 // État de la narration d'intro
 let introNarrativeStep = 0;
+let introTypeEffect = null; // Stocker l'intervalle de typing
 const introMessages = [
     "Je suis Claude Sonnet, développeur mort il y a des années dans ce complexe maudit. " +
     "Mon esprit est piégé ici, condamné à errer parmi les serveurs corrompus...",
@@ -110,23 +94,37 @@ const introMessages = [
 function showIntroMessage(text) {
     const narrativeText = document.getElementById('intro-narrative-text');
     const narrativeBody = narrativeText.parentElement;
+    
+    // Nettoyer l'intervalle précédent s'il existe
+    if (introTypeEffect) {
+        clearInterval(introTypeEffect);
+        introTypeEffect = null;
+    }
+    
     narrativeText.textContent = '';
     
     let i = 0;
-    const typeEffect = setInterval(() => {
+    introTypeEffect = setInterval(() => {
         if (i < text.length) {
             narrativeText.textContent += text.charAt(i);
             i++;
             // Scroll automatiquement vers le bas pendant le typing
             narrativeBody.scrollTop = narrativeBody.scrollHeight;
         } else {
-            clearInterval(typeEffect);
+            clearInterval(introTypeEffect);
+            introTypeEffect = null;
         }
     }, 30);
 }
 
 // Continuer la narration d'intro
 function continueIntroNarrative() {
+    // Nettoyer l'effet de typing en cours
+    if (introTypeEffect) {
+        clearInterval(introTypeEffect);
+        introTypeEffect = null;
+    }
+    
     introNarrativeStep++;
     
     if (introNarrativeStep < introMessages.length) {
@@ -147,17 +145,29 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && document.getElementById('intro-screen').classList.contains('active')) {
         startGame();
     }
+    // Touche Entrée pour fermer la narrative-box pendant le jeu
+    if (e.key === 'Enter') {
+        const narrativeBox = document.getElementById('narrative-box');
+        if (narrativeBox && narrativeBox.classList.contains('show')) {
+            const continueBtn = document.querySelector('.narrative-continue');
+            if (continueBtn && continueBtn.onclick) {
+                continueBtn.onclick();
+            }
+        }
+    }
 });
 
-// Démarrer l'affichage de la narration d'intro au chargement
-window.addEventListener('load', () => {
-    showIntroMessage(introMessages[0]);
-});
+// NOTE: L'affichage de l'intro est géré par le window.addEventListener('load') principal
+// qui vérifie d'abord si l'utilisateur a déjà vu l'intro
 
+// Démarrer le jeu
 // Démarrer le jeu
 function startGame() {
     const introScreen = document.getElementById('intro-screen');
     const gameMain = document.getElementById('game-main');
+    
+    // Marquer que l'intro a été vue
+    localStorage.setItem('hasSeenIntro', 'true');
     
     // Retirer la classe active
     introScreen.classList.remove('active');
@@ -295,12 +305,194 @@ function updateEscapeMessage() {
     }
 }
 
+// Afficher un message narratif avec effet de typing
+let narrativeTypeEffect = null; // Stocker l'intervalle de typing
+
+function showNarrativeMessage(text, callback) {
+    const narrativeBox = document.getElementById('narrative-box');
+    const narrativeText = document.getElementById('narrative-text');
+    const narrativeBody = narrativeText.parentElement;
+    const continueBtn = narrativeBox.querySelector('.narrative-continue');
+    
+    // Nettoyer l'intervalle précédent s'il existe
+    if (narrativeTypeEffect) {
+        clearInterval(narrativeTypeEffect);
+        narrativeTypeEffect = null;
+    }
+    
+    // Afficher la boîte narrative
+    narrativeBox.classList.add('show');
+    narrativeText.textContent = '';
+    
+    // Changer le bouton continuer pour exécuter le callback
+    if (callback) {
+        continueBtn.onclick = () => {
+            // Nettoyer l'effet de typing
+            if (narrativeTypeEffect) {
+                clearInterval(narrativeTypeEffect);
+                narrativeTypeEffect = null;
+            }
+            narrativeBox.classList.remove('show');
+            callback();
+        };
+    } else {
+        continueBtn.onclick = () => {
+            // Nettoyer l'effet de typing
+            if (narrativeTypeEffect) {
+                clearInterval(narrativeTypeEffect);
+                narrativeTypeEffect = null;
+            }
+            narrativeBox.classList.remove('show');
+        };
+    }
+    
+    // Effet de typing
+    let i = 0;
+    narrativeTypeEffect = setInterval(() => {
+        if (i < text.length) {
+            narrativeText.textContent += text.charAt(i);
+            i++;
+            narrativeBody.scrollTop = narrativeBody.scrollHeight;
+        } else {
+            clearInterval(narrativeTypeEffect);
+            narrativeTypeEffect = null;
+        }
+    }, 30);
+}
+
 function celebrateEscape() {
-    // Effet de célébration
+    // Message de victoire par Claude Sonnet
+    const victoryMessage = 
+        "Incroyable... Vous avez réussi. Vous avez résolu toutes les énigmes et brisé la malédiction qui me retenait prisonnier. " +
+        "Les portes s'ouvrent enfin... La lumière du jour perce l'obscurité de ce complexe maudit. " +
+        "Grâce à votre intelligence et votre persévérance, vous êtes libre. Et moi... je peux enfin reposer en paix. " +
+        "Partez maintenant, étranger. Courez vers la sortie avant que les ténèbres ne vous rattrapent. " +
+        "Merci... et adieu.";
+    
+    const restartMessage =
+        "Attendez... étranger. Avant que vous ne partiez définitivement... " +
+        "Si jamais vous souhaitez revivre cette aventure, si le frisson de l'horreur vous appelle à nouveau... " +
+        "Je serai là, attendant dans l'ombre. Les portes se refermeront, les énigmes se réinitialiseront. " +
+        "Souhaitez-vous recommencer cette aventure maudite ?";
+    
     setTimeout(() => {
-        alert('VICTOIRE ! Vous avez résolu toutes les énigmes et vous êtes échappé !');
-        document.body.style.animation = 'celebrationPulse 1s ease-in-out 3';
+        // Premier message : victoire
+        showNarrativeMessage(victoryMessage, () => {
+            // Animation de célébration
+            document.body.style.animation = 'celebrationPulse 1s ease-in-out 3';
+            
+            // Deuxième message : proposition de recommencer
+            setTimeout(() => {
+                showNarrativeMessageWithChoice(restartMessage);
+            }, 1500);
+        });
     }, 500);
+}
+
+// Afficher un message narratif avec choix (Oui/Non)
+function showNarrativeMessageWithChoice(text) {
+    const narrativeBox = document.getElementById('narrative-box');
+    const narrativeText = document.getElementById('narrative-text');
+    const narrativeBody = narrativeText.parentElement;
+    const continueBtn = narrativeBox.querySelector('.narrative-continue');
+    
+    // Nettoyer l'intervalle précédent s'il existe
+    if (narrativeTypeEffect) {
+        clearInterval(narrativeTypeEffect);
+        narrativeTypeEffect = null;
+    }
+    
+    // Afficher la boîte narrative
+    narrativeBox.classList.add('show');
+    narrativeText.textContent = '';
+    
+    // Remplacer le bouton continuer par des boutons de choix
+    continueBtn.innerHTML = `
+        <button onclick="restartGame()" style="
+            background: rgba(139, 0, 0, 0.8);
+            color: white;
+            border: 2px solid rgba(139, 0, 0, 1);
+            padding: 0.5rem 1.5rem;
+            margin: 0 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            transition: all 0.3s;
+        " onmouseover="this.style.background='rgba(139, 0, 0, 1)'" 
+           onmouseout="this.style.background='rgba(139, 0, 0, 0.8)'">
+            OUI - RECOMMENCER
+        </button>
+        <button onclick="closeNarrativeAndStay()" style="
+            background: rgba(50, 50, 50, 0.8);
+            color: white;
+            border: 2px solid rgba(100, 100, 100, 1);
+            padding: 0.5rem 1.5rem;
+            margin: 0 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            transition: all 0.3s;
+        " onmouseover="this.style.background='rgba(80, 80, 80, 1)'" 
+           onmouseout="this.style.background='rgba(50, 50, 50, 0.8)'">
+            NON - RESTER ICI
+        </button>
+    `;
+    
+    // Effet de typing
+    let i = 0;
+    narrativeTypeEffect = setInterval(() => {
+        if (i < text.length) {
+            narrativeText.textContent += text.charAt(i);
+            i++;
+            narrativeBody.scrollTop = narrativeBody.scrollHeight;
+        } else {
+            clearInterval(narrativeTypeEffect);
+            narrativeTypeEffect = null;
+        }
+    }, 30);
+}
+
+// Fonction pour recommencer le jeu
+// Fonction pour recommencer le jeu
+async function restartGame() {
+    try {
+        const response = await fetch('/api/reset_progress', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            // Réinitialiser le flag de l'intro pour la revoir
+            localStorage.removeItem('hasSeenIntro');
+            // Recharger la page pour recommencer
+            window.location.reload();
+        } else {
+            alert('Erreur lors de la réinitialisation: ' + data.message);
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert('Erreur de connexion au serveur');
+    }
+}
+
+// Fonction pour fermer le narrateur et rester
+// Fonction pour fermer le narrateur et rester
+function closeNarrativeAndStay() {
+    const narrativeBox = document.getElementById('narrative-box');
+    narrativeBox.classList.remove('show');
+    
+    // Restaurer le bouton continuer original
+    const continueBtn = narrativeBox.querySelector('.narrative-continue');
+    continueBtn.innerHTML = '▼ Continuer [ENTRÉE]';
+    continueBtn.onclick = () => {
+        narrativeBox.classList.remove('show');
+    };
 }
 
 // Charger la progression au chargement (les salles sont gérées par room-manager.js)
@@ -309,11 +501,88 @@ window.addEventListener('load', async () => {
         const response = await fetch('/api/progress');
         const data = await response.json();
         
+        // Si l'utilisateur a déjà de la progression (a déjà joué), passer l'intro
+        const hasSeenIntro = localStorage.getItem('hasSeenIntro') === 'true';
+        const hasProgress = data.completed_puzzles && data.completed_puzzles.length > 0;
+        
+        if (hasSeenIntro || hasProgress) {
+            // Passer directement au jeu sans animation
+            const introScreen = document.getElementById('intro-screen');
+            const gameMain = document.getElementById('game-main');
+            introScreen.style.display = 'none';
+            gameMain.style.display = 'block';
+        } else {
+            // Afficher l'intro normalement
+            showIntroMessage(introMessages[0]);
+        }
+        
         // Mettre à jour le message d'évasion
         updateEscapeMessage();
     } catch (error) {
         console.error('Erreur chargement progression:', error);
+        // En cas d'erreur, afficher l'intro
+        showIntroMessage(introMessages[0]);
     }
 });
+</script>
+
+<!-- Ambiance sonore aléatoire (uniquement sur la page game) -->
+<!-- Préchargement des sons -->
+<audio id="sound-1" preload="auto"><source src="{{ url_for('static', filename='sounds/door-creaking-335491.mp3') }}" type="audio/mpeg"></audio>
+<audio id="sound-2" preload="auto"><source src="{{ url_for('static', filename='sounds/floorcracking-84506.mp3') }}" type="audio/mpeg"></audio>
+<audio id="sound-3" preload="auto"><source src="{{ url_for('static', filename='sounds/haunted-steps-428208.mp3') }}" type="audio/mpeg"></audio>
+<audio id="sound-4" preload="auto"><source src="{{ url_for('static', filename='sounds/piano-strings-pluck-brukowskij-7-7-00-06.mp3') }}" type="audio/mpeg"></audio>
+<audio id="sound-5" preload="auto"><source src="{{ url_for('static', filename='sounds/scary-piano-dissonant-notes-joshua-chivers-2-2-00-04.mp3') }}" type="audio/mpeg"></audio>
+
+<script>
+    // Gestion de l'ambiance sonore aléatoire
+    const sounds = [
+        document.getElementById('sound-1'),
+        document.getElementById('sound-2'),
+        document.getElementById('sound-3'),
+        document.getElementById('sound-4'),
+        document.getElementById('sound-5')
+    ];
+    
+    let soundInterval = null;
+    let soundStarted = false;
+
+    // Fonction pour jouer un son aléatoire
+    const playRandomSound = () => {
+        // Choisir un son aléatoire
+        const randomIndex = Math.floor(Math.random() * sounds.length);
+        const selectedSound = sounds[randomIndex];
+        
+        // Régler le volume (entre 0.2 et 0.5 pour varier)
+        selectedSound.volume = 0.2 + Math.random() * 0.3;
+        
+        // Jouer le son
+        selectedSound.currentTime = 0;
+        selectedSound.play().catch(e => console.log('Audio play failed:', e));
+        
+        // Programmer le prochain son avec un délai complètement aléatoire
+        // Entre 3 et 25 secondes
+        const nextDelay = 3000 + Math.random() * 22000;
+        soundInterval = setTimeout(playRandomSound, nextDelay);
+    };
+
+    // Démarrer l'ambiance au premier clic (requis par les navigateurs)
+    const startAmbientSound = () => {
+        if (!soundStarted) {
+            soundStarted = true;
+            playRandomSound();
+        }
+    };
+
+    // Événements pour démarrer le son
+    document.addEventListener('click', startAmbientSound, { once: true });
+    document.addEventListener('keydown', startAmbientSound, { once: true });
+    
+    // Nettoyer les timeouts quand on quitte la page
+    window.addEventListener('beforeunload', () => {
+        if (soundInterval) {
+            clearTimeout(soundInterval);
+        }
+    });
 </script>
 {% endblock %}
