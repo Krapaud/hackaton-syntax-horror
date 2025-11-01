@@ -2493,8 +2493,9 @@ body::before {
 }
 
 .mission-header {
-    font-family: 'Creepster', cursive;
+    font-family: 'Roboto', sans-serif;
     font-size: 1.3rem;
+    font-weight: bold;
     color: var(--blood-red);
     margin-bottom: 0.8rem;
     text-transform: uppercase;
