@@ -5,16 +5,15 @@
       "title": "SALLE 1: Terminal Python Corrompu",
       "atmosphere": [
         "<em>Vous pénétrez dans une pièce froide et humide...</em>",
-        "<em>Un vieux terminal Python clignote faiblement dans l'obscurité. L'écran CRT crépite et affiche un code source corrompu par le temps.</em>",
-        "<em>Des étincelles jaillissent du clavier poussiéreux. Un algorithme étrange semble compter quelque chose d'inquiétant...</em>"
+        "<em>Un vieux terminal Python clignote faiblement dans l'obscurité. L'écran CRT crépite et affiche un code source étrange qui mélange du texte inversé et un chiffrement mystérieux.</em>",
+        "<em>Des étincelles jaillissent du clavier poussiéreux. Le code semble déchiffrer un message secret en plusieurs étapes...</em>"
       ],
-      "mission": "Ce programme compte les lettres d'un mot maudit. Analysez le code et déterminez quel nombre il afficherait s'il était correctement exécuté.",
+      "mission": "Ce programme déchiffre un message crypté en plusieurs étapes : inversion de texte et décalage César. Analysez le code et trouvez quel mot secret apparaîtrait si le programme s'exécutait correctement. Entrez ce mot en MAJUSCULES.",
       "codeBlock": {
         "language": "python",
-        "code": "def count_letters():\n    word = \"HALLOWEEN\"\n    count = 0\n    \n    for letter in word\n        if letter == 'L' or letter == 'E'\n            count += 1\n    \n    print(count)\n    return count\n\nif __name__ = \"__main__\":\n    count_letters()"
+        "code": "# Message crypté\nmsg = \"QRLWRS\"[::-1]  # Inversion\n\n# Décalage César -3\nresult = \"\"\nfor c in msg\n    if c.isupper():\n        result += chr((ord(c) - 3 - 65) % 26 + 65)\nprint(\"Secret:\", result)"
       },
-      "hint": "<em>Combien de fois les lettres 'L' et 'E' apparaissent-elles dans le mot 'HALLOWEEN' ? Les erreurs de syntaxe n'affectent pas la logique...</em>",
-      "placeholder": ">>> Entrez le nombre...",
+      "placeholder": ">>> Entrez le mot secret...",
       "buttonText": "DÉVERROUILLER LA PORTE"
     },
     {
@@ -34,7 +33,6 @@
         "<strong>ASTUCE :</strong> Faites clic-droit sur cette carte > 'Inspecter l'élément' pour voir directement son code",
         "<strong>ENCODAGE :</strong> Le vrai flag est encodé en HEXADÉCIMAL (format: 0x...). Utilisez un convertisseur HEX vers ASCII en ligne"
       ],
-      "hint": "<em>Cherchez les commentaires HTML avec des valeurs en hexadécimal (0x...). Il y a beaucoup de faux flags pour vous tromper ! Le vrai commence par 0x48414C... Convertissez-le en texte ASCII.</em>",
       "placeholder": "FLAG_{...}",
       "buttonText": "DÉVERROUILLER LA PORTE"
     },
@@ -48,7 +46,6 @@
       ],
       "mission": "Exploitez la vulnérabilité SQL Injection pour extraire TOUTES les données secrètes de la table <code>secret_data</code>. Tapez une requête SQL complète dans le terminal pour interroger la base de données. Le mot de passe de sortie est caché dans ces données.",
       "specialContent": "sql",
-      "hint": "<em>💡 Écrivez une requête SQL complète pour sélectionner toutes les données. La table s'appelle <code>secret_data</code>. Exemple de syntaxe SQL : <code>SELECT * FROM nom_table</code></em>",
       "placeholder": ">>> Entrez le mot de passe trouvé...",
       "buttonText": "DÉVERROUILLER LA PORTE"
     },
@@ -69,7 +66,6 @@
         "<strong>ERREURS DÉTECTÉES :</strong> Syntaxe invalide",
         "<strong>LOGIQUE :</strong> Le calcul est correct"
       ],
-      "hint": "<em>Point-virgules manquants... Mais la logique reste intacte. Quelle est cette fameuse réponse universelle ?</em>",
       "placeholder": ">>> Entrez la valeur finale...",
       "buttonText": "DÉVERROUILLER LA SORTIE"
     },
@@ -83,7 +79,6 @@
       ],
       "mission": "Un fichier crypté contient un mot de passe vital. <strong>1)</strong> Cliquez sur le bouton pour télécharger <code>lettre_enigme.txt</code>. <strong>2)</strong> Ouvrez le fichier et lisez-le attentivement. <strong>3)</strong> Trouvez le mot de passe caché dans le fichier. <strong>4)</strong> Entrez ce mot de passe ci-dessous pour déverrouiller la salle.",
       "specialContent": "download",
-      "hint": "<em>Le fichier contient une énigme sur un tueur légendaire. Une fois l'énigme résolue, le mot de passe est révélé dans le fichier. Format : 7 caractères majuscules/chiffres.</em>",
       "placeholder": ">>> Entrez le mot de passe du fichier...",
       "buttonText": "DÉVERROUILLER LA SALLE"
     },

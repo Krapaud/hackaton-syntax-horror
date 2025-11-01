@@ -156,7 +156,7 @@ def check_answer():
     
     # Définition des réponses correctes pour chaque énigme
     correct_answers = {
-        'puzzle1': '5',  # Énigme Python - compter les lettres L et E dans HALLOWEEN
+        'puzzle1': 'POTION',  # Énigme Python - texte inversé + César (QRLWRS → SRWLRQ → POTION)
         'puzzle2': 'HALLOWEEN2025',  # Flag caché dans la console F12
         'puzzle3': 'sp00ky_p4ssw0rd',  # Énigme SQL - mot de passe dans BDD
         'puzzle4': '42',  # Énigme C - correction de syntaxe
