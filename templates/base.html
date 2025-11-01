@@ -14,7 +14,9 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="{{ url_for('index') }}" class="logo-link">
-                <h1 class="logo">404 SOULS NOT FOUND</h1>
+                <h1 class="logo">
+                    <span class="logo-404">404</span>
+                </h1>
             </a>
             <div class="nav-links">
                 {% if current_user.is_authenticated %}
