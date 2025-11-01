@@ -121,6 +121,18 @@ def game():
     progress = Progress.query.filter_by(user_id=current_user.id).first()
     return render_template('game.html', progress=progress)
 
+@app.route('/puzzle5')
+@login_required
+def puzzle5():
+    """Route pour la salle 5 - Enveloppe maudite"""
+    return render_template('puzzle5_envelope.html')
+
+@app.route('/puzzle6')
+@login_required
+def puzzle6():
+    """Route pour la salle 6 - Archives cryptées"""
+    return render_template('puzzle6_archives.html')
+
 @app.route('/api/progress')
 @login_required
 def get_progress():
@@ -148,6 +160,8 @@ def check_answer():
         'puzzle2': 'HALLOWEEN2025',  # Flag caché dans la console F12
         'puzzle3': 'sp00ky_p4ssw0rd',  # Énigme SQL - mot de passe dans BDD
         'puzzle4': '42',  # Énigme C - correction de syntaxe
+        'puzzle5': 'FRI13TH',  # Mot de passe dans le fichier lettre_enigme.txt
+        'puzzle6': 'DARK-CODE-2025-HORROR',  # Énigme archives cryptées - 4 fragments
     }
     
     correct = correct_answers.get(puzzle_id, '').lower() == answer.lower()

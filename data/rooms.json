@@ -23,17 +23,18 @@
       "atmosphere": [
         "<em>La porte grince... Vous entrez dans une salle remplie de classeurs métalliques rouillés.</em>",
         "<em>Des dossiers poussiéreux jonchent le sol. Certains sont marqués \"CONFIDENTIEL\". Le temps a effacé les étiquettes...</em>",
-        "<em>Un ordinateur vintage éclaire faiblement la pièce. Son écran affiche : \"ARCHIVES NUMÉRIQUES - Accès restreint\".</em>"
+        "<em>Un ordinateur vintage éclaire faiblement la pièce. Son écran affiche : \"ARCHIVES NUMÉRIQUES - Accès restreint\". Des codes hexadécimaux défilent à l'écran...</em>"
       ],
-      "mission": "Les développeurs cachent parfois des informations dans le code source HTML des pages web. Ouvrez les outils de développement (<kbd>F12</kbd> ou clic-droit > Inspecter) et explorez le code HTML de cette salle pour trouver le FLAG caché dans les commentaires.",
+      "mission": "Les développeurs cachent parfois des informations dans le code source HTML des pages web, parfois encodées pour plus de sécurité. Ouvrez les outils de développement (<kbd>F12</kbd> ou clic-droit > Inspecter) et explorez le code HTML de cette salle. Le FLAG est caché en format hexadécimal parmi de nombreux faux codes.",
       "specialContent": "investigation",
       "clues": [
         "<strong>INDICE :</strong> Les commentaires HTML (<!-- -->) sont invisibles à l'écran mais visibles dans le code source",
         "<strong>OUTIL :</strong> Appuyez sur <kbd>F12</kbd> puis allez dans l'onglet 'Éléments' ou 'Inspector'",
         "<strong>CIBLE :</strong> Cherchez dans la structure HTML de cette carte puzzle, pas dans le code général de la page",
-        "<strong>ASTUCE :</strong> Faites clic-droit sur cette carte > 'Inspecter l'élément' pour voir directement son code"
+        "<strong>ASTUCE :</strong> Faites clic-droit sur cette carte > 'Inspecter l'élément' pour voir directement son code",
+        "<strong>ENCODAGE :</strong> Le vrai flag est encodé en HEXADÉCIMAL (format: 0x...). Utilisez un convertisseur HEX vers ASCII en ligne"
       ],
-      "hint": "<em>La vérité est cachée dans les commentaires HTML de cette salle. Cherchez des balises qui commencent par <!-- ... Il y a aussi des faux flags pour vous tromper !</em>",
+      "hint": "<em>Cherchez les commentaires HTML avec des valeurs en hexadécimal (0x...). Il y a beaucoup de faux flags pour vous tromper ! Le vrai commence par 0x48414C... Convertissez-le en texte ASCII.</em>",
       "placeholder": "FLAG_{...}",
       "buttonText": "DÉVERROUILLER LA PORTE"
     },
@@ -70,6 +71,42 @@
       ],
       "hint": "<em>Point-virgules manquants... Mais la logique reste intacte. Quelle est cette fameuse réponse universelle ?</em>",
       "placeholder": ">>> Entrez la valeur finale...",
+      "buttonText": "DÉVERROUILLER LA SORTIE"
+    },
+    {
+      "id": "puzzle5",
+      "title": "SALLE 5: Message Crypté",
+      "atmosphere": [
+        "<em>Un terminal clignote faiblement dans l'obscurité...</em>",
+        "<em>Un message s'affiche : \"FICHIER CRYPTÉ DÉTECTÉ - TÉLÉCHARGEMENT DISPONIBLE\"</em>",
+        "<em>Vous devez télécharger le fichier secret, le lire, et entrer le mot de passe qu'il contient...</em>"
+      ],
+      "mission": "Un fichier crypté contient un mot de passe vital. <strong>1)</strong> Cliquez sur le bouton pour télécharger <code>lettre_enigme.txt</code>. <strong>2)</strong> Ouvrez le fichier et lisez-le attentivement. <strong>3)</strong> Trouvez le mot de passe caché dans le fichier. <strong>4)</strong> Entrez ce mot de passe ci-dessous pour déverrouiller la salle.",
+      "specialContent": "download",
+      "hint": "<em>Le fichier contient une énigme sur un tueur légendaire. Une fois l'énigme résolue, le mot de passe est révélé dans le fichier. Format : 7 caractères majuscules/chiffres.</em>",
+      "placeholder": ">>> Entrez le mot de passe du fichier...",
+      "buttonText": "DÉVERROUILLER LA SALLE"
+    },
+    {
+      "id": "puzzle6",
+      "title": "SALLE 6: Archives Cryptées",
+      "atmosphere": [
+        "<em>Vous entrez dans une archive corrompue remplie de textes maudits...</em>",
+        "<em>Des fragments d'informations sont cachés partout : texte invisible, éléments en display:none, texte microscopique...</em>",
+        "<em>Un message s'affiche : \"4 FRAGMENTS CACHÉS - TROUVEZ-LES TOUS POUR SORTIR\"</em>"
+      ],
+      "mission": "Explorez cette archive numérique corrompue. Les informations sont cachées de différentes manières : <strong>1)</strong> Texte invisible à sélectionner, <strong>2)</strong> Éléments CSS cachés (F12), <strong>3)</strong> Texte minuscule, <strong>4)</strong> Couleurs camouflées. Trouvez les 4 fragments : <code>DARK</code>, <code>CODE</code>, <code>2025</code>, <code>HORROR</code>.",
+      "specialContent": "archives",
+      "clues": [
+        "<strong>TECHNIQUE 1 :</strong> Sélectionnez le texte avec votre souris pour révéler du contenu invisible",
+        "<strong>TECHNIQUE 2 :</strong> Ouvrez F12 (DevTools), cherchez les commentaires HTML et les éléments cachés",
+        "<strong>TECHNIQUE 3 :</strong> Certains textes sont microscopiques (zoom du navigateur peut aider)",
+        "<strong>TECHNIQUE 4 :</strong> Du texte peut être de la même couleur que le fond (sélectionnez tout)",
+        "<strong>FORMAT :</strong> Le mot de passe final est : FRAGMENT1-FRAGMENT2-FRAGMENT3-FRAGMENT4",
+        "<strong>⚠️ ATTENTION :</strong> Il y a des leurres ! Cherchez bien les vrais fragments"
+      ],
+      "hint": "<em>Les 4 fragments sont : DARK, CODE, 2025, HORROR. Utilisez toutes les techniques : sélection de texte, inspection F12, zoom du navigateur. Format final : DARK-CODE-2025-HORROR</em>",
+      "placeholder": "XXXX-XXXX-XXXX-XXXXX",
       "buttonText": "DÉVERROUILLER LA SORTIE"
     }
   ]

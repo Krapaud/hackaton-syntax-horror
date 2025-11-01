@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SALLE 6: Archives Cryptées - Syntax Horror</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .hidden-room {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid #ff0040;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255, 0, 64, 0.3);
+        }
+
+        .room-title {
+            text-align: center;
+            color: #ff0040;
+            font-size: 2.5em;
+            text-shadow: 0 0 20px #ff0040;
+            margin-bottom: 10px;
+            animation: flicker 2s infinite;
+        }
+
+        .room-subtitle {
+            text-align: center;
+            color: #00ff41;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .mission-box {
+            background: rgba(255, 0, 64, 0.1);
+            border: 2px solid #ff0040;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .mission-box h3 {
+            color: #ff0040;
+            margin-top: 0;
+        }
+
+        .text-maze {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 30px;
+            line-height: 1.8;
+            font-size: 14px;
+            max-height: 600px;
+            overflow-y: auto;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .invisible-text {
+            color: transparent;
+            background: transparent;
+            user-select: text;
+            cursor: text;
+        }
+
+        .invisible-text::selection {
+            background: #ff0040;
+            color: #fff;
+        }
+
+        .hidden-display {
+            display: none;
+        }
+
+        .secret-fragment {
+            display: none;
+            color: #00ff41;
+            font-weight: bold;
+            font-size: 18px;
+            background: rgba(0, 255, 65, 0.2);
+            padding: 10px;
+            border: 2px solid #00ff41;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .decoy-fragment {
+            display: none;
+            color: #ff0040;
+            font-weight: bold;
+            font-size: 18px;
+            background: rgba(255, 0, 64, 0.2);
+            padding: 10px;
+            border: 2px solid #ff0040;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .tiny-text {
+            font-size: 4px;
+            color: #222;
+            letter-spacing: -1px;
+        }
+
+        .same-color {
+            color: #0a0a0a;
+        }
+
+        .same-color::selection {
+            background: #00ff41;
+            color: #000;
+        }
+
+        .normal-text {
+            color: #888;
+        }
+
+        .password-fragment {
+            color: transparent;
+            font-weight: bold;
+        }
+
+        .password-fragment::selection {
+            background: #00ff41;
+            color: #000;
+        }
+
+        .reveal-button {
+            background: #ff0040;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 10px 5px;
+            transition: all 0.3s;
+        }
+
+        .reveal-button:hover {
+            background: #cc0033;
+            box-shadow: 0 0 15px #ff0040;
+        }
+
+        .reveal-button:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+
+        .hints-section {
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .hint-box {
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid #00ff41;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .hint-box.revealed {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .answer-section {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ff41;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .answer-input {
+            width: 400px;
+            max-width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            border: 2px solid #00ff41;
+            color: #00ff41;
+            border-radius: 5px;
+            text-align: center;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+        }
+
+        .submit-btn {
+            background: #00ff41;
+            color: #000;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            box-shadow: 0 0 25px #00ff41;
+            transform: scale(1.05);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #ff0040;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 2px solid #ff0040;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: #ff0040;
+            color: #fff;
+            box-shadow: 0 0 15px #ff0040;
+        }
+
+        .message-box {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+            animation: slideIn 0.3s;
+        }
+
+        .message-box.success {
+            background: rgba(0, 255, 65, 0.2);
+            border: 2px solid #00ff41;
+            color: #00ff41;
+            display: block;
+        }
+
+        .message-box.error {
+            background: rgba(255, 0, 64, 0.2);
+            border: 2px solid #ff0040;
+            color: #ff0040;
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .text-maze::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .text-maze::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        .text-maze::-webkit-scrollbar-thumb {
+            background: #ff0040;
+            border-radius: 5px;
+        }
+
+        .clue-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ff0040;
+            font-size: 100px;
+            opacity: 0.03;
+            pointer-events: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="hidden-room">
+        <h1 class="room-title">🗄️ SALLE 6: ARCHIVES CRYPTÉES 🗄️</h1>
+
+        <div class="mission-box">
+            <h3>📋 MISSION SECRÈTE</h3>
+            <p>Vous êtes entré dans une archive corrompue remplie de textes maudits...</p>
+            <p>Des informations sont cachées dans ce chaos textuel de différentes manières :</p>
+            <ul>
+                <li><strong>Texte invisible :</strong> Sélectionnez avec votre souris pour révéler</li>
+                <li><strong>Éléments cachés :</strong> Utilisez les boutons indices pour afficher les éléments en display:none</li>
+                <li><strong>Texte microscopique :</strong> Certains textes sont minuscules</li>
+                <li><strong>Camouflage :</strong> Texte de la même couleur que le fond</li>
+                <li><strong>CSS Caché :</strong> Ouvrez F12 et modifiez le CSS pour révéler des éléments cachés (attention aux leurres !)</li>
+            </ul>
+            <p><strong>🎯 OBJECTIF :</strong> Trouvez les 4 fragments du mot de passe dispersés dans le texte, puis entrez le mot de passe complet pour sortir !</p>
+        </div>
+
+        <div class="hints-section">
+            <button class="reveal-button" onclick="revealHint(1)">💡 Indice 1: Afficher élément caché #1</button>
+            <button class="reveal-button" onclick="revealHint(2)">💡 Indice 2: Afficher élément caché #2</button>
+            <button class="reveal-button" onclick="revealHint(3)">💡 Indice 3: Afficher élément caché #3</button>
+            <button class="reveal-button" onclick="toggleSmallText()">🔍 Zoom sur texte minuscule</button>
+            <button class="reveal-button" onclick="showCSSHint()">🔧 Indice CSS: Comment révéler les éléments cachés</button>
+        </div>
+
+        <div id="hint1" class="hint-box">
+            ✅ <strong>Fragment révélé #1 :</strong> Le premier fragment est <span style="color: #00ff41; font-weight: bold;">DARK</span>
+        </div>
+
+        <div id="hint2" class="hint-box">
+            ✅ <strong>Fragment révélé #2 :</strong> Le deuxième fragment est <span style="color: #00ff41; font-weight: bold;">CODE</span>
+        </div>
+
+        <div id="hint3" class="hint-box">
+            ✅ <strong>Fragment révélé #3 :</strong> Le troisième fragment est <span style="color: #00ff41; font-weight: bold;">2025</span>
+        </div>
+
+        <div id="cssHint" class="hint-box">
+            🔧 <strong>Indice CSS :</strong> Cherchez dans le texte un élément avec la classe <code>secret-fragment</code>. 
+            Ouvrez F12, trouvez cet élément dans l'inspecteur, et changez son CSS de <code>display: none</code> à <code>display: block</code>.
+            ⚠️ <strong>ATTENTION :</strong> Il y a aussi des éléments <code>decoy-fragment</code> qui sont des leurres avec de fausses informations !
+        </div>
+
+        <div class="text-maze" id="textMaze">
+            <div class="clue-overlay">SEARCH</div>
+            
+            <p class="normal-text">
+                Les archives du département informatique sont corrompues depuis l'incident de 2025.
+                Les développeurs ont disparu un par un, laissant derrière eux des fragments de code et de mémoire.
+            </p>
+
+            <p class="normal-text">
+                <span class="invisible-text">Le premier fragment du mot de passe est : DARK</span>
+                Dans les profondeurs des serveurs, les données s'entremêlent et se corrompent.
+                Les fichiers sont devenus illisibles, les bases de données sont hantées.
+            </p>
+
+            <!-- LEURRE #1 - Ne contient PAS la bonne réponse -->
+            <p class="decoy-fragment" id="decoy1">
+                ❌ FAUX FRAGMENT : NIGHT (Ce n'est pas le bon !)
+            </p>
+
+            <p class="normal-text">
+                Personne ne sait vraiment ce qui s'est passé cette nuit-là. Les caméras de surveillance
+                ont enregistré des anomalies étranges, des formes dans l'obscurité.
+                <span class="same-color">Le deuxième fragment est caché ici mais invisible CODE</span>
+            </p>
+
+            <!-- LEURRE #2 - Ne contient PAS la bonne réponse -->
+            <p class="decoy-fragment" id="decoy2">
+                ❌ FAUX FRAGMENT : SCRIPT (Ce n'est pas le bon non plus !)
+            </p>
+
+            <p class="hidden-display" id="hidden1">
+                ℹ️ ÉLÉMENT CACHÉ #1 : Le premier fragment commence par D et finit par K
+            </p>
+
+            <p class="normal-text">
+                Les logs système montrent des erreurs en cascade, des boucles infinies,
+                des pointeurs vers le néant. Le code source lui-même semble vivant.
+            </p>
+
+            <p class="tiny-text" id="tinyText">
+                ATTENTION: Le quatrième et dernier fragment du mot de passe est HORROR - Cette information est écrite en très petit
+            </p>
+
+            <!-- ⚠️ ATTENTION DÉVELOPPEUR : Un fragment secret est caché ci-dessous -->
+            <!-- INDICE : Cherchez un élément avec class="secret-fragment" -->
+            <!-- MÉTHODE : Ouvrez F12 > Inspecteur > Trouvez cet élément > Modifiez display:none en display:block -->
+            <!-- ⚠️ ATTENTION : Il y a aussi des "decoy-fragment" qui sont des LEURRES ! -->
+            
+            <!-- LE VRAI FRAGMENT CACHÉ EN CSS - Il faut modifier display:none en display:block dans F12 -->
+            <p class="secret-fragment" id="secretFragment">
+                ✅ FRAGMENT SECRET CSS : Le troisième fragment est <strong>2025</strong> - Vous devez modifier le CSS dans F12 pour voir ceci !
+            </p>
+
+            <!-- LEURRE #3 - Ne contient PAS la bonne réponse -->
+            <p class="decoy-fragment" id="decoy3">
+                ❌ FAUX FRAGMENT : 2024 (Mauvaise année !)
+            </p>
+
+            <p class="normal-text">
+                Les backups ont été corrompus. Les sauvegardes sont inutilisables.
+                Seuls quelques fragments d'information persistent dans le chaos numérique.
+            </p>
+
+            <p class="hidden-display" id="hidden2">
+                ℹ️ ÉLÉMENT CACHÉ #2 : Le deuxième fragment a 4 lettres et évoque la programmation
+            </p>
+
+            <!-- LEURRE #4 - Ne contient PAS la bonne réponse -->
+            <p class="decoy-fragment" id="decoy4">
+                ❌ FAUX FRAGMENT : BYTE (Encore raté !)
+            </p>
+
+            <p class="normal-text">
+                <span class="password-fragment">DARK</span> Des témoins parlent de murmures dans les couloirs,
+                de lumières qui clignotent sans raison, d'écrans qui affichent des messages incompréhensibles.
+            </p>
+
+            <p class="normal-text">
+                Le directeur technique a été retrouvé devant son ordinateur, les yeux grands ouverts,
+                répétant sans cesse : "Le code... le code nous observe..."
+            </p>
+
+            <p class="hidden-display" id="hidden3">
+                ℹ️ ÉLÉMENT CACHÉ #3 : Le troisième fragment est une année : 2025
+            </p>
+
+            <!-- LEURRE #5 - Ne contient PAS la bonne réponse -->
+            <p class="decoy-fragment" id="decoy5">
+                ❌ FAUX FRAGMENT : 1999 (Fausse piste !)
+            </p>
+
+            <p class="normal-text">
+                <span class="password-fragment">CODE</span>
+                Les équipes de maintenance refusent maintenant d'entrer dans la salle des serveurs.
+                Ils affirment entendre des voix sortir des ventilateurs, voir des ombres dans les câbles.
+            </p>
+
+            <p class="normal-text">
+                Les nouveaux développeurs ne restent jamais longtemps. Certains disent que le code
+                vous appelle, qu'il veut vous absorber dans ses boucles infinies.
+                <span class="invisible-text">Troisième fragment : 2025 - l'année de l'incident</span>
+            </p>
+
+            <p class="normal-text">
+                <span class="password-fragment">2025</span>
+                Les détecteurs de fumée se déclenchent sans raison. Les alarmes sonnent à 3h33 du matin.
+                Les portes se verrouillent d'elles-mêmes, piégeant les employés à l'intérieur.
+            </p>
+
+            <p class="normal-text">
+                Un consultant en sécurité a tenté d'analyser le code source. Il a trouvé des patterns
+                étranges, des algorithmes qui ne devraient pas exister, des fonctions qui appellent
+                des dimensions inconnues. Il a démissionné le lendemain.
+            </p>
+
+            <p class="normal-text">
+                <span class="same-color">Fragment final bien caché : HORROR</span>
+                Les rumeurs parlent d'un ancien développeur qui aurait fait un pacte avec quelque chose
+                de sombre pour terminer un projet dans les délais. Le projet a été livré à temps,
+                mais le développeur n'a plus jamais été le même.
+            </p>
+
+            <!-- LEURRE #6 - Ne contient PAS la bonne réponse -->
+            <p class="decoy-fragment" id="decoy6">
+                ❌ FAUX FRAGMENT : TERROR (Presque, mais non !)
+            </p>
+
+            <p class="normal-text">
+                <span class="password-fragment">HORROR</span>
+                Aujourd'hui, ce bâtiment est connu sous le nom de "Syntax Horror".
+                Ceux qui osent y entrer cherchent la vérité dans les archives corrompues.
+                Mais la vérité a un prix... et ce prix pourrait être votre santé mentale.
+            </p>
+
+            <p class="normal-text">
+                <strong>📝 RAPPEL :</strong> Le mot de passe complet est formé des 4 fragments dans l'ordre :
+                [Fragment1]-[Fragment2]-[Fragment3]-[Fragment4]
+            </p>
+
+            <p class="normal-text">
+                Bonne chance, explorateur. Vous en aurez besoin...
+            </p>
+        </div>
+
+        <div id="messageBox" class="message-box"></div>
+
+        <div class="answer-section">
+            <h3 style="color: #00ff41;">🔓 ENTREZ LE MOT DE PASSE</h3>
+            <p style="color: #888;">Format: XXXX-XXXX-XXXX-XXXXX (4 fragments séparés par des tirets)</p>
+            <input type="text" id="passwordInput" class="answer-input" placeholder="XXXX-XXXX-XXXX-XXXXX" maxlength="23">
+            <br>
+            <button class="submit-btn" onclick="checkPassword()">✔ DÉVERROUILLER LA SORTIE</button>
+            <br>
+            <a href="{{ url_for('game') }}" class="back-link">← Retour aux salles principales</a>
+        </div>
+    </div>
+
+    <script>
+        let hintsRevealed = 0;
+
+        function revealHint(hintNumber) {
+            const hint = document.getElementById(`hint${hintNumber}`);
+            if (!hint.classList.contains('revealed')) {
+                hint.classList.add('revealed');
+                hintsRevealed++;
+                
+                event.target.disabled = true;
+                event.target.textContent = '✅' + event.target.textContent.slice(2);
+            }
+        }
+
+        function toggleSmallText() {
+            const tinyText = document.getElementById('tinyText');
+            if (tinyText.style.fontSize === '14px') {
+                tinyText.style.fontSize = '4px';
+                tinyText.style.color = '#222';
+                event.target.textContent = '🔍 Zoom sur texte minuscule';
+            } else {
+                tinyText.style.fontSize = '14px';
+                tinyText.style.color = '#00ff41';
+                tinyText.style.fontWeight = 'bold';
+                event.target.textContent = '✅ Texte minuscule révélé';
+                event.target.disabled = true;
+            }
+        }
+
+        function showCSSHint() {
+            const cssHint = document.getElementById('cssHint');
+            if (!cssHint.classList.contains('revealed')) {
+                cssHint.classList.add('revealed');
+                event.target.disabled = true;
+                event.target.textContent = '✅ Indice CSS révélé';
+            }
+        }
+
+        function showMessage(message, type) {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.textContent = message;
+            messageBox.className = `message-box ${type}`;
+            
+            setTimeout(() => {
+                messageBox.className = 'message-box';
+            }, 5000);
+        }
+
+        async function checkPassword() {
+            const input = document.getElementById('passwordInput');
+            const password = input.value.trim().toUpperCase();
+            
+            if (!password) {
+                showMessage('⚠️ Veuillez entrer un mot de passe !', 'error');
+                return;
+            }
+
+            const correctPassword = 'DARK-CODE-2025-HORROR';
+            
+            if (password === correctPassword) {
+                showMessage('✅ CORRECT ! La salle est déverrouillée ! Vous avez trouvé le mot de passe secret !', 'success');
+                
+                document.body.style.animation = 'celebrationPulse 1s ease-in-out 3';
+                
+                try {
+                    await fetch('/api/check_answer', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ 
+                            puzzle_id: 'puzzle6', 
+                            answer: password 
+                        })
+                    });
+                } catch (error) {
+                    console.error('Erreur:', error);
+                }
+                
+                setTimeout(() => {
+                    window.location.href = '{{ url_for("game") }}';
+                }, 3000);
+                
+            } else {
+                showMessage('❌ MOT DE PASSE INCORRECT ! Continuez à chercher dans le texte...', 'error');
+                input.value = '';
+                
+                input.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    input.style.animation = '';
+                }, 500);
+            }
+        }
+
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+            @keyframes celebrationPulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.02); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

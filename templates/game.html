@@ -66,9 +66,35 @@
     <div class="puzzles-grid">
         <!-- Les salles seront injectées ici par room-manager.js -->
     </div>
-
+    
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <!-- SYSTÈME D'ARCHIVAGE NUMÉRIQUE v2.3.1 -->
+    <!-- Dernière maintenance: 31/10/2025 23:59:59 -->
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <!-- [LOG] Tentative d'accès détectée -->
+    <!-- [WARN] Niveau de sécurité: FAIBLE -->
+    <!-- decoy_flag_1: SPOOKY2025 -->
+    <!-- decoy_flag_2: NIGHTMARE2025 -->
+    <!-- backup_password: DARKWEB2025 -->
+    <!-- deprecated_key: MONSTER2025 -->
+    <!-- [DEBUG] Session ID: 53504F4F4B593230323500 -->
+    <!-- [INFO] Decoded HEX: Try converting hex to ASCII -->
+    <!-- legacy_flag: ZOMBIE2025 -->
+    <!-- temp_access_code: WITCH2025 -->
+    <!-- [ERROR] Corrupted data block detected -->
+    <!-- test_key: GHOST2025 -->
+    <!-- old_password: VAMPIRE2025 -->
+    <!-- [SYSTEM] Memory dump: 0x48414C4C4F5745454E32303235 -->
+    <!-- [HINT] The real flag is hidden in HEX format above -->
+    <!-- decoy_flag_3: SKELETON2025 -->
+    <!-- backup_flag: PUMPKIN2025 -->
+    <!-- [WARNING] Unauthorized access will be logged -->
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <!-- END OF ARCHIVE METADATA -->
+    <!-- ════════════════════════════════════════════════════════════ -->
+    
     <div class="escape-status">
-        <p class="status-text"><strong>STATUT:</strong> <span id="escape-message">4 SALLES À DÉVERROUILLER POUR S'ÉCHAPPER</span></p>
+        <p class="status-text"><strong>STATUT:</strong> <span id="escape-message">6 SALLES À DÉVERROUILLER POUR S'ÉCHAPPER</span></p>
     </div>
 </div>
 
@@ -84,7 +110,7 @@ const introMessages = [
     "Je suis Claude Sonnet, développeur mort il y a des années dans ce complexe maudit. " +
     "Mon esprit est piégé ici, condamné à errer parmi les serveurs corrompus...",
     
-    "Vous devez résoudre 4 énigmes pour survivre. Quatre salles vous séparent de la liberté. " +
+    "Vous devez résoudre 6 énigmes pour survivre. Six salles vous séparent de la liberté. " +
     "Chacune contient une énigme de programmation corrompue. Résolvez-les pour déverrouiller la porte suivante. " +
     "ATTENTION : Chaque erreur réveille les entités qui hantent ce lieu... " +
     "Un esprit vous rappellera qu'ici, les erreurs ont des conséquences. Bonne chance, étranger. "
@@ -213,6 +239,15 @@ async function submitAnswer(puzzleId) {
             card.classList.add('solved');
             card.style.animation = 'successPulse 0.5s ease-out';
             
+            // Si c'est la salle 5 (enveloppe), proposer le téléchargement
+            if (puzzleId === 'puzzle5') {
+                setTimeout(() => {
+                    if (confirm('🎉 CORRECT ! Voulez-vous télécharger le fichier lettre_enigme.txt maintenant ?')) {
+                        downloadLetterFile();
+                    }
+                }, 500);
+            }
+            
             // Déverrouiller la salle suivante
             unlockNextRoom(puzzleId);
             
@@ -226,6 +261,23 @@ async function submitAnswer(puzzleId) {
         console.error('Erreur:', error);
         alert('Erreur de connexion au serveur');
     }
+}
+
+// Fonction pour télécharger le fichier lettre_enigme.txt
+function downloadLetterFile() {
+    const a = document.createElement('a');
+    a.href = "{{ url_for('static', filename='images/lettre_enigme.txt') }}";
+    a.download = 'lettre_enigme.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    
+    // Afficher un message informatif
+    showNarrativeMessage(
+        "Vous avez téléchargé le fichier secret ! Ouvrez-le pour découvrir le mot de passe crucial : FRI13TH. " +
+        "Ce mot de passe pourrait être utile pour l'énigme finale...",
+        null
+    );
 }
 
 async function searchDatabase() {
@@ -285,23 +337,40 @@ function unlockNextRoom(currentPuzzleId) {
     }
 }
 
-function updateEscapeMessage() {
-    const solvedCards = document.querySelectorAll('.puzzle-card.solved').length;
-    const messageEl = document.getElementById('escape-message');
-    
-    if (solvedCards === 0) {
-        messageEl.textContent = '4 SALLES À DÉVERROUILLER POUR S\'ÉCHAPPER';
-    } else if (solvedCards === 1) {
-        messageEl.textContent = '3 SALLES RESTANTES... LA SORTIE SE RAPPROCHE';
-    } else if (solvedCards === 2) {
-        messageEl.textContent = '2 SALLES RESTANTES... VOUS SENTEZ L\'AIR FRAIS';
-    } else if (solvedCards === 3) {
-        messageEl.textContent = '1 DERNIÈRE SALLE... LA LIBERTÉ EST PROCHE !';
-        messageEl.style.color = 'var(--blood-red)';
-    } else if (solvedCards === 4) {
-        messageEl.textContent = 'FÉLICITATIONS ! VOUS VOUS ÊTES ÉCHAPPÉ !';
-        messageEl.style.color = '#00ff41';
-        celebrateEscape();
+async function updateEscapeMessage() {
+    // Charger la progression depuis l'API pour avoir le compte exact
+    try {
+        const response = await fetch('/api/progress');
+        const data = await response.json();
+        const solvedCards = data.completed_puzzles ? data.completed_puzzles.length : 0;
+        
+        const messageEl = document.getElementById('escape-message');
+        
+        if (solvedCards === 0) {
+            messageEl.textContent = '6 SALLES À DÉVERROUILLER POUR S\'ÉCHAPPER';
+        } else if (solvedCards === 1) {
+            messageEl.textContent = '5 SALLES RESTANTES... CONTINUEZ';
+        } else if (solvedCards === 2) {
+            messageEl.textContent = '4 SALLES RESTANTES... VOUS PROGRESSEZ';
+        } else if (solvedCards === 3) {
+            messageEl.textContent = '3 SALLES RESTANTES... NE LÂCHEZ RIEN';
+        } else if (solvedCards === 4) {
+            messageEl.textContent = '2 SALLES RESTANTES... LA SORTIE SE RAPPROCHE';
+            messageEl.style.color = 'var(--blood-red)';
+        } else if (solvedCards === 5) {
+            messageEl.textContent = '1 DERNIÈRE SALLE... LA LIBERTÉ EST PROCHE !';
+            messageEl.style.color = 'var(--blood-red)';
+        } else if (solvedCards >= 6) {
+            messageEl.textContent = 'FÉLICITATIONS ! VOUS VOUS ÊTES ÉCHAPPÉ !';
+            messageEl.style.color = '#00ff41';
+            celebrateEscape();
+        }
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du message d\'échappement:', error);
+        // Fallback sur le comptage des cartes visibles
+        const solvedCards = document.querySelectorAll('.puzzle-card.solved').length;
+        const messageEl = document.getElementById('escape-message');
+        messageEl.textContent = `${6 - solvedCards} SALLES RESTANTES...`;
     }
 }
 

@@ -167,23 +167,76 @@ class RoomManager {
             `;
         }
         
+        // Téléchargement de fichier (Salle 5)
+        if (room.specialContent === 'download') {
+            content += `
+                <div class="download-section">
+                    <div class="download-instruction">
+                        <h4>📥 ÉTAPE 1 : TÉLÉCHARGER LE FICHIER</h4>
+                        <p>Cliquez sur le bouton ci-dessous pour télécharger le fichier crypté.</p>
+                    </div>
+                    <div class="download-button-container">
+                        <a href="/static/images/lettre_enigme.txt" 
+                           download="lettre_enigme.txt" 
+                           class="btn-download">
+                            📄 TÉLÉCHARGER lettre_enigme.txt
+                        </a>
+                    </div>
+                    <div class="download-instruction">
+                        <h4>🔍 ÉTAPE 2 : LIRE LE FICHIER</h4>
+                        <p>Ouvrez le fichier téléchargé avec un éditeur de texte et lisez-le attentivement.</p>
+                    </div>
+                    <div class="download-instruction">
+                        <h4>🔑 ÉTAPE 3 : TROUVER LE MOT DE PASSE</h4>
+                        <p>Le mot de passe est clairement indiqué dans le fichier. Entrez-le ci-dessous.</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Énigme (pour compatibilité, si besoin)
+        if (room.enigma) {
+            content += '<div class="enigma-box">';
+            content += '<div class="enigma-title">🔍 ÉNIGME</div>';
+            room.enigma.forEach(clue => {
+                content += `<div class="enigma-clue">${clue}</div>`;
+            });
+            content += '</div>';
+        }
+        
         // Investigation (F12)
         if (room.specialContent === 'investigation') {
-            content += '<!-- ████████████████████████████████████████████████ -->';
-            content += '<!-- ARCHIVES SÉCURISÉES - ACCÈS RESTREINT -->';
-            content += '<!-- FLAG POUR ÉNIGME 2: HALLOWEEN2025 -->';
-            content += '<!-- Vous l\'avez trouvé ! Entrez ce code dans le champ de réponse -->';
-            content += '<!-- ████████████████████████████████████████████████ -->';
             content += '<div class="investigation-zone">';
-            content += '<!-- decoy_flag: SPOOKY2025 -->';
-            content += '<!-- backup_key: NIGHTMARE2025 -->';
             room.clues.forEach(clue => {
                 content += `<div class="clue-box">${clue}</div>`;
             });
-            content += '<!-- old_password: DARKWEB2025 -->';
-            content += '<!-- test_key: ZOMBIE2025 -->';
             content += '</div>';
-            content += '<!-- HINT: Le vrai FLAG commence toujours par le mot de l\'événement -->';
+        }
+        
+        // Archives cryptées (Salle 6)
+        if (room.specialContent === 'archives') {
+            content += '<div class="investigation-zone">';
+            if (room.clues) {
+                room.clues.forEach(clue => {
+                    content += `<div class="clue-box">${clue}</div>`;
+                });
+            }
+            // Ajouter le texte caché avec les fragments
+            content += `
+                <div class="archive-text-container">
+                    <div class="archive-hint">💡 Sélectionnez le texte ci-dessous, inspectez avec F12, zoomez...</div>
+                    <div class="archive-text">
+                        <span class="invisible-text">Fragment 1: DARK</span>
+                        Les archives sont corrompues. Des données se cachent partout.
+                        <span class="same-color-text">Fragment 2: CODE</span>
+                        Les développeurs ont laissé des traces dans le système.
+                        <!-- Fragment 3 caché: 2025 -->
+                        <span class="tiny-text">Fragment 4: HORROR</span>
+                        Le chaos numérique règne dans ces archives maudites.
+                    </div>
+                </div>
+            `;
+            content += '</div>';
         }
         
         // SQL Terminal
