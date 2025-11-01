@@ -681,8 +681,8 @@ window.addEventListener('load', async () => {
         selectedSound.play().catch(e => console.log('Audio play failed:', e));
         
         // Programmer le prochain son avec un délai complètement aléatoire
-        // Entre 3 et 25 secondes
-        const nextDelay = 3000 + Math.random() * 22000;
+        // Entre 15 et 45 secondes
+        const nextDelay = 5000 + Math.random() * 15000;
         soundInterval = setTimeout(playRandomSound, nextDelay);
     };
 
