@@ -243,17 +243,49 @@ def rooms_data():
 @login_required
 def search_secrets():
     data = request.json
-    search_term = data.get('search', '')
+    search_term = data.get('search', '').strip()
     
     # ATTENTION: Vulnérabilité SQL Injection intentionnelle pour l'énigme
     # Dans un vrai projet, TOUJOURS utiliser des requêtes paramétrées !
+    # SÉCURITÉ: On limite aux requêtes SELECT sur la table secret_data uniquement
     try:
-        query = f"SELECT hint FROM secret_data WHERE secret_code LIKE '%{search_term}%'"
-        result = db.session.execute(db.text(query)).fetchall()
-        hints = [row[0] for row in result]
-        return jsonify({'hints': hints})
-    except:
-        return jsonify({'hints': ['Erreur dans la requête']})
+        # Convertir en minuscules pour la vérification
+        search_lower = search_term.lower()
+        
+        # Vérifications de sécurité - bloquer les requêtes dangereuses
+        dangerous_keywords = ['user', 'progress', 'drop', 'delete', 'update', 'insert', 'alter', 'create']
+        for keyword in dangerous_keywords:
+            if keyword in search_lower:
+                return jsonify({'hints': ['⚠️ ACCÈS REFUSÉ: Cette requête est interdite par le système de sécurité']})
+        
+        # Vérifier que c'est bien une requête SELECT
+        if not search_lower.startswith('select'):
+            return jsonify({'hints': ['⚠️ Seules les requêtes SELECT sont autorisées']})
+        
+        # Vérifier que la requête cible bien secret_data
+        if 'secret_data' not in search_lower:
+            return jsonify({'hints': ['⚠️ Vous devez interroger la table secret_data']})
+        
+        # Si c'est une requête SQL complète valide
+        if search_term.upper().startswith('SELECT'):
+            # Exécuter la requête SQL complète (vulnérable intentionnellement mais limitée)
+            result = db.session.execute(db.text(search_term)).fetchall()
+            # Récupérer tous les champs de chaque ligne
+            hints = []
+            for row in result:
+                # Convertir la ligne en texte lisible
+                row_data = ' | '.join([str(val) for val in row])
+                hints.append(row_data)
+            return jsonify({'hints': hints if hints else ['Aucun résultat trouvé']})
+        else:
+            # Ancienne méthode (fragment SQL injection) - aussi limitée à secret_data
+            query = f"SELECT hint FROM secret_data WHERE secret_code LIKE '%{search_term}%'"
+            result = db.session.execute(db.text(query)).fetchall()
+            hints = [row[0] for row in result]
+            return jsonify({'hints': hints if hints else ['Aucun résultat trouvé']})
+    except Exception as e:
+        return jsonify({'hints': [f'❌ Erreur SQL: Syntaxe invalide']})
+
 
 def init_db():
     """Initialiser la base de données avec des données de test"""
