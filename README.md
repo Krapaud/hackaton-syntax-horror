@@ -1,4 +1,4 @@
-#  SYNTAX HORROR - Halloween Escape Game 
+#  404 Souls Not Found - Halloween Escape Game 
 
 A spooky Halloween-themed Escape Game featuring programming puzzles (Python, C, SQL) and cybersecurity challenges.
 
