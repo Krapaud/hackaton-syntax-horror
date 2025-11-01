@@ -130,12 +130,14 @@ class RoomManager {
         // Contenu spécial selon le type
         content += this.createSpecialContent(room);
         
-        // Hint
-        content += `
-            <div class="puzzle-hint">
-                ${room.hint}
-            </div>
-        `;
+        // Hint (seulement si présent)
+        if (room.hint) {
+            content += `
+                <div class="puzzle-hint">
+                    ${room.hint}
+                </div>
+            `;
+        }
         
         // Zone de réponse
         content += `

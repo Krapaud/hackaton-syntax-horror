@@ -3644,3 +3644,22 @@ body::before {
     border-radius: 4px;
 }
 
+/* ============================================
+   SALLE 6 - ARCHIVES CRYPTÉES (GRENIER)
+   ============================================ */
+
+.puzzle-card[data-puzzle="puzzle6"] {
+    background: 
+        linear-gradient(135deg, rgba(0, 0, 0, 0.15) 0%, rgba(20, 0, 0, 0.25) 100%),
+        url('../images/grenier.jpeg') center/cover no-repeat;
+}
+
+.puzzle-card[data-puzzle="puzzle6"] .clue-box {
+    background: rgba(0, 0, 0, 0.75);
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin: 8px 0;
+    border-left: 3px solid var(--blood-red);
+}
+
+

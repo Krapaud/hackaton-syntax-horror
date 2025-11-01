@@ -95,7 +95,7 @@
         "<em>Des fragments d'informations sont cachés partout : texte invisible, éléments en display:none, texte microscopique...</em>",
         "<em>Un message s'affiche : \"4 FRAGMENTS CACHÉS - TROUVEZ-LES TOUS POUR SORTIR\"</em>"
       ],
-      "mission": "Explorez cette archive numérique corrompue. Les informations sont cachées de différentes manières : <strong>1)</strong> Texte invisible à sélectionner, <strong>2)</strong> Éléments CSS cachés (F12), <strong>3)</strong> Texte minuscule, <strong>4)</strong> Couleurs camouflées. Trouvez les 4 fragments : <code>DARK</code>, <code>CODE</code>, <code>2025</code>, <code>HORROR</code>.",
+      "mission": "Explorez cette archive numérique corrompue. Les informations sont cachées de différentes manières : <strong>1)</strong> Texte invisible à sélectionner, <strong>2)</strong> Éléments CSS cachés (F12), <strong>3)</strong> Texte minuscule, <strong>4)</strong> Couleurs camouflées. Trouvez les 4 fragments.",
       "specialContent": "archives",
       "clues": [
         "<strong>TECHNIQUE 1 :</strong> Sélectionnez le texte avec votre souris pour révéler du contenu invisible",
@@ -105,7 +105,6 @@
         "<strong>FORMAT :</strong> Le mot de passe final est : FRAGMENT1-FRAGMENT2-FRAGMENT3-FRAGMENT4",
         "<strong>⚠️ ATTENTION :</strong> Il y a des leurres ! Cherchez bien les vrais fragments"
       ],
-      "hint": "<em>Les 4 fragments sont : DARK, CODE, 2025, HORROR. Utilisez toutes les techniques : sélection de texte, inspection F12, zoom du navigateur. Format final : DARK-CODE-2025-HORROR</em>",
       "placeholder": "XXXX-XXXX-XXXX-XXXXX",
       "buttonText": "DÉVERROUILLER LA SORTIE"
     }
