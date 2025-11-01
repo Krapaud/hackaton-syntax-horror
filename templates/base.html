@@ -46,9 +46,7 @@
     </div>
 
     <audio id="screamer-sound" preload="auto">
-        <!-- Pour un meilleur effet, ajoutez un fichier scream.mp3 dans static/sounds/ -->
-        <!-- Voir static/sounds/AJOUT_SON_CRI.md pour les instructions -->
-        <source src="{{ url_for('static', filename='sounds/scary-piano-dissonant-notes-joshua-chivers-2-2-00-04.mp3') }}" type="audio/mpeg">
+        <source src="{{ url_for('static', filename='sounds/screamer2.wav') }}" type="audio/wav">
     </audio>
 
     <script src="{{ url_for('static', filename='js/room-manager.js') }}"></script>

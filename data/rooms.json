@@ -51,22 +51,18 @@
     },
     {
       "id": "puzzle4",
-      "title": "SALLE 4: Code C Maudit",
+      "title": "SALLE 4: Rébus du Code Maudit",
       "atmosphere": [
-        "<em>Vous arrivez devant la dernière porte... Une lumière rouge pulsante illumine la salle finale.</em>",
-        "<em>Un terminal antique affiche un programme en langage C. Les circuits grésillent. Le code semble incomplet...</em>",
-        "<em>Une inscription gravée dans le métal : \"SEULE LA RÉPONSE UNIVERSELLE VOUS LIBÉRERA\"</em>"
+        "<em>Vous entrez dans une salle étrange où des symboles flottent dans l'air...</em>",
+        "<em>Des images de films d'horreur se mélangent à du code de programmation. Un mystérieux rébus apparaît sur l'écran...</em>",
+        "<em>Une voix chuchote : \"DÉCHIFFREZ LE MESSAGE... PROGRAMMATION ET HORREUR NE FONT QU'UN\"</em>"
       ],
-      "mission": "Analysez ce programme C corrompu. Malgré les erreurs de syntaxe, déterminez quelle valeur il DEVRAIT calculer et afficher. C'est votre dernière chance de sortir vivant...",
+      "mission": "Décodez ce rébus qui mélange termes de programmation et films d'horreur. Chaque ligne de code représente une syllabe ou un mot. Assemblez-les pour trouver le titre d'un film d'horreur culte !",
       "codeBlock": {
-        "language": "c",
-        "code": "#include <stdio.h>\n\nint main() {\n    int answer = 40;\n    answer = answer + 2\n    \n    printf(\"La réponse est: %d\\n\", answer);\n    return 0\n}"
+        "language": "python",
+        "code": "# RÉBUS HORRIFIQUE - Trouvez le film\nimport silence\n\nclass Of:\n    pass\n\nlambs = []\n\n# Réponse: ?"
       },
-      "codeAnalysis": [
-        "<strong>ERREURS DÉTECTÉES :</strong> Syntaxe invalide",
-        "<strong>LOGIQUE :</strong> Le calcul est correct"
-      ],
-      "placeholder": ">>> Entrez la valeur finale...",
+      "placeholder": ">>> Entrez le titre du film (sans espaces)...",
       "buttonText": "DÉVERROUILLER LA SORTIE"
     },
     {

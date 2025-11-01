@@ -159,7 +159,7 @@ def check_answer():
         'puzzle1': 'POTION',  # Énigme Python - texte inversé + César (QRLWRS → SRWLRQ → POTION)
         'puzzle2': 'HALLOWEEN2025',  # Flag caché dans la console F12
         'puzzle3': 'sp00ky_p4ssw0rd',  # Énigme SQL - mot de passe dans BDD
-        'puzzle4': '42',  # Énigme C - correction de syntaxe
+        'puzzle4': 'THESILENCEOFTHELAMBS',  # Rébus: import silence + class Of + lambs = The Silence of the Lambs
         'puzzle5': 'FRI13TH',  # Mot de passe dans le fichier lettre_enigme.txt
         'puzzle6': 'DARK-CODE-2025-HORROR',  # Énigme archives cryptées - 4 fragments
     }
