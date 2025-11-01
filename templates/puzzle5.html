@@ -328,47 +328,47 @@
 </head>
 <body>
     <div class="hidden-room">
-        <h1 class="room-title">🔐 SALLE 5: ARCHIVES CRYPTÉES 🔐</h1>
-        <p class="room-subtitle">⚠️ Niveau 3 - Textes Maudits ⚠️</p>
+        <h1 class="room-title"> SALLE 5: ARCHIVES CRYPTÉES </h1>
+        <p class="room-subtitle"> Niveau 3 - Textes Maudits </p>
 
         <div class="mission-box">
-            <h3>🎯 MISSION SECRÈTE</h3>
-            <p>📜 Vous êtes entré dans une archive corrompue remplie de textes maudits...</p>
-            <p>🔍 Des informations sont cachées dans ce chaos textuel de différentes manières :</p>
+            <h3> MISSION SECRÈTE</h3>
+            <p> Vous êtes entré dans une archive corrompue remplie de textes maudits...</p>
+            <p> Des informations sont cachées dans ce chaos textuel de différentes manières :</p>
                 <ul>
-                <li>📝 <strong>Texte invisible :</strong> Sélectionnez avec votre souris pour révéler</li>
-                <li>👁️ <strong>Éléments cachés :</strong> Utilisez les boutons indices pour afficher les éléments en display:none</li>
-                <li>🔬 <strong>Texte microscopique :</strong> Certains textes sont minuscules</li>
-                <li>🎨 <strong>Camouflage :</strong> Texte de la même couleur que le fond</li>
-                <li>🛠️ <strong>CSS Caché :</strong> Ouvrez F12 et modifiez le CSS pour révéler des éléments cachés (attention aux leurres !)</li>
+                <li> <strong>Texte invisible :</strong> Sélectionnez avec votre souris pour révéler</li>
+                <li> <strong>Éléments cachés :</strong> Utilisez les boutons indices pour afficher les éléments en display:none</li>
+                <li> <strong>Texte microscopique :</strong> Certains textes sont minuscules</li>
+                <li> <strong>Camouflage :</strong> Texte de la même couleur que le fond</li>
+                <li> <strong>CSS Caché :</strong> Ouvrez F12 et modifiez le CSS pour révéler des éléments cachés (attention aux leurres !)</li>
             </ul>
-            <p>🔑 <strong>OBJECTIF :</strong> Trouvez les 4 fragments du mot de passe dispersés dans le texte, puis entrez le mot de passe complet pour sortir !</p>
+            <p> <strong>OBJECTIF :</strong> Trouvez les 4 fragments du mot de passe dispersés dans le texte, puis entrez le mot de passe complet pour sortir !</p>
         </div>
 
         <div class="hints-section">
-            <button class="reveal-button" onclick="revealHint(1)">💡 Indice 1: Afficher élément caché #1</button>
-            <button class="reveal-button" onclick="revealHint(2)">💡 Indice 2: Afficher élément caché #2</button>
-            <button class="reveal-button" onclick="revealHint(3)">💡 Indice 3: Afficher élément caché #3</button>
-            <button class="reveal-button" onclick="toggleSmallText()">🔍 Zoom sur texte minuscule</button>
-            <button class="reveal-button" onclick="showCSSHint()">🛠️ Indice CSS: Comment révéler les éléments cachés</button>
+            <button class="reveal-button" onclick="revealHint(1)"> Indice 1: Afficher élément caché #1</button>
+            <button class="reveal-button" onclick="revealHint(2)"> Indice 2: Afficher élément caché #2</button>
+            <button class="reveal-button" onclick="revealHint(3)"> Indice 3: Afficher élément caché #3</button>
+            <button class="reveal-button" onclick="toggleSmallText()"> Zoom sur texte minuscule</button>
+            <button class="reveal-button" onclick="showCSSHint()"> Indice CSS: Comment révéler les éléments cachés</button>
         </div>
 
         <div id="hint1" class="hint-box">
-            🔓 <strong>Fragment révélé #1 :</strong> Le premier fragment est <span style="color: #00ff41; font-weight: bold;">DARK</span>
+             <strong>Fragment révélé #1 :</strong> Le premier fragment est <span style="color: #00ff41; font-weight: bold;">DARK</span>
         </div>
 
         <div id="hint2" class="hint-box">
-            🔓 <strong>Fragment révélé #2 :</strong> Le deuxième fragment est <span style="color: #00ff41; font-weight: bold;">CODE</span>
+             <strong>Fragment révélé #2 :</strong> Le deuxième fragment est <span style="color: #00ff41; font-weight: bold;">CODE</span>
         </div>
 
         <div id="hint3" class="hint-box">
-            🔓 <strong>Fragment révélé #3 :</strong> Le troisième fragment est <span style="color: #00ff41; font-weight: bold;">2025</span>
+             <strong>Fragment révélé #3 :</strong> Le troisième fragment est <span style="color: #00ff41; font-weight: bold;">2025</span>
         </div>
 
         <div id="cssHint" class="hint-box">
-            🛠️ <strong>Indice CSS :</strong> Cherchez dans le texte un élément avec la classe <code>secret-fragment</code>. 
+             <strong>Indice CSS :</strong> Cherchez dans le texte un élément avec la classe <code>secret-fragment</code>. 
             Ouvrez F12, trouvez cet élément dans l'inspecteur, et changez son CSS de <code>display: none</code> à <code>display: block</code>.
-            ⚠️ ATTENTION : Il y a aussi des éléments <code>decoy-fragment</code> qui sont des leurres avec de fausses informations !
+             ATTENTION : Il y a aussi des éléments <code>decoy-fragment</code> qui sont des leurres avec de fausses informations !
         </div>
 
         <div class="text-maze" id="textMaze">
@@ -387,7 +387,7 @@
 
             <!-- LEURRE #1 - Ne contient PAS la bonne réponse -->
             <p class="decoy-fragment" id="decoy1">
-                ❌ FAUX FRAGMENT : NIGHT (Ce n'est pas le bon !)
+                 FAUX FRAGMENT : NIGHT (Ce n'est pas le bon !)
             </p>
 
             <p class="normal-text">
@@ -398,11 +398,11 @@
 
             <!-- LEURRE #2 - Ne contient PAS la bonne réponse -->
             <p class="decoy-fragment" id="decoy2">
-                ❌ FAUX FRAGMENT : SCRIPT (Ce n'est pas le bon non plus !)
+                 FAUX FRAGMENT : SCRIPT (Ce n'est pas le bon non plus !)
             </p>
 
             <p class="hidden-display" id="hidden1">
-                🔐 ÉLÉMENT CACHÉ #1 : Le premier fragment commence par D et finit par K
+                 ÉLÉMENT CACHÉ #1 : Le premier fragment commence par D et finit par K
             </p>
 
             <p class="normal-text">
@@ -414,19 +414,19 @@
                 ATTENTION: Le quatrième et dernier fragment du mot de passe est HORROR - Cette information est écrite en très petit
             </p>
 
-            <!-- ⚠️ ATTENTION DÉVELOPPEUR : Un fragment secret est caché ci-dessous -->
+            <!--  ATTENTION DÉVELOPPEUR : Un fragment secret est caché ci-dessous -->
             <!-- INDICE : Cherchez un élément avec class="secret-fragment" -->
             <!-- MÉTHODE : Ouvrez F12 > Inspecteur > Trouvez cet élément > Modifiez display:none en display:block -->
-            <!-- ⚠️ ATTENTION : Il y a aussi des "decoy-fragment" qui sont des LEURRES ! -->
+            <!--  ATTENTION : Il y a aussi des "decoy-fragment" qui sont des LEURRES ! -->
             
             <!-- LE VRAI FRAGMENT CACHÉ EN CSS - Il faut modifier display:none en display:block dans F12 -->
             <p class="secret-fragment" id="secretFragment">
-                ✅ FRAGMENT SECRET CSS : Le troisième fragment est <strong>2025</strong> - Vous devez modifier le CSS dans F12 pour voir ceci !
+                 FRAGMENT SECRET CSS : Le troisième fragment est <strong>2025</strong> - Vous devez modifier le CSS dans F12 pour voir ceci !
             </p>
 
             <!-- LEURRE #3 - Ne contient PAS la bonne réponse -->
             <p class="decoy-fragment" id="decoy3">
-                ❌ FAUX FRAGMENT : 2024 (Mauvaise année !)
+                 FAUX FRAGMENT : 2024 (Mauvaise année !)
             </p>
 
             <p class="normal-text">
@@ -435,12 +435,12 @@
             </p>
 
             <p class="hidden-display" id="hidden2">
-                🔐 ÉLÉMENT CACHÉ #2 : Le deuxième fragment a 4 lettres et évoque la programmation
+                 ÉLÉMENT CACHÉ #2 : Le deuxième fragment a 4 lettres et évoque la programmation
             </p>
 
             <!-- LEURRE #4 - Ne contient PAS la bonne réponse -->
             <p class="decoy-fragment" id="decoy4">
-                ❌ FAUX FRAGMENT : BYTE (Encore raté !)
+                 FAUX FRAGMENT : BYTE (Encore raté !)
             </p>
 
             <p class="normal-text">
@@ -454,12 +454,12 @@
             </p>
 
             <p class="hidden-display" id="hidden3">
-                🔐 ÉLÉMENT CACHÉ #3 : Le troisième fragment est une année : 2025
+                 ÉLÉMENT CACHÉ #3 : Le troisième fragment est une année : 2025
             </p>
 
             <!-- LEURRE #5 - Ne contient PAS la bonne réponse -->
             <p class="decoy-fragment" id="decoy5">
-                ❌ FAUX FRAGMENT : 1999 (Fausse piste !)
+                 FAUX FRAGMENT : 1999 (Fausse piste !)
             </p>
 
             <p class="normal-text">
@@ -495,7 +495,7 @@
 
             <!-- LEURRE #6 - Ne contient PAS la bonne réponse -->
             <p class="decoy-fragment" id="decoy6">
-                ❌ FAUX FRAGMENT : TERROR (Presque, mais non !)
+                 FAUX FRAGMENT : TERROR (Presque, mais non !)
             </p>
 
             <p class="normal-text">
@@ -506,7 +506,7 @@
             </p>
 
             <p class="normal-text">
-                🔐 <strong>RAPPEL :</strong> Le mot de passe complet est formé des 4 fragments dans l'ordre :
+                 <strong>RAPPEL :</strong> Le mot de passe complet est formé des 4 fragments dans l'ordre :
                 [Fragment1]-[Fragment2]-[Fragment3]-[Fragment4]
             </p>
 
@@ -518,11 +518,11 @@
         <div id="messageBox" class="message-box"></div>
 
         <div class="answer-section">
-            <h3 style="color: #00ff41;">🔑 ENTREZ LE MOT DE PASSE</h3>
+            <h3 style="color: #00ff41;"> ENTREZ LE MOT DE PASSE</h3>
             <p style="color: #888;">Format: XXXX-XXXX-XXXX-XXXXX (4 fragments séparés par des tirets)</p>
             <input type="text" id="passwordInput" class="answer-input" placeholder="XXXX-XXXX-XXXX-XXXXX" maxlength="23">
             <br>
-            <button class="submit-btn" onclick="checkPassword()">🔓 DÉVERROUILLER LA SORTIE</button>
+            <button class="submit-btn" onclick="checkPassword()"> DÉVERROUILLER LA SORTIE</button>
             <br>
             <a href="{{ url_for('game') }}" class="back-link">← Retour aux salles principales</a>
         </div>
@@ -540,7 +540,7 @@
                 
                 // Désactiver le bouton après utilisation
                 event.target.disabled = true;
-                event.target.textContent = `✅ ${event.target.textContent.slice(2)}`;
+                event.target.textContent = ` ${event.target.textContent.slice(2)}`;
             }
         }
 
@@ -549,12 +549,12 @@
             if (tinyText.style.fontSize === '14px') {
                 tinyText.style.fontSize = '4px';
                 tinyText.style.color = '#222';
-                event.target.textContent = '🔍 Zoom sur texte minuscule';
+                event.target.textContent = ' Zoom sur texte minuscule';
             } else {
                 tinyText.style.fontSize = '14px';
                 tinyText.style.color = '#00ff41';
                 tinyText.style.fontWeight = 'bold';
-                event.target.textContent = '✅ Texte minuscule révélé';
+                event.target.textContent = ' Texte minuscule révélé';
                 event.target.disabled = true;
             }
         }
@@ -564,7 +564,7 @@
             if (!cssHint.classList.contains('revealed')) {
                 cssHint.classList.add('revealed');
                 event.target.disabled = true;
-                event.target.textContent = '✅ Indice CSS révélé';
+                event.target.textContent = ' Indice CSS révélé';
             }
         }
 
@@ -583,7 +583,7 @@
             const password = input.value.trim().toUpperCase();
             
             if (!password) {
-                showMessage('⚠️ Veuillez entrer un mot de passe !', 'error');
+                showMessage(' Veuillez entrer un mot de passe !', 'error');
                 return;
             }
 
@@ -591,7 +591,7 @@
             const correctPassword = 'DARK-CODE-2025-HORROR';
             
             if (password === correctPassword) {
-                showMessage('🎉 CORRECT ! La salle est déverrouillée ! Vous avez trouvé le mot de passe secret !', 'success');
+                showMessage(' CORRECT ! La salle est déverrouillée ! Vous avez trouvé le mot de passe secret !', 'success');
                 
                 // Animation de victoire
                 document.body.style.animation = 'celebrationPulse 1s ease-in-out 3';
@@ -618,7 +618,7 @@
                 }, 3000);
                 
             } else {
-                showMessage('❌ MOT DE PASSE INCORRECT ! Continuez à chercher dans le texte...', 'error');
+                showMessage(' MOT DE PASSE INCORRECT ! Continuez à chercher dans le texte...', 'error');
                 input.value = '';
                 
                 // Effet de tremblement

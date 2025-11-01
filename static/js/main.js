@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // Initialisation du système
-    console.log('%c⚠️ SYSTEM CORRUPTED', 'color: red; font-size: 12px; font-family: monospace;');
+    console.log('%cSYSTEM CORRUPTED', 'color: red; font-size: 12px; font-family: monospace;');
     console.log('%cLoading assets...', 'color: #666;');
     
     // Créer des araignées animées
@@ -24,7 +24,7 @@ function createSpiders() {
         setTimeout(() => {
             const spider = document.createElement('div');
             spider.className = 'spider';
-            spider.innerHTML = '🕷️';
+            spider.innerHTML = '';
             spider.style.cssText = `
                 position: absolute;
                 top: -50px;
@@ -231,14 +231,14 @@ function flashScreen(color = 'red', duration = 100) {
 
 // Messages d'erreur effrayants personnalisés
 const scaryMessages = [
-    "💀 Les esprits ne sont pas contents...",
-    "👻 Vous avez réveillé quelque chose...",
-    "🕷️ Les araignées approchent...",
-    "⚠️ Erreur fatale... ou presque",
-    "🎃 Essayez encore, si vous osez...",
-    "🔥 Le code brûle vos yeux...",
-    "⚡ Erreur de syntaxe... de l'horreur !",
-    "🌙 La nuit tombe sur votre code..."
+    "Les esprits ne sont pas contents...",
+    "Vous avez réveillé quelque chose...",
+    "Les araignées approchent...",
+    "Erreur fatale... ou presque",
+    "Essayez encore, si vous osez...",
+    "Le code brûle vos yeux...",
+    "Erreur de syntaxe... de l'horreur !",
+    "La nuit tombe sur votre code..."
 ];
 
 function getRandomScaryMessage() {
@@ -259,7 +259,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 function activateEasterEgg() {
-    alert('🎃 EASTER EGG ACTIVÉ ! 🎃\nVous avez trouvé le code secret !\n+500 points bonus !');
+    alert('EASTER EGG ACTIVÉ !\nVous avez trouvé le code secret !\n+500 points bonus !');
     document.body.style.animation = 'rainbow 2s linear infinite';
     
     const style = document.createElement('style');
@@ -319,7 +319,7 @@ if (window.location.pathname.includes('/game')) {
 document.addEventListener('contextmenu', (e) => {
     if (window.location.pathname.includes('/game')) {
         e.preventDefault();
-        alert('🎃 Pas de triche ! Utilisez F12 pour les énigmes légitimes.');
+        alert('Pas de triche ! Utilisez F12 pour les énigmes légitimes.');
     }
 });
 */

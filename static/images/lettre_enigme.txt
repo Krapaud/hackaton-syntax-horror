@@ -171,7 +171,7 @@
         }
 
         .clue::before {
-            content: '🔪';
+            content: '';
             position: absolute;
             left: 0;
         }
@@ -312,9 +312,9 @@
         <div class="envelope" id="envelope">
             <div class="envelope-back"></div>
             <div class="letter">
-                <div class="stamp">CONFIDENTIEL<br>☠️</div>
+                <div class="stamp">CONFIDENTIEL<br></div>
                 <div class="letter-content">
-                    <h1>⚠️ ÉNIGME MORTELLE ⚠️</h1>
+                    <h1> ÉNIGME MORTELLE </h1>
                     
                     <div class="enigma">
                         <div class="enigma-title">Résolvez l'énigme pour obtenir l'accès...</div>
@@ -337,7 +337,7 @@
                     </div>
 
                     <div style="text-align: center;">
-                        <button class="download-btn" id="downloadBtn" onclick="downloadLetter()">📥 Télécharger le Message</button>
+                        <button class="download-btn" id="downloadBtn" onclick="downloadLetter()"> Télécharger le Message</button>
                     </div>
                 </div>
             </div>
@@ -367,12 +367,12 @@
             const password = input.value.trim().toUpperCase();
 
             if (password === 'JASON') {
-                result.innerHTML = '<div class="message-result success">✓ ACCÈS ACCORDÉ ! Le mot de passe est correct.</div>';
+                result.innerHTML = '<div class="message-result success"> ACCÈS ACCORDÉ ! Le mot de passe est correct.</div>';
                 isUnlocked = true;
                 downloadBtn.classList.add('active');
                 instruction.textContent = 'Vous pouvez maintenant télécharger le message !';
             } else {
-                result.innerHTML = '<div class="message-result error">✗ Mauvaise réponse. Relisez les indices...</div>';
+                result.innerHTML = '<div class="message-result error"> Mauvaise réponse. Relisez les indices...</div>';
                 setTimeout(() => {
                     result.innerHTML = '';
                 }, 3000);
@@ -393,7 +393,7 @@
 
             const content = `
 ═══════════════════════════════════════════════════
-        ⚠️  MESSAGE DÉVERROUILLÉ  ⚠️
+          MESSAGE DÉVERROUILLÉ  
 ═══════════════════════════════════════════════════
 
 FÉLICITATIONS !
@@ -417,7 +417,7 @@ L'ÉNIGME :
 - Vengeance de la mère (Pamela Voorhees)
 - Le tueur : JASON VOORHEES
 
-⚠️ ACCÈS SÉCURISÉ CONFIRMÉ ⚠️
+ ACCÈS SÉCURISÉ CONFIRMÉ 
 
 ---------------------------------------------------
 Film : Vendredi 13 (Friday the 13th)

@@ -7,12 +7,15 @@
     --dark-blood: #4a0000;
     --deep-black: #000000;
     --shadow-grey: #0d0d0d;
-    --corpse-grey: #1a1a1a;
+    --corpse-grey: #c0c0c0;
     --bone-white: #e8e8e8;
-    --decay-green: #1a3d1a;
+    --decay-grey: #2a2a2a;
     --rust-brown: #3d1a1a;
     --death-purple: #1a001a;
     --warning-red: #ff0000;
+    --dark-red: #660000;
+    --crimson: #dc143c;
+    --ash-grey: #3a3a3a;
 }
 
 /* Reset et styles de base */
@@ -24,7 +27,10 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background: radial-gradient(ellipse at center, #0d0d0d 0%, #000000 100%);
+    background: 
+        radial-gradient(ellipse at 20% 30%, rgba(139, 0, 0, 0.15) 0%, transparent 40%),
+        radial-gradient(ellipse at 80% 70%, rgba(74, 0, 0, 0.10) 0%, transparent 40%),
+        radial-gradient(ellipse at center, #0d0d0d 0%, #000000 100%);
     color: var(--bone-white);
     min-height: 100vh;
     overflow-x: hidden;
@@ -464,7 +470,7 @@ body::before {
 .intro-text {
     font-size: 1.2rem;
     margin: 1rem 0;
-    color: var(--text-color);
+    color: var(--corpse-grey);
 }
 
 /* Boutons CTA */
@@ -618,12 +624,12 @@ body::before {
 }
 
 .player-score {
-    color: #888;
+    color: #999;
     font-weight: bold;
 }
 
 .player-level {
-    color: #666;
+    color: #777;
     margin-left: 1rem;
 }
 
@@ -678,7 +684,7 @@ body::before {
 }
 
 .form-group label {
-    color: var(--corpse-grey);
+    color: #b8b8b8;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -720,10 +726,10 @@ body::before {
 }
 
 .message.success {
-    background: rgba(0, 100, 0, 0.2);
-    border: 1px solid rgba(0, 100, 0, 0.6);
-    color: #00ff41;
-    text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+    background: rgba(139, 0, 0, 0.25);
+    border: 1px solid rgba(139, 0, 0, 0.7);
+    color: #ff6b6b;
+    text-shadow: 0 0 5px rgba(139, 0, 0, 0.6);
 }
 
 .message.error {
@@ -736,7 +742,7 @@ body::before {
 .auth-switch {
     text-align: center;
     margin-top: 1rem;
-    color: #888;
+    color: #999;
 }
 
 .auth-switch a {
@@ -1032,7 +1038,7 @@ body::before {
 }
 
 .narrative-box.show {
-    bottom: 20px;
+    bottom: 100px;
     pointer-events: auto; /* Réactiver les interactions quand elle est affichée */
 }
 
@@ -1066,14 +1072,52 @@ body::before {
 
 .narrative-content {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.narrative-header {
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .narrative-name {
     font-family: 'Nosifer', cursive;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: var(--blood-red);
-    margin-bottom: 0.5rem;
     text-shadow: 0 2px 5px rgba(139, 0, 0, 0.8);
+    margin: 0;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.narrative-body {
+    flex: 1;
+    height: 150px;
+    min-height: 150px;
+    max-height: 150px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 0.5rem;
+}
+
+/* Style de la scrollbar pour le contenu narratif */
+.narrative-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.narrative-body::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 3px;
+}
+
+.narrative-body::-webkit-scrollbar-thumb {
+    background: var(--blood-red);
+    border-radius: 3px;
+}
+
+.narrative-body::-webkit-scrollbar-thumb:hover {
+    background: #a00000;
 }
 
 .narrative-text {
@@ -1088,7 +1132,7 @@ body::before {
     bottom: 10px;
     right: 20px;
     font-size: 0.9rem;
-    color: #888;
+    color: #999;
     animation: blink 1.5s ease-in-out infinite;
     cursor: pointer;
 }
@@ -1166,7 +1210,7 @@ body::before {
 }
 
 .story-text {
-    color: var(--corpse-grey);
+    color: #b8b8b8;
     font-size: 1.1rem;
     line-height: 1.8;
     margin: 0.75rem 0;
@@ -1212,7 +1256,7 @@ body::before {
 }
 
 .status-text {
-    color: var(--corpse-grey);
+    color: #b8b8b8;
     font-size: 1.2rem;
     margin: 0;
     position: relative;
@@ -1268,7 +1312,7 @@ body::before {
 
 .stat-label {
     font-size: 0.85rem;
-    color: #888;
+    color: #999;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: 600;
@@ -1368,7 +1412,7 @@ body::before {
 }
 
 .puzzle-card.solved::before {
-    content: '✅ RÉSOLU';
+    content: 'RÉSOLU RÉSOLU';
     position: absolute;
     top: 10px;
     right: 10px;
@@ -1431,15 +1475,15 @@ body::before {
 }
 
 .difficulty.easy {
-    background: rgba(0, 100, 0, 0.25);
-    color: #00ff41;
-    border-color: rgba(0, 255, 65, 0.6);
-    text-shadow: 0 0 8px rgba(0, 255, 65, 0.5);
+    background: rgba(80, 80, 80, 0.25);
+    color: #c0c0c0;
+    border-color: rgba(160, 160, 160, 0.6);
+    text-shadow: 0 0 8px rgba(160, 160, 160, 0.5);
 }
 
 .difficulty.easy:hover {
-    background: rgba(0, 100, 0, 0.35);
-    box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+    background: rgba(80, 80, 80, 0.35);
+    box-shadow: 0 0 15px rgba(160, 160, 160, 0.4);
 }
 
 .difficulty.medium {
@@ -1455,7 +1499,7 @@ body::before {
 }
 
 .puzzle-description {
-    color: var(--corpse-grey);
+    color: #b8b8b8;
     line-height: 1.6;
     margin-bottom: 1rem;
 }
@@ -1494,11 +1538,11 @@ body::before {
 }
 
 .puzzle-hint {
-    background: rgba(139, 0, 0, 0.1);
-    border-left: 2px solid var(--blood-red);
+    background: rgba(139, 0, 0, 0.24);
+    border-left: 3px solid var(--blood-red);
     padding: 0.75rem;
     margin: 1rem 0;
-    color: #888;
+    color: #999;
     font-style: italic;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
@@ -1600,9 +1644,9 @@ body::before {
 }
 
 .sql-result {
-    color: #00ff41;
+    color: #ff6b6b;
     margin: 0.5rem 0;
-    text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
+    text-shadow: 0 0 5px rgba(139, 0, 0, 0.4);
 }
 
 .no-result, .error {
@@ -1753,11 +1797,11 @@ body::before {
     }
     50% {
         transform: scale(1.05);
-        box-shadow: 0 10px 40px rgba(0, 255, 65, 0.6);
+        box-shadow: 0 10px 40px rgba(139, 0, 0, 0.7);
     }
     100% {
         transform: scale(1);
-        box-shadow: 0 4px 15px rgba(0, 100, 0, 0.4);
+        box-shadow: 0 4px 15px rgba(139, 0, 0, 0.5);
     }
 }
 
@@ -1797,15 +1841,15 @@ body::before {
 /* Python Room Background (Salle 1) - ESCAPE GAME STYLE */
 .puzzle-card[data-puzzle="puzzle1"] {
     background: 
-        linear-gradient(135deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.55) 100%),
+        linear-gradient(135deg, rgba(0, 0, 0, 0.35) 0%, rgba(20, 0, 0, 0.55) 100%),
         url('../images/python_room.png') center/cover no-repeat;
     background-blend-mode: normal;
-    border: 3px solid rgba(0, 255, 65, 0.6);
+    border: 3px solid rgba(139, 0, 0, 0.8);
     box-shadow: 
-        0 10px 40px rgba(0, 255, 65, 0.3),
-        0 0 60px rgba(0, 255, 65, 0.2),
+        0 10px 40px rgba(139, 0, 0, 0.5),
+        0 0 60px rgba(139, 0, 0, 0.3),
         inset 0 0 100px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(0, 255, 65, 0.1);
+        0 0 0 1px rgba(139, 0, 0, 0.2);
     position: relative;
     min-height: 600px;
     overflow: hidden;
@@ -1823,8 +1867,8 @@ body::before {
         0deg,
         transparent,
         transparent 2px,
-        rgba(0, 255, 65, 0.02) 2px,
-        rgba(0, 255, 65, 0.02) 4px
+        rgba(139, 0, 0, 0.03) 2px,
+        rgba(139, 0, 0, 0.03) 4px
     );
     pointer-events: none;
     z-index: 1;
@@ -1846,7 +1890,7 @@ body::before {
 }
 
 .puzzle-card[data-puzzle="puzzle1"]::before {
-    background: radial-gradient(circle at 30% 40%, rgba(0, 255, 65, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle at 30% 40%, rgba(139, 0, 0, 0.12) 0%, transparent 70%);
     opacity: 1;
     animation: pythonGlow 4s ease-in-out infinite;
     z-index: 0;
@@ -1854,96 +1898,88 @@ body::before {
 
 @keyframes pythonGlow {
     0%, 100% {
-        background: radial-gradient(circle at 30% 40%, rgba(0, 255, 65, 0.08) 0%, transparent 70%);
+        background: radial-gradient(circle at 30% 40%, rgba(139, 0, 0, 0.12) 0%, transparent 70%);
     }
     50% {
-        background: radial-gradient(circle at 30% 40%, rgba(0, 255, 65, 0.15) 0%, transparent 75%);
+        background: radial-gradient(circle at 30% 40%, rgba(139, 0, 0, 0.20) 0%, transparent 75%);
     }
 }
 
 .puzzle-card[data-puzzle="puzzle1"]:not(.locked):hover {
-    border-color: rgba(0, 255, 65, 0.8);
+    border-color: rgba(139, 0, 0, 1);
     box-shadow: 
-        0 15px 60px rgba(0, 255, 65, 0.4),
-        0 0 80px rgba(0, 255, 65, 0.3),
+        0 15px 60px rgba(139, 0, 0, 0.6),
+        0 0 80px rgba(139, 0, 0, 0.4),
         inset 0 0 100px rgba(0, 0, 0, 0.4),
-        0 0 0 1px rgba(0, 255, 65, 0.2);
+        0 0 0 1px rgba(139, 0, 0, 0.3);
     transform: translateY(-8px) scale(1.02);
 }
 
 .puzzle-card[data-puzzle="puzzle1"] .puzzle-header h3 {
-    color: rgba(0, 255, 65, 0.95);
+    color: rgba(220, 20, 60, 0.95);
     text-shadow: 
-        0 0 25px rgba(0, 255, 65, 0.9),
-        0 0 50px rgba(0, 255, 65, 0.5),
+        0 0 25px rgba(139, 0, 0, 0.9),
+        0 0 50px rgba(139, 0, 0, 0.6),
         0 4px 15px rgba(0, 0, 0, 1),
-        0 0 10px rgba(0, 255, 65, 0.3);
+        0 0 10px rgba(139, 0, 0, 0.5);
     animation: pythonHeaderGlow 3s ease-in-out infinite;
-    background: rgba(0, 0, 0, 0.60);
+    background: transparent;
     padding: 0.7rem 1.5rem;
     border-radius: 10px;
     display: inline-block;
-    backdrop-filter: blur(15px) saturate(180%);
-    border: 2px solid rgba(0, 255, 65, 0.5);
-    box-shadow: 
-        0 4px 20px rgba(0, 255, 65, 0.3),
-        inset 0 1px 0 rgba(0, 255, 65, 0.15);
+    backdrop-filter: none;
+    border: 2px solid rgba(139, 0, 0, 0.7);
+    box-shadow: none;
     font-size: 1.7rem;
 }
 
 .puzzle-card[data-puzzle="puzzle1"] .puzzle-header {
-    background: rgba(0, 0, 0, 0.40);
-    backdrop-filter: blur(8px) saturate(150%);
-    border-bottom: 2px solid rgba(0, 255, 65, 0.4);
+    background: transparent;
+    backdrop-filter: none;
+    border-bottom: 2px solid rgba(139, 0, 0, 0.5);
     margin: -2.5rem -2.5rem 1.5rem -2.5rem;
     padding: 2rem 2.5rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: none;
 }
 
 @keyframes pythonHeaderGlow {
     0%, 100% {
         text-shadow: 
-            0 0 25px rgba(0, 255, 65, 0.9),
-            0 0 50px rgba(0, 255, 65, 0.5),
+            0 0 25px rgba(139, 0, 0, 0.9),
+            0 0 50px rgba(139, 0, 0, 0.6),
             0 4px 15px rgba(0, 0, 0, 1),
-            0 0 10px rgba(0, 255, 65, 0.3);
+            0 0 10px rgba(139, 0, 0, 0.5);
         transform: scale(1);
     }
     50% {
         text-shadow: 
-            0 0 35px rgba(0, 255, 65, 1),
-            0 0 70px rgba(0, 255, 65, 0.6),
+            0 0 35px rgba(139, 0, 0, 1),
+            0 0 70px rgba(139, 0, 0, 0.7),
             0 4px 20px rgba(0, 0, 0, 1),
-            0 0 15px rgba(0, 255, 65, 0.4);
+            0 0 15px rgba(139, 0, 0, 0.6);
         transform: scale(1.02);
     }
 }
 
 /* Room atmosphere intro */
 .room-intro {
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 0, 0, 0.85) 100%);
+    background: transparent;
     border-left: 4px solid var(--blood-red);
     border-radius: 8px;
     padding: 1.8rem;
     margin-bottom: 1.8rem;
-    box-shadow: 
-        0 4px 25px rgba(0, 0, 0, 0.9),
-        inset 0 0 20px rgba(0, 0, 0, 0.6);
+    box-shadow: none;
     position: relative;
     overflow: hidden;
 }
 
 /* Special atmosphere for Python room - GLASS EFFECT */
 .puzzle-card[data-puzzle="puzzle1"] .room-intro {
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.65) 0%, rgba(10, 20, 10, 0.60) 100%);
-    border-left-color: rgba(0, 255, 65, 0.8);
+    background: transparent;
+    border-left-color: rgba(139, 0, 0, 0.8);
     border-left-width: 4px;
-    backdrop-filter: blur(12px) saturate(180%);
-    box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.6),
-        inset 0 0 30px rgba(0, 0, 0, 0.2),
-        0 0 20px rgba(0, 255, 65, 0.2),
-        inset 1px 1px 0 rgba(0, 255, 65, 0.05);
+    backdrop-filter: none;
+    box-shadow: none;
     border-radius: 12px;
 }
 
@@ -1955,14 +1991,10 @@ body::before {
 }
 
 .puzzle-card[data-puzzle="puzzle1"] .mission-brief {
-    background: rgba(10, 20, 10, 0.60);
-    border: 2px solid rgba(0, 255, 65, 0.6);
-    backdrop-filter: blur(15px) saturate(180%);
-    box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.5),
-        0 0 30px rgba(0, 255, 65, 0.2),
-        inset 0 1px 0 rgba(0, 255, 65, 0.1),
-        inset 0 0 20px rgba(0, 0, 0, 0.4);
+    background: transparent;
+    border: 2px solid rgba(139, 0, 0, 0.7);
+    backdrop-filter: none;
+    box-shadow: none;
     border-radius: 8px;
 }
 
@@ -1974,75 +2006,68 @@ body::before {
 }
 
 .puzzle-card[data-puzzle="puzzle1"] .mission-header {
-    color: rgba(0, 255, 65, 0.95);
+    color: rgba(220, 20, 60, 0.95);
     text-shadow: 
-        0 0 20px rgba(0, 255, 65, 0.8),
-        0 0 40px rgba(0, 255, 65, 0.4),
+        0 0 20px rgba(139, 0, 0, 0.8),
+        0 0 40px rgba(139, 0, 0, 0.5),
         0 2px 10px rgba(0, 0, 0, 1);
 }
 
 .puzzle-card[data-puzzle="puzzle1"] .puzzle-hint {
-    background: rgba(10, 20, 10, 0.55);
-    border-left-color: rgba(0, 255, 65, 0.8);
+    background: transparent;
+    border-left-color: rgba(139, 0, 0, 0.8);
     border-left-width: 4px;
-    backdrop-filter: blur(12px) saturate(180%);
-    box-shadow: 
-        0 4px 16px rgba(0, 0, 0, 0.5),
-        inset 1px 1px 0 rgba(0, 255, 65, 0.05);
+    backdrop-filter: none;
+    box-shadow: none;
     border-radius: 6px;
     color: #c0c0c0;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
 }
 
 .puzzle-card[data-puzzle="puzzle1"] .puzzle-answer {
-    background: rgba(0, 0, 0, 0.60);
+    background: transparent;
     padding: 1.5rem;
     border-radius: 10px;
-    backdrop-filter: blur(15px) saturate(180%);
-    border: 2px solid rgba(0, 255, 65, 0.3);
-    box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.6),
-        0 0 20px rgba(0, 255, 65, 0.15),
-        inset 0 1px 0 rgba(0, 255, 65, 0.08);
+    backdrop-filter: none;
+    border: 2px solid rgba(139, 0, 0, 0.4);
+    box-shadow: none;
 }
 
 .puzzle-card[data-puzzle="puzzle1"] .difficulty {
-    background: rgba(0, 100, 0, 0.55) !important;
-    backdrop-filter: blur(10px) saturate(180%);
-    box-shadow: 
-        0 4px 15px rgba(0, 100, 0, 0.4),
-        inset 0 1px 0 rgba(0, 255, 65, 0.15);
+    background: transparent !important;
+    backdrop-filter: none;
+    box-shadow: none;
 }
 
 /* Inputs et boutons transparents pour la salle Python */
 .puzzle-card[data-puzzle="puzzle1"] .answer-input {
-    background: rgba(0, 20, 10, 0.70) !important;
-    border: 2px solid rgba(0, 255, 65, 0.5) !important;
+    background: rgba(40, 0, 0, 0.70) !important;
+    border: 2px solid rgba(139, 0, 0, 0.6) !important;
     backdrop-filter: blur(12px) saturate(180%);
-    color: #00ff41 !important;
+    color: #ff6b6b !important;
     font-weight: 500;
     font-size: 1.05rem;
     box-shadow: 
         inset 0 2px 10px rgba(0, 0, 0, 0.6),
-        0 0 15px rgba(0, 255, 65, 0.2),
-        inset 0 1px 0 rgba(0, 255, 65, 0.08) !important;
+        0 0 15px rgba(139, 0, 0, 0.3),
+        inset 0 1px 0 rgba(139, 0, 0, 0.12) !important;
     transition: all 0.3s ease;
 }
 
 .puzzle-card[data-puzzle="puzzle1"] .answer-input::placeholder {
-    color: rgba(0, 255, 65, 0.4);
-    text-shadow: 0 0 5px rgba(0, 255, 65, 0.2);
+    color: rgba(139, 0, 0, 0.5);
+    text-shadow: 0 0 5px rgba(139, 0, 0, 0.3);
 }
 
 .puzzle-card[data-puzzle="puzzle1"] .answer-input:focus {
-    border-color: rgba(0, 255, 65, 0.8) !important;
-    background: rgba(0, 20, 10, 0.80) !important;
+    border-color: rgba(139, 0, 0, 0.9) !important;
+    background: rgba(40, 0, 0, 0.85) !important;
     box-shadow: 
         inset 0 2px 10px rgba(0, 0, 0, 0.7),
-        0 0 30px rgba(0, 255, 65, 0.4),
-        0 0 50px rgba(0, 255, 65, 0.2),
-        inset 0 1px 0 rgba(0, 255, 65, 0.12) !important;
-    text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
+        0 0 30px rgba(139, 0, 0, 0.5),
+        0 0 50px rgba(139, 0, 0, 0.3),
+        inset 0 1px 0 rgba(139, 0, 0, 0.18) !important;
+    text-shadow: 0 0 5px rgba(139, 0, 0, 0.4);
 }
 
 .puzzle-card[data-puzzle="puzzle1"] .btn-submit {
@@ -2129,7 +2154,7 @@ body::before {
 
 /* Mission briefing */
 .mission-brief {
-    background: rgba(139, 0, 0, 0.15);
+    background: transparent;
     border: 2px solid rgba(139, 0, 0, 0.4);
     padding: 1.2rem;
     margin: 1.5rem 0;
@@ -2168,7 +2193,7 @@ body::before {
     background: rgba(0, 0, 0, 0.6);
     padding: 2px 6px;
     border-radius: 2px;
-    color: #00ff41;
+    color: #ff6b6b;
     font-family: 'Courier New', monospace;
 }
 
@@ -2176,57 +2201,48 @@ body::before {
 .terminal-glow {
     box-shadow: 
         inset 0 2px 10px rgba(0, 0, 0, 0.9),
-        0 0 20px rgba(0, 255, 65, 0.2),
-        0 0 40px rgba(0, 255, 65, 0.1);
-    border: 1px solid rgba(0, 255, 65, 0.3);
+        0 0 20px rgba(139, 0, 0, 0.3),
+        0 0 40px rgba(139, 0, 0, 0.2);
+    border: 1px solid rgba(139, 0, 0, 0.4);
     animation: terminalPulse 3s ease-in-out infinite;
 }
 
 /* Python terminal specific styling (Salle 1) - GLASS TERMINAL */
 .puzzle-card[data-puzzle="puzzle1"] .code-block {
-    background: rgba(0, 20, 10, 0.70);
-    border: 2px solid rgba(0, 255, 65, 0.6);
-    backdrop-filter: blur(15px) saturate(180%);
-    box-shadow: 
-        inset 0 4px 20px rgba(0, 0, 0, 0.6),
-        0 8px 40px rgba(0, 255, 65, 0.3),
-        0 0 50px rgba(0, 255, 65, 0.2),
-        inset 0 0 40px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(0, 255, 65, 0.1),
-        0 0 0 1px rgba(0, 255, 65, 0.1);
+    background: transparent;
+    border: 2px solid rgba(139, 0, 0, 0.7);
+    backdrop-filter: none;
+    box-shadow: none;
     position: relative;
     overflow: visible;
     border-radius: 8px;
 }
 
 .puzzle-card[data-puzzle="puzzle1"] .code-block::before {
-    content: '🐍 PYTHON TERMINAL';
-    color: rgba(0, 255, 65, 0.95);
+    content: '� CURSED TERMINAL';
+    color: rgba(220, 20, 60, 0.95);
     font-size: 0.8rem;
     font-weight: 700;
-    background: rgba(0, 20, 10, 0.90);
+    background: transparent;
     padding: 0.4rem 1rem;
     border-radius: 6px 6px 0 0;
     position: absolute;
     top: -2rem;
     left: 0;
-    border: 2px solid rgba(0, 255, 65, 0.6);
+    border: 2px solid rgba(139, 0, 0, 0.7);
     border-bottom: none;
-    box-shadow: 
-        0 -4px 15px rgba(0, 255, 65, 0.2),
-        0 0 30px rgba(0, 255, 65, 0.15),
-        inset 0 1px 0 rgba(0, 255, 65, 0.15);
-    backdrop-filter: blur(10px);
+    box-shadow: none;
+    backdrop-filter: none;
     text-shadow: 
-        0 0 15px rgba(0, 255, 65, 0.8),
-        0 0 30px rgba(0, 255, 65, 0.4);
+        0 0 15px rgba(139, 0, 0, 0.9),
+        0 0 30px rgba(139, 0, 0, 0.5);
     letter-spacing: 1px;
 }
 
 .puzzle-card[data-puzzle="puzzle1"] .code-block code {
-    color: #00ff41;
+    color: #ff6b6b;
     text-shadow: 
-        0 0 5px rgba(0, 255, 65, 0.5),
+        0 0 5px rgba(139, 0, 0, 0.6),
         0 2px 8px rgba(0, 0, 0, 0.9);
     font-weight: 500;
 }
@@ -2235,67 +2251,67 @@ body::before {
     0%, 100% {
         box-shadow: 
             inset 0 2px 10px rgba(0, 0, 0, 0.9),
-            0 0 20px rgba(0, 255, 65, 0.2),
-            0 0 40px rgba(0, 255, 65, 0.1);
+            0 0 20px rgba(139, 0, 0, 0.3),
+            0 0 40px rgba(139, 0, 0, 0.2);
     }
     50% {
         box-shadow: 
             inset 0 2px 10px rgba(0, 0, 0, 0.9),
-            0 0 30px rgba(0, 255, 65, 0.3),
-            0 0 60px rgba(0, 255, 65, 0.2);
+            0 0 30px rgba(139, 0, 0, 0.4),
+            0 0 60px rgba(139, 0, 0, 0.3);
     }
 }
 
 /* Investigation zone (for F12 puzzle) */
 .investigation-zone {
-    background: rgba(0, 20, 40, 0.3);
-    border: 1px dashed rgba(100, 149, 237, 0.4);
+    background: transparent;
+    border: 1px dashed rgba(139, 0, 0, 0.4);
     padding: 1.2rem;
     margin: 1.5rem 0;
     border-radius: 4px;
 }
 
 .clue-box {
-    background: rgba(0, 0, 0, 0.6);
-    border-left: 3px solid rgba(100, 149, 237, 0.6);
+    background: transparent;
+    border-left: 3px solid rgba(139, 0, 0, 0.6);
     padding: 0.8rem 1rem;
     margin: 0.8rem 0;
-    color: var(--corpse-grey);
+    color: #b8b8b8;
     font-size: 0.95rem;
 }
 
 .clue-box strong {
-    color: rgba(100, 149, 237, 0.9);
+    color: rgba(220, 20, 60, 0.9);
     margin-right: 0.5rem;
 }
 
 .clue-box kbd {
     background: rgba(0, 0, 0, 0.8);
-    border: 1px solid rgba(100, 149, 237, 0.5);
+    border: 1px solid rgba(139, 0, 0, 0.5);
     border-radius: 3px;
     padding: 2px 8px;
     font-family: 'Courier New', monospace;
-    color: rgba(100, 149, 237, 1);
+    color: rgba(220, 20, 60, 1);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     font-size: 0.9rem;
 }
 
 /* Terminal interface (for SQL puzzle) */
 .terminal-interface {
-    background: linear-gradient(135deg, rgba(0, 20, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 100%);
-    border: 2px solid rgba(0, 255, 65, 0.3);
+    background: transparent;
+    border: 2px solid rgba(139, 0, 0, 0.4);
     border-radius: 4px;
     padding: 0;
     margin: 1.5rem 0;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 255, 65, 0.2);
+    box-shadow: none;
 }
 
 .terminal-header {
-    background: rgba(0, 0, 0, 0.9);
-    border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+    background: transparent;
+    border-bottom: 1px solid rgba(139, 0, 0, 0.4);
     padding: 0.6rem 1rem;
-    color: #00ff41;
+    color: #ff6b6b;
     font-family: 'Courier New', monospace;
     font-size: 0.9rem;
     display: flex;
@@ -2304,15 +2320,15 @@ body::before {
 }
 
 .terminal-prompt {
-    color: #00ff41;
+    color: #ff6b6b;
     font-family: 'Courier New', monospace;
     margin-right: 0.5rem;
     font-weight: bold;
 }
 
 .terminal-status {
-    background: rgba(0, 0, 0, 0.6);
-    border-top: 1px solid rgba(0, 255, 65, 0.2);
+    background: transparent;
+    border-top: 1px solid rgba(139, 0, 0, 0.3);
     padding: 0.5rem 1rem;
     color: rgba(255, 140, 0, 0.9);
     font-family: 'Courier New', monospace;
@@ -2335,15 +2351,15 @@ body::before {
 }
 
 .analysis-box.error {
-    background: rgba(139, 0, 0, 0.2);
+    background: transparent;
     border: 1px solid rgba(139, 0, 0, 0.5);
     color: #ff6b6b;
 }
 
 .analysis-box.success {
-    background: rgba(0, 100, 0, 0.2);
-    border: 1px solid rgba(0, 255, 65, 0.5);
-    color: #00ff41;
+    background: transparent;
+    border: 1px solid rgba(160, 160, 160, 0.6);
+    color: #c0c0c0;
 }
 
 .analysis-box strong {
@@ -2363,8 +2379,8 @@ body::before {
     flex: 1;
     min-width: 250px;
     background: rgba(0, 0, 0, 0.8);
-    border: 1px solid rgba(0, 255, 65, 0.4);
-    color: #00ff41;
+    border: 1px solid rgba(139, 0, 0, 0.5);
+    color: #ff6b6b;
     padding: 0.8rem 1rem;
     border-radius: 4px;
     font-family: 'Courier New', monospace;
@@ -2373,8 +2389,8 @@ body::before {
 
 .sql-input:focus {
     outline: none;
-    border-color: #00ff41;
-    box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+    border-color: #ff6b6b;
+    box-shadow: 0 0 15px rgba(139, 0, 0, 0.4);
 }
 
 /* Scan line animation */

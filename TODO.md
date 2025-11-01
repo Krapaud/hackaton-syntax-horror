@@ -1,6 +1,6 @@
-# 🎃 SYNTAX HORROR - TODO & AMÉLIORATIONS
+#  SYNTAX HORROR - TODO & AMÉLIORATIONS
 
-## ✅ Fonctionnalités Implémentées
+##  Fonctionnalités Implémentées
 
 - [x] Structure du projet complète
 - [x] Configuration Docker et Docker Compose
@@ -16,7 +16,7 @@
 - [x] JavaScript interactif
 - [x] Documentation complète
 
-## 🚀 Améliorations Prioritaires
+##  Améliorations Prioritaires
 
 ### Sécurité
 - [ ] Ajouter CSRF protection avec Flask-WTF
@@ -76,11 +76,11 @@
 - [ ] Statistiques et analytics
 - [ ] Modération utilisateurs
 
-## 🐛 Bugs Connus
+##  Bugs Connus
 
 - [ ] Aucun bug connu pour le moment
 
-## 📝 Notes de Développement
+##  Notes de Développement
 
 ### Structure de base de données à améliorer
 - Ajouter table pour les hints
@@ -99,7 +99,7 @@
 - Ajouter confirmations pour actions importantes
 - Tooltip pour les indices
 
-## 🎨 Design
+##  Design
 
 ### Thèmes supplémentaires à considérer
 - Mode Noël (décembre)
@@ -107,20 +107,20 @@
 - Mode été/plage
 - Mode cyberpunk
 
-## 🌐 Internationalisation
+##  Internationalisation
 
 - [ ] Support multi-langues (EN, FR, ES, DE)
 - [ ] Détection automatique de la langue
 - [ ] Traduction des énigmes
 
-## 📊 Analytics
+##  Analytics
 
 - [ ] Tracking des énigmes les plus difficiles
 - [ ] Temps moyen par énigme
 - [ ] Taux de réussite par énigme
 - [ ] Heatmap des tentatives
 
-## 💡 Idées Créatives
+##  Idées Créatives
 
 - Mode "Boss Fight" avec énigme finale très difficile
 - Easter eggs cachés dans le code source

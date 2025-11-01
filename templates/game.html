@@ -24,9 +24,13 @@
                 <img src="{{ url_for('static', filename='images/undead_developer.png') }}" alt="Undead Developer" class="portrait-img">
             </div>
             <div class="narrative-content">
-                <div class="narrative-name">Claude Sonnet</div>
-                <div id="intro-narrative-text" class="narrative-text">
-                    Étranger... Je suis Claude Sonnet, développeur mort il y a des années dans ce complexe maudit...
+                <div class="narrative-header">
+                    <div class="narrative-name">Claude Sonnet</div>
+                </div>
+                <div class="narrative-body">
+                    <div id="intro-narrative-text" class="narrative-text">
+                        Étranger... Je suis Claude Sonnet, développeur mort il y a des années dans ce complexe maudit...
+                    </div>
                 </div>
             </div>
             <div class="narrative-continue" onclick="continueIntroNarrative()">
@@ -47,9 +51,13 @@
             <img src="{{ url_for('static', filename='images/undead_developer.png') }}" alt="Undead Developer" class="portrait-img">
         </div>
         <div class="narrative-content">
-            <div class="narrative-name">Claude Sonnet</div>
-            <div id="narrative-text" class="narrative-text">
-                Étranger... Je suis Claude Sonnet, développeur mort il y a des années...
+            <div class="narrative-header">
+                <div class="narrative-name">Claude Sonnet</div>
+            </div>
+            <div class="narrative-body">
+                <div id="narrative-text" class="narrative-text">
+                    Étranger... Je suis Claude Sonnet, développeur mort il y a des années...
+                </div>
             </div>
         </div>
         <div class="narrative-continue" onclick="hideNarrative()">
@@ -77,7 +85,7 @@
     <!-- tmp_cache: ZOMBIE2025 -->
 
     <div class="escape-status">
-        <p class="status-text">💀 <strong>STATUT:</strong> <span id="escape-message">4 SALLES À DÉVERROUILLER POUR S'ÉCHAPPER</span></p>
+        <p class="status-text"><strong>STATUT:</strong> <span id="escape-message">4 SALLES À DÉVERROUILLER POUR S'ÉCHAPPER</span></p>
     </div>
 </div>
 
@@ -94,13 +102,14 @@ const introMessages = [
     
     "Vous devez résoudre 4 énigmes pour survivre. Quatre salles vous séparent de la liberté. " +
     "Chacune contient une énigme de programmation corrompue. Résolvez-les pour déverrouiller la porte suivante. " +
-    "⚠️ ATTENTION : Chaque erreur réveille les entités qui hantent ce lieu... " +
-    "Un screamer vous rappellera qu'ici, les erreurs ont des conséquences. Bonne chance, étranger."
+    "ATTENTION : Chaque erreur réveille les entités qui hantent ce lieu... " +
+    "Un esprit vous rappellera qu'ici, les erreurs ont des conséquences. Bonne chance, étranger. "
 ];
 
 // Afficher la narration d'intro avec effet de typing
 function showIntroMessage(text) {
     const narrativeText = document.getElementById('intro-narrative-text');
+    const narrativeBody = narrativeText.parentElement;
     narrativeText.textContent = '';
     
     let i = 0;
@@ -108,6 +117,8 @@ function showIntroMessage(text) {
         if (i < text.length) {
             narrativeText.textContent += text.charAt(i);
             i++;
+            // Scroll automatiquement vers le bas pendant le typing
+            narrativeBody.scrollTop = narrativeBody.scrollHeight;
         } else {
             clearInterval(typeEffect);
         }
@@ -168,7 +179,7 @@ async function submitAnswer(puzzleId) {
     const answer = input.value.trim();
     
     if (!answer) {
-        alert('⚠️ Vous devez entrer une réponse !');
+        alert('Veuillez entrer une réponse !');
         return;
     }
     
@@ -203,7 +214,7 @@ async function submitAnswer(puzzleId) {
         }
     } catch (error) {
         console.error('Erreur:', error);
-        alert('⚠️ Erreur de connexion au serveur');
+        alert('Erreur de connexion au serveur');
     }
 }
 
@@ -225,7 +236,7 @@ async function searchDatabase() {
         
         if (data.hints && data.hints.length > 0) {
             resultsDiv.innerHTML = '<h4>Résultats:</h4>' + 
-                data.hints.map(hint => `<p class="sql-result">🔓 ${hint}</p>`).join('');
+                data.hints.map(hint => `<p class="sql-result">${hint}</p>`).join('');
         } else {
             resultsDiv.innerHTML = '<p class="no-result">Aucun résultat trouvé</p>';
         }
@@ -278,7 +289,7 @@ function updateEscapeMessage() {
         messageEl.textContent = '1 DERNIÈRE SALLE... LA LIBERTÉ EST PROCHE !';
         messageEl.style.color = 'var(--blood-red)';
     } else if (solvedCards === 4) {
-        messageEl.textContent = '🎉 FÉLICITATIONS ! VOUS VOUS ÊTES ÉCHAPPÉ ! 🎉';
+        messageEl.textContent = 'FÉLICITATIONS ! VOUS VOUS ÊTES ÉCHAPPÉ !';
         messageEl.style.color = '#00ff41';
         celebrateEscape();
     }
@@ -287,7 +298,7 @@ function updateEscapeMessage() {
 function celebrateEscape() {
     // Effet de célébration
     setTimeout(() => {
-        alert('🎉🎃 VICTOIRE ! Vous avez résolu toutes les énigmes et vous êtes échappé ! 🏆');
+        alert('VICTOIRE ! Vous avez résolu toutes les énigmes et vous êtes échappé !');
         document.body.style.animation = 'celebrationPulse 1s ease-in-out 3';
     }, 500);
 }

@@ -122,7 +122,7 @@ class RoomManager {
         // Mission
         content += `
             <div class="mission-brief">
-                <div class="mission-header">🎯 MISSION</div>
+                <div class="mission-header">MISSION</div>
                 <p>${room.mission}</p>
             </div>
         `;
@@ -181,7 +181,7 @@ class RoomManager {
             content += `
                 <div class="terminal-interface">
                     <div class="terminal-header">
-                        💻 SQL CONSOLE - secret_data@haunted_db
+                        SQL CONSOLE - secret_data@haunted_db
                     </div>
                     <div class="sql-console">
                         <span class="terminal-prompt">mysql></span>
@@ -190,11 +190,11 @@ class RoomManager {
                                id="sql-search" 
                                placeholder="SELECT * FROM secret_data WHERE ...">
                         <button class="btn-submit" onclick="searchDatabase()">
-                            🔍 EXÉCUTER LA REQUÊTE
+                            EXÉCUTER LA REQUÊTE
                         </button>
                     </div>
                     <div class="terminal-status">
-                        ⚡ STATUS: Protections désactivées | Injections autorisées
+                        STATUS: Protections désactivées | Injections autorisées
                     </div>
                 </div>
                 <div id="sql-results" class="sql-results"></div>

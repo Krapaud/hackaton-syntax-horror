@@ -1,20 +1,20 @@
-# 🎃 SYNTAX HORROR - Escape Game Halloween 🎃
+#  SYNTAX HORROR - Escape Game Halloween 
 
 Un Escape Game effrayant sur le thème d'Halloween avec des énigmes de programmation (Python, C, SQL) et de cybersécurité.
 
-## 🎮 Fonctionnalités
+##  Fonctionnalités
 
 - **Système d'authentification** : Inscription et connexion des utilisateurs
 - **Énigmes variées** :
-  - 🐍 Python : Correction de code buggé
-  - ⚙️ Langage C : Détection d'erreurs de syntaxe
-  - 🗃️ SQL : Exploration de bases de données et injection SQL
-  - 🔐 Cybersécurité : Recherche de flags cachés (F12)
+  -  Python : Correction de code buggé
+  -  Langage C : Détection d'erreurs de syntaxe
+  -  SQL : Exploration de bases de données et injection SQL
+  -  Cybersécurité : Recherche de flags cachés (F12)
 - **Screamer** : Pop-ups effrayants en cas de mauvaise réponse
 - **Système de score** : Progression et classement des joueurs
 - **Interface effrayante** : Design Halloween avec animations
 
-## 🐳 Installation avec Docker
+##  Installation avec Docker
 
 ### Prérequis
 
@@ -61,7 +61,7 @@ docker-compose up --build
 docker exec -it escape-game-halloween bash
 ```
 
-## 🛠️ Installation manuelle (sans Docker)
+##  Installation manuelle (sans Docker)
 
 ### Prérequis
 
@@ -93,7 +93,7 @@ python app.py
 http://localhost:5000
 ```
 
-## 📁 Structure du projet
+##  Structure du projet
 
 ```
 hackaton-syntax-horror/
@@ -119,26 +119,26 @@ hackaton-syntax-horror/
     └── game.html              # Page de jeu
 ```
 
-## 🎯 Énigmes et Solutions
+##  Énigmes et Solutions
 
-### Énigme 1 : Python Corrompu 🐍
+### Énigme 1 : Python Corrompu 
 **Objectif** : Trouver la sortie correcte du code Python après correction
 **Solution** : `Hello, World!`
 
-### Énigme 2 : Le Secret Caché 🔍
+### Énigme 2 : Le Secret Caché 
 **Objectif** : Trouver le flag dans la console F12
 **Solution** : `HALLOWEEN2025`
 
-### Énigme 3 : Base de Données Hantée 🗃️
+### Énigme 3 : Base de Données Hantée 
 **Objectif** : Utiliser SQL injection pour trouver le mot de passe
 **Indice** : Essayer `' OR '1'='1` dans la recherche
 **Solution** : `sp00ky_p4ssw0rd`
 
-### Énigme 4 : C Maudit ⚙️
+### Énigme 4 : C Maudit 
 **Objectif** : Corriger mentalement le code C et trouver le résultat
 **Solution** : `42`
 
-## 🎨 Personnalisation
+##  Personnalisation
 
 ### Ajouter des images
 
@@ -167,7 +167,7 @@ correct_answers = {
 }
 ```
 
-## 🔐 Configuration de production
+##  Configuration de production
 
 ### Variables d'environnement
 
@@ -181,7 +181,7 @@ SECRET_KEY=votre-clé-secrète-très-longue-et-complexe
 
 Remplacez `SECRET_KEY` par une valeur sécurisée dans `docker-compose.yml`.
 
-## 🐛 Dépannage
+##  Dépannage
 
 ### Le port 5000 est déjà utilisé
 
@@ -205,7 +205,7 @@ docker-compose up --build
 sudo chown -R $USER:$USER data/
 ```
 
-## 📝 API Endpoints
+##  API Endpoints
 
 - `GET /` : Page d'accueil
 - `POST /register` : Inscription
@@ -216,7 +216,7 @@ sudo chown -R $USER:$USER data/
 - `POST /api/search_secrets` : Recherche dans la BDD (SQL)
 - `GET /api/leaderboard` : Classement des joueurs
 
-## 🚀 Améliorations possibles
+##  Améliorations possibles
 
 - [ ] Ajouter plus d'énigmes
 - [ ] Système de hints payants
@@ -228,14 +228,14 @@ sudo chown -R $USER:$USER data/
 - [ ] Mode histoire avec narration
 - [ ] Sauvegarde cloud
 
-## 👥 Contributeurs
+##  Contributeurs
 
 - Votre équipe de développeurs
 
-## 📄 Licence
+##  Licence
 
 MIT License - Libre d'utilisation
 
-## 🎃 Happy Halloween ! 🎃
+##  Happy Halloween ! 
 
-Amusez-vous bien et n'ayez pas trop peur ! 👻
+Amusez-vous bien et n'ayez pas trop peur ! 
