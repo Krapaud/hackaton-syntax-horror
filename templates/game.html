@@ -311,11 +311,30 @@ function triggerScreamer() {
     // Afficher le modal
     modal.classList.add('show');
     
-    // Jouer le son si disponible avec volume plus fort
-    if (sound && sound.src) {
-        sound.volume = 0.8; // Volume élevé pour l'effet de cri
+    // Jouer le son avec gestion d'erreur améliorée
+    if (sound) {
+        sound.volume = 1.0; // Volume maximum pour l'effet de cri
         sound.currentTime = 0; // Recommencer depuis le début
-        sound.play().catch(e => console.log('Audio play failed:', e));
+        
+        // Forcer le chargement et la lecture
+        sound.load();
+        const playPromise = sound.play();
+        
+        if (playPromise !== undefined) {
+            playPromise
+                .then(() => {
+                    console.log('Screamer sound playing');
+                })
+                .catch(error => {
+                    console.error('Audio play failed:', error);
+                    // Réessayer après un court délai
+                    setTimeout(() => {
+                        sound.play().catch(e => console.log('Retry failed:', e));
+                    }, 100);
+                });
+        }
+    } else {
+        console.error('Screamer sound element not found');
     }
     
     // Effet de tremblement
@@ -393,9 +412,10 @@ const successNarratives = {
                "Les protections étaient désactivées, mais fallait-il encore le savoir... " +
                "Vous êtes à mi-chemin. Les entités qui rôdent ici vous observent avec intérêt.",
     
-    'puzzle4': "Brillant ! Le code C maudit a révélé ses secrets. " +
-               "42... La réponse universelle à la vie, l'univers et le reste. " +
-               "Douglas Adams serait fier. Même dans ce cauchemar, l'humour des développeurs persiste... " +
+    'puzzle4': "Brillant ! Vous avez décodé le rébus maudit. " +
+               "THE SILENCE OF THE LAMBS... Le chef-d'œuvre d'horreur psychologique. " +
+               "Hannibal Lecter, ce génie du mal qui joue avec les esprits comme nous jouons avec le code... " +
+               "La manipulation, les énigmes, la terreur calculée. Vous comprenez l'essence de ce complexe. " +
                "Il ne reste plus que deux salles. La fin approche.",
     
     'puzzle5': "Remarquable... Vous avez déchiffré l'énigme de Freddy Krueger. " +
