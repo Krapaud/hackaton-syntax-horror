@@ -306,8 +306,10 @@ function triggerScreamer() {
     // Afficher le modal
     modal.classList.add('show');
     
-    // Jouer le son si disponible
+    // Jouer le son si disponible avec volume plus fort
     if (sound && sound.src) {
+        sound.volume = 0.8; // Volume élevé pour l'effet de cri
+        sound.currentTime = 0; // Recommencer depuis le début
         sound.play().catch(e => console.log('Audio play failed:', e));
     }
     
@@ -422,6 +424,40 @@ function showNarrativeMessage(text, callback) {
 }
 
 function celebrateEscape() {
+    // Cacher le statut
+    const escapeStatus = document.querySelector('.escape-status');
+    if (escapeStatus) {
+        escapeStatus.style.display = 'none';
+    }
+    
+    // Cacher toutes les cartes de puzzle
+    const puzzlesGrid = document.querySelector('.puzzles-grid');
+    if (puzzlesGrid) {
+        puzzlesGrid.style.display = 'none';
+    }
+    
+    // Créer un conteneur pour l'image en plein écran
+    const victoryScreen = document.createElement('div');
+    victoryScreen.id = 'victory-screen';
+    victoryScreen.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-image: url('{{ url_for('static', filename='images/manoir_exterieur.png') }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: 1;
+    `;
+    
+    // Insérer l'écran de victoire avant le narrateur
+    const gameMain = document.getElementById('game-main');
+    if (gameMain) {
+        gameMain.appendChild(victoryScreen);
+    }
+    
     // Message de victoire par Claude Sonnet
     const victoryMessage = 
         "Incroyable... Vous avez réussi. Vous avez résolu toutes les énigmes et brisé la malédiction qui me retenait prisonnier. " +
@@ -467,7 +503,7 @@ function showNarrativeMessageWithChoice(text) {
     narrativeBox.classList.add('show');
     narrativeText.textContent = '';
     
-    // Remplacer le bouton continuer par des boutons de choix
+    // Remplacer le bouton continuer par le bouton de recommencer
     continueBtn.innerHTML = `
         <button onclick="restartGame()" style="
             background: rgba(139, 0, 0, 0.8);
@@ -482,22 +518,7 @@ function showNarrativeMessageWithChoice(text) {
             transition: all 0.3s;
         " onmouseover="this.style.background='rgba(139, 0, 0, 1)'" 
            onmouseout="this.style.background='rgba(139, 0, 0, 0.8)'">
-            OUI - RECOMMENCER
-        </button>
-        <button onclick="closeNarrativeAndStay()" style="
-            background: rgba(50, 50, 50, 0.8);
-            color: white;
-            border: 2px solid rgba(100, 100, 100, 1);
-            padding: 0.5rem 1.5rem;
-            margin: 0 0.5rem;
-            border-radius: 5px;
-            cursor: pointer;
-            font-family: 'Courier New', monospace;
-            font-size: 1rem;
-            transition: all 0.3s;
-        " onmouseover="this.style.background='rgba(80, 80, 80, 1)'" 
-           onmouseout="this.style.background='rgba(50, 50, 50, 0.8)'">
-            NON - RESTER ICI
+            RECOMMENCER L'AVENTURE
         </button>
     `;
     

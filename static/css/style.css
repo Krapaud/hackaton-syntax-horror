@@ -1057,15 +1057,16 @@ body::before {
     transform: translateX(-50%);
     width: 90%;
     max-width: 900px;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.98) 0%, rgba(13, 13, 13, 0.98) 100%);
-    border: 2px solid rgba(139, 0, 0, 0.8);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.75) 0%, rgba(13, 13, 13, 0.75) 100%);
+    border: 2px solid rgba(139, 0, 0, 0.6);
     padding: 2rem;
     z-index: 9999;
     display: flex;
     gap: 1.5rem;
-    box-shadow: 0 -5px 30px rgba(139, 0, 0, 0.6);
+    box-shadow: 0 -5px 30px rgba(139, 0, 0, 0.4);
     transition: bottom 0.5s ease-out;
     pointer-events: none; /* Désactiver les interactions quand elle est cachée */
+    backdrop-filter: blur(5px);
 }
 
 .narrative-box.show {
@@ -1698,6 +1699,10 @@ body::before {
     text-align: center;
     animation: horrorScream 0.5s ease-in-out;
     filter: drop-shadow(0 0 30px rgba(139, 0, 0, 0.9));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 @keyframes horrorScream {
@@ -1707,9 +1712,16 @@ body::before {
 }
 
 .screamer-image {
-    font-size: 15rem;
+    width: 600px;
+    height: 600px;
+    max-width: 90vw;
+    max-height: 60vh;
     animation: terrifyingRotate 0.5s ease-in-out infinite;
-    text-shadow: 0 0 30px rgba(139, 0, 0, 1);
+    filter: drop-shadow(0 0 30px rgba(139, 0, 0, 1));
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @keyframes terrifyingRotate {

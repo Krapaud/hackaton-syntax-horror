@@ -35,15 +35,18 @@
 
     <div id="screamer-modal" class="screamer-modal">
         <div class="screamer-content">
-            <div class="screamer-image">ERREUR</div>
+            <div class="screamer-image">
+                <img src="{{ url_for('static', filename='images/screamer.png') }}" alt="Screamer" style="width: 100%; height: 100%; object-fit: contain; display: block; margin: 0 auto;">
+            </div>
             <h2 class="screamer-text">MAUVAISE RÉPONSE !</h2>
             <p class="screamer-subtitle">Vous avez réveillé les esprits...</p>
         </div>
     </div>
 
     <audio id="screamer-sound" preload="auto">
-        <!-- Vous ajouterez votre fichier audio ici -->
-        <!-- <source src="{{ url_for('static', filename='sounds/scream.mp3') }}" type="audio/mpeg"> -->
+        <!-- Pour un meilleur effet, ajoutez un fichier scream.mp3 dans static/sounds/ -->
+        <!-- Voir static/sounds/AJOUT_SON_CRI.md pour les instructions -->
+        <source src="{{ url_for('static', filename='sounds/scary-piano-dissonant-notes-joshua-chivers-2-2-00-04.mp3') }}" type="audio/mpeg">
     </audio>
 
     <script src="{{ url_for('static', filename='js/room-manager.js') }}"></script>
