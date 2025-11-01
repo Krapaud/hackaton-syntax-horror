@@ -227,7 +227,7 @@ class RoomManager {
             content += `
                 <div class="archive-text-container">
                     <div class="archive-hint">Sélectionnez le texte ci-dessous, inspectez avec F12, zoomez...</div>
-                    <div class="archive-text">`
+                    <div class="archive-text">
                         <span class="invisible-text">Fragment 1: DARK</span>
                         Les archives sont corrompues. Des données se cachent partout.
                         <span class="same-color-text">Fragment 2: CODE</span>
