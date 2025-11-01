@@ -40,24 +40,6 @@
     <!-- Console de commentaire cachée pour l'énigme 2 -->
     <!-- FLAG POUR ÉNIGME 2: HALLOWEEN2025 -->
     <!-- Vous devez ouvrir la console F12 pour trouver ce flag ! -->
-    
-    <!-- Score simple en haut -->
-    <div class="game-header">
-        <div class="score-panel">
-            <div class="stat">
-                <span class="stat-label">Score:</span>
-                <span id="score" class="stat-value">{{ progress.score }}</span>
-            </div>
-            <div class="stat">
-                <span class="stat-label">Salle:</span>
-                <span id="level" class="stat-value">{{ progress.level }}/4</span>
-            </div>
-            <div class="stat">
-                <span class="stat-label">Erreurs:</span>
-                <span id="attempts" class="stat-value">{{ progress.attempts }}</span>
-            </div>
-        </div>
-    </div>
 
     <!-- Dialogue narratif -->
     <div id="narrative-box" class="narrative-box">
@@ -150,6 +132,10 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && document.getElementById('intro-screen').classList.contains('active')) {
         continueIntroNarrative();
     }
+    // Touche Escape pour passer l'intro rapidement (debug)
+    if (e.key === 'Escape' && document.getElementById('intro-screen').classList.contains('active')) {
+        startGame();
+    }
 });
 
 // Démarrer l'affichage de la narration d'intro au chargement
@@ -161,6 +147,9 @@ window.addEventListener('load', () => {
 function startGame() {
     const introScreen = document.getElementById('intro-screen');
     const gameMain = document.getElementById('game-main');
+    
+    // Retirer la classe active
+    introScreen.classList.remove('active');
     
     // Transition avec fade
     introScreen.style.opacity = '0';
@@ -196,8 +185,6 @@ async function submitAnswer(puzzleId) {
         
         if (data.correct) {
             // Bonne réponse
-            document.getElementById('score').textContent = data.score;
-            document.getElementById('level').textContent = data.level + '/4';
             input.value = '';
             
             // Marquer l'énigme comme résolue avec animation
@@ -213,7 +200,6 @@ async function submitAnswer(puzzleId) {
         } else {
             // Mauvaise réponse - SCREAMER !
             triggerScreamer();
-            document.getElementById('attempts').textContent = data.attempts;
         }
     } catch (error) {
         console.error('Erreur:', error);
@@ -301,20 +287,16 @@ function updateEscapeMessage() {
 function celebrateEscape() {
     // Effet de célébration
     setTimeout(() => {
-        alert('🎉🎃 VICTOIRE ! Vous avez résolu toutes les énigmes et vous êtes échappé ! Score final: ' + document.getElementById('score').textContent + ' points 🏆');
+        alert('🎉🎃 VICTOIRE ! Vous avez résolu toutes les énigmes et vous êtes échappé ! 🏆');
         document.body.style.animation = 'celebrationPulse 1s ease-in-out 3';
     }, 500);
 }
 
-// Charger la progression au chargement (scores uniquement, les salles sont gérées par room-manager.js)
+// Charger la progression au chargement (les salles sont gérées par room-manager.js)
 window.addEventListener('load', async () => {
     try {
         const response = await fetch('/api/progress');
         const data = await response.json();
-        
-        document.getElementById('score').textContent = data.score;
-        document.getElementById('level').textContent = data.level + '/4';
-        document.getElementById('attempts').textContent = data.attempts;
         
         // Mettre à jour le message d'évasion
         updateEscapeMessage();

@@ -14,8 +14,6 @@ class RoomManager {
      * Initialise le gestionnaire de salles
      */
     async initialize() {
-        console.log('[RoomManager] Initialisation...');
-        
         try {
             // Attendre que le DOM soit complètement chargé
             if (document.readyState !== 'complete') {
@@ -32,7 +30,6 @@ class RoomManager {
             
             const data = await response.json();
             this.rooms = data.rooms;
-            console.log(`[RoomManager] ${this.rooms.length} salles chargées`);
 
             // Récupérer le conteneur
             this.roomsContainer = document.querySelector('.puzzles-grid');
@@ -46,10 +43,9 @@ class RoomManager {
             // Charger la progression après un court délai pour s'assurer que le DOM est prêt
             setTimeout(() => {
                 this.loadProgress();
-            }, 100);
+            }, 200);
 
             this.initialized = true;
-            console.log('[RoomManager] Initialisation terminée');
 
         } catch (error) {
             console.error('[RoomManager] Erreur lors de l\'initialisation:', error);
@@ -60,8 +56,6 @@ class RoomManager {
      * Génère et affiche toutes les salles
      */
     renderRooms() {
-        console.log('[RoomManager] Génération des salles...');
-        
         // Vider le conteneur
         this.roomsContainer.innerHTML = '';
 
@@ -70,17 +64,14 @@ class RoomManager {
             const roomElement = this.createRoomElement(room, index);
             this.roomsContainer.appendChild(roomElement);
             
-            // Forcer le masquage des salles verrouillées APRÈS l'ajout au DOM
+            // Masquer TOUTES les salles sauf la première initialement
             if (index > 0) {
-                // Utiliser requestAnimationFrame pour s'assurer que le DOM est mis à jour
-                requestAnimationFrame(() => {
-                    roomElement.style.display = 'none';
-                    console.log(`[RoomManager] Salle ${room.id} masquée`);
-                });
+                roomElement.style.display = 'none';
+                roomElement.classList.add('locked');
+            } else {
+                roomElement.classList.add('unlocked');
             }
         });
-
-        console.log('[RoomManager] Toutes les salles générées');
     }
 
     /**
@@ -99,8 +90,6 @@ class RoomManager {
         const content = this.createContent(room);
 
         div.innerHTML = header + content;
-
-        console.log(`[RoomManager] Salle ${room.id} créée (index: ${index})`);
         
         return div;
     }
@@ -243,20 +232,44 @@ class RoomManager {
      * Charge la progression du joueur
      */
     async loadProgress() {
-        console.log('[RoomManager] Chargement de la progression...');
-        
         try {
             const response = await fetch('/api/progress');
             const data = await response.json();
-            console.log('[RoomManager] Progression:', data);
             
-            // Marquer les salles résolues et déverrouiller les suivantes
-            if (data.completed_puzzles && data.completed_puzzles.length > 0) {
-                data.completed_puzzles.forEach(puzzleId => {
-                    this.markRoomAsSolved(puzzleId);
-                    this.unlockNextRoomAfterSolved(puzzleId);
-                });
-            }
+            // Récupérer la liste des énigmes complétées
+            const completedPuzzles = data.completed_puzzles || [];
+            
+            // Parcourir toutes les salles pour gérer leur état
+            this.rooms.forEach((room, index) => {
+                const card = document.querySelector(`[data-puzzle="${room.id}"]`);
+                if (!card) return;
+                
+                if (completedPuzzles.includes(room.id)) {
+                    // Salle résolue : masquer
+                    card.classList.add('solved');
+                    card.classList.remove('locked', 'unlocked');
+                    card.style.display = 'none';
+                } else if (index === 0) {
+                    // Première salle : toujours visible si non résolue
+                    card.classList.add('unlocked');
+                    card.classList.remove('locked');
+                    card.style.display = '';
+                } else {
+                    // Vérifier si la salle précédente est résolue
+                    const previousRoom = this.rooms[index - 1];
+                    if (completedPuzzles.includes(previousRoom.id)) {
+                        // Salle précédente résolue : déverrouiller cette salle
+                        card.classList.add('unlocked');
+                        card.classList.remove('locked');
+                        card.style.display = '';
+                    } else {
+                        // Salle précédente non résolue : garder verrouillée
+                        card.classList.add('locked');
+                        card.classList.remove('unlocked');
+                        card.style.display = 'none';
+                    }
+                }
+            });
             
         } catch (error) {
             console.error('[RoomManager] Erreur chargement progression:', error);
@@ -264,42 +277,21 @@ class RoomManager {
     }
 
     /**
-     * Marque une salle comme résolue
-     */
-    markRoomAsSolved(puzzleId) {
-        const card = document.querySelector(`[data-puzzle="${puzzleId}"]`);
-        if (card) {
-            card.classList.add('solved');
-            card.style.display = '';
-            console.log(`[RoomManager] Salle ${puzzleId} marquée comme résolue`);
-        }
-    }
-
-    /**
-     * Déverrouille la salle suivante après résolution
-     */
-    unlockNextRoomAfterSolved(puzzleId) {
-        const currentIndex = this.rooms.findIndex(room => room.id === puzzleId);
-        if (currentIndex !== -1 && currentIndex < this.rooms.length - 1) {
-            const nextRoom = this.rooms[currentIndex + 1];
-            const nextCard = document.querySelector(`[data-puzzle="${nextRoom.id}"]`);
-            
-            if (nextCard) {
-                nextCard.style.display = '';
-                console.log(`[RoomManager] Salle ${nextRoom.id} déverrouillée`);
-            }
-        }
-    }
-
-    /**
      * Déverrouille la salle suivante (appelé lors de la résolution d'une énigme)
      */
     unlockNextRoom(currentPuzzleId) {
-        console.log(`[RoomManager] Déverrouillage après résolution de ${currentPuzzleId}`);
+        // Masquer la salle actuelle résolue
+        const currentCard = document.querySelector(`[data-puzzle="${currentPuzzleId}"]`);
+        if (currentCard) {
+            currentCard.classList.add('solved');
+            currentCard.classList.remove('unlocked');
+            setTimeout(() => {
+                currentCard.style.display = 'none';
+            }, 1500); // Laisser le temps de voir l'animation de succès
+        }
         
         const currentIndex = this.rooms.findIndex(room => room.id === currentPuzzleId);
         if (currentIndex === -1 || currentIndex >= this.rooms.length - 1) {
-            console.log('[RoomManager] Pas de salle suivante à déverrouiller');
             return;
         }
 
@@ -311,21 +303,13 @@ class RoomManager {
             return;
         }
 
-        // Animation de déverrouillage
+        // Animation de déverrouillage de la prochaine salle
         setTimeout(() => {
+            nextCard.classList.remove('locked');
+            nextCard.classList.add('unlocked');
             nextCard.style.display = '';
             nextCard.style.animation = 'fadeInUp 0.8s ease-out';
-            console.log(`[RoomManager] Salle ${nextRoom.id} déverrouillée avec animation`);
-            
-            // Messages narratifs selon la salle
-            const roomMessages = {
-                'puzzle2': 'SALLE 2 déverrouillée.',
-                'puzzle3': 'SALLE 3 déverrouillée.',
-                'puzzle4': 'SALLE 4 déverrouillée - DERNIÈRE SALLE !'
-            };
-            
-            console.log(`[RoomManager] ${roomMessages[nextRoom.id] || 'Nouvelle salle accessible'}`);
-        }, 1000);
+        }, 2000); // Déverrouiller après que la salle actuelle soit masquée
     }
 
     /**
