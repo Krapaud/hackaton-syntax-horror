@@ -32,20 +32,10 @@ body {
         radial-gradient(ellipse at 80% 70%, rgba(74, 0, 0, 0.10) 0%, transparent 40%),
         radial-gradient(ellipse at center, #0d0d0d 0%, #000000 100%);
     color: var(--bone-white);
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    overflow-x: hidden;
     position: relative;
     background-attachment: fixed;
-}
-
-/* Masquer la scrollbar sur tous les navigateurs */
-body::-webkit-scrollbar {
-    display: none;
-}
-
-body {
-    -ms-overflow-style: none;  /* IE et Edge */
-    scrollbar-width: none;  /* Firefox */
 }
 
 /* Effet de grain film d'horreur */
@@ -472,18 +462,17 @@ body::before {
 /* Section Hero */
 .hero-section {
     text-align: center;
-    padding: 0;
+    padding: 3rem 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
 }
 
 .glitch-text {
     font-family: 'Nosifer', cursive;
-    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-size: clamp(4rem, 10vw, 8rem);
     color: var(--blood-red);
     position: relative;
     display: inline-block;
@@ -496,7 +485,7 @@ body::before {
 }
 
 .glitch-subtitle {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-size: clamp(2rem, 5vw, 3.5rem);
     margin-top: 0.2rem;
     margin-bottom: clamp(0.3rem, 1vh, 0.5rem);
 }
