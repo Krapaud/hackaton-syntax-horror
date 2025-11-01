@@ -462,12 +462,13 @@ body::before {
 /* Section Hero */
 .hero-section {
     text-align: center;
-    padding: 3rem 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .glitch-text {
