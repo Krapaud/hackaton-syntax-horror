@@ -245,15 +245,6 @@ async function submitAnswer(puzzleId) {
                 showSuccessNarrative(puzzleId);
             }, 800);
             
-            // Si c'est la salle 5 (enveloppe), proposer le téléchargement
-            if (puzzleId === 'puzzle5') {
-                setTimeout(() => {
-                    if (confirm('🎉 CORRECT ! Voulez-vous télécharger le fichier lettre_enigme.txt maintenant ?')) {
-                        downloadLetterFile();
-                    }
-                }, 500);
-            }
-            
             // Déverrouiller la salle suivante
             unlockNextRoom(puzzleId);
             

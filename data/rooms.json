@@ -46,9 +46,9 @@
         "<em>Des serveurs anciens ronronnent dans l'obscurité. Un vieux système SQL émet des bips inquiétants. Les données semblent corrompues...</em>",
         "<em>Un terminal clignote : \"SYSTÈME DE SÉCURITÉ DÉFAILLANT\". Les protections contre les injections SQL sont désactivées...</em>"
       ],
-      "mission": "Exploitez la vulnérabilité SQL Injection pour extraire TOUTES les données secrètes de la table <code>secret_data</code>. Le mot de passe de sortie est caché dans ces données.",
+      "mission": "Exploitez la vulnérabilité SQL Injection pour extraire TOUTES les données secrètes de la table <code>secret_data</code>. Tapez une requête SQL complète dans le terminal pour interroger la base de données. Le mot de passe de sortie est caché dans ces données.",
       "specialContent": "sql",
-      "hint": "<em>Les anciennes bases n'échappent pas les entrées... Essayez : <code>' OR '1'='1</code></em>",
+      "hint": "<em>💡 Écrivez une requête SQL complète pour sélectionner toutes les données. La table s'appelle <code>secret_data</code>. Exemple de syntaxe SQL : <code>SELECT * FROM nom_table</code></em>",
       "placeholder": ">>> Entrez le mot de passe trouvé...",
       "buttonText": "DÉVERROUILLER LA PORTE"
     },
