@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
         body {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.85) 0%, rgba(22, 33, 62, 0.85) 100%),
+                        url('{{ url_for("static", filename="images/grenier.jpeg") }}') center/cover no-repeat fixed;
             color: #e0e0e0;
             font-family: 'Courier New', monospace;
             margin: 0;
