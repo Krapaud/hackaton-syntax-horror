@@ -1,205 +1,239 @@
-#  SYNTAX HORROR - Escape Game Halloween 
+#  SYNTAX HORROR - Halloween Escape Game 
 
-Un Escape Game effrayant sur le thème d'Halloween avec des énigmes de programmation (Python, C, SQL) et de cybersécurité.
+A spooky Halloween-themed Escape Game featuring programming puzzles (Python, C, SQL) and cybersecurity challenges.
 
-##  Fonctionnalités
+##  Features
 
-- **Système d'authentification** : Inscription et connexion des utilisateurs
-- **Énigmes variées** :
-  -  Python : Correction de code buggé
-  -  Langage C : Détection d'erreurs de syntaxe
-  -  SQL : Exploration de bases de données et injection SQL
-  -  Cybersécurité : Recherche de flags cachés (F12)
-- **Screamer** : Pop-ups effrayants en cas de mauvaise réponse
-- **Système de score** : Progression et classement des joueurs
-- **Interface effrayante** : Design Halloween avec animations
+- **Authentication System**: User registration and login with password hashing
+- **6 Varied Puzzles**:
+  -  Room 1: Python - Reverse text and Caesar cipher decryption
+  -  Room 2: Cybersecurity - Finding hidden flags in HTML code (F12)
+  -  Room 3: SQL - Database exploration and SQL injection exploitation
+  -  Room 4: Logic - Horror movie coding rebus
+  -  Room 5: File Investigation - Download and read encrypted message
+  -  Room 6: Web Forensics - Finding 4 hidden fragments using various CSS/HTML tricks
+- **Screamer System**: Scary pop-ups with sound effects for wrong answers
+- **Scoring System**: Player progression tracking, attempts counter, and leaderboard
+- **Spooky Interface**: Halloween-themed design with animations and sound effects
+- **Progress Reset**: Ability to restart the game from the beginning
 
-##  Installation avec Docker
+##  Installation with Docker
 
-### Prérequis
+### Prerequisites
 
 - Docker
 - Docker Compose
 
-### Lancement rapide
+### Quick Start
 
-1. **Cloner le projet**
+1. **Clone the project**
 ```bash
-git clone <votre-repo>
+git clone <your-repo>
 cd hackaton-syntax-horror
 ```
 
-2. **Lancer avec Docker Compose**
+2. **Launch with Docker Compose**
 ```bash
 docker-compose up --build
 ```
 
-3. **Accéder à l'application**
+3. **Access the application**
 ```
 http://localhost:5000
 ```
 
-### Commandes Docker utiles
+### Useful Docker Commands
 
-**Arrêter le conteneur :**
+**Stop the container:**
 ```bash
 docker-compose down
 ```
 
-**Voir les logs :**
+**View logs:**
 ```bash
 docker-compose logs -f
 ```
 
-**Rebuild après modifications :**
+**Rebuild after modifications:**
 ```bash
 docker-compose up --build
 ```
 
-**Accéder au conteneur :**
+**Access the container:**
 ```bash
 docker exec -it escape-game-halloween bash
 ```
 
-##  Installation manuelle (sans Docker)
+##  Manual Installation (without Docker)
 
-### Prérequis
+### Prerequisites
 
 - Python 3.11+
 - pip
 
 ### Installation
 
-1. **Créer un environnement virtuel**
+1. **Create a virtual environment**
 ```bash
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
-# ou
+# or
 venv\Scripts\activate  # Windows
 ```
 
-2. **Installer les dépendances**
+2. **Install dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-3. **Lancer l'application**
+3. **Launch the application**
 ```bash
 python app.py
 ```
 
-4. **Accéder à l'application**
+4. **Access the application**
 ```
 http://localhost:5000
 ```
 
-##  Structure du projet
+##  Project Structure
 
 ```
 hackaton-syntax-horror/
-├── app.py                      # Application Flask principale
-├── Dockerfile                  # Configuration Docker
-├── docker-compose.yml          # Orchestration Docker
-├── requirements.txt            # Dépendances Python
-├── .dockerignore              # Fichiers ignorés par Docker
-├── data/                       # Base de données SQLite
-│   └── escape_game.db
-├── static/                     # Fichiers statiques
+├── app.py                      # Main Flask application
+├── Dockerfile                  # Docker configuration
+├── docker-compose.yml          # Docker orchestration
+├── requirements.txt            # Python dependencies
+├── .dockerignore              # Files ignored by Docker
+├── data/                       # SQLite database and game data
+│   ├── escape_game.db         # Player data and progress
+│   └── rooms.json             # Room configurations and puzzles
+├── static/                     # Static files
 │   ├── css/
-│   │   └── style.css          # Styles Halloween
+│   │   └── style.css          # Halloween styles
 │   ├── js/
-│   │   └── main.js            # JavaScript principal
-│   ├── images/                # Images (à ajouter)
-│   └── sounds/                # Sons effrayants (à ajouter)
-└── templates/                  # Templates HTML
-    ├── base.html              # Template de base
-    ├── index.html             # Page d'accueil
-    ├── login.html             # Page de connexion
-    ├── register.html          # Page d'inscription
-    └── game.html              # Page de jeu
+│   │   ├── main.js            # Main JavaScript
+│   │   └── room-manager.js    # Room navigation and puzzle logic
+│   ├── images/                # Images and assets
+│   │   ├── screamer.png       # Screamer image
+│   │   ├── manoir_*.png       # Manor backgrounds
+│   │   ├── lettre_enigme.txt  # Puzzle 5 encrypted file
+│   │   └── ...                # Other game assets
+│   └── sounds/                # Sound effects
+│       ├── scream-90747.mp3   # Main screamer sound
+│       ├── Screamer*.wav      # Additional screamers
+│       └── ...                # Ambient sounds
+└── templates/                  # HTML templates
+    ├── base.html              # Base template
+    ├── index.html             # Home page
+    ├── login.html             # Login page
+    ├── register.html          # Registration page
+    ├── game.html              # Main game page with 6 rooms
+    ├── puzzle5_envelope.html  # Puzzle 5 (file download)
+    └── puzzle6_archives.html  # Puzzle 6 (hidden fragments)
 ```
 
-##  Énigmes et Solutions
+##  Puzzles and Solutions
 
-### Énigme 1 : Python Corrompu 
-**Objectif** : Trouver la sortie correcte du code Python après correction
-**Solution** : `Hello, World!`
+### Puzzle 1: Corrupted Python Terminal
+**Objective**: Analyze the code that reverses text and applies Caesar cipher (-3)
+**Hint**: The encrypted message is `QRLWRS` - reverse it then apply Caesar -3
+**Solution**: `POTION`
 
-### Énigme 2 : Le Secret Caché 
-**Objectif** : Trouver le flag dans la console F12
-**Solution** : `HALLOWEEN2025`
+### Puzzle 2: Secret Archives
+**Objective**: Find the flag hidden in HTML code (hexadecimal encoded)
+**Hint**: Press F12, inspect the puzzle card HTML, find the hex-encoded comment
+**Solution**: `HALLOWEEN2025`
 
-### Énigme 3 : Base de Données Hantée 
-**Objectif** : Utiliser SQL injection pour trouver le mot de passe
-**Indice** : Essayer `' OR '1'='1` dans la recherche
-**Solution** : `sp00ky_p4ssw0rd`
+### Puzzle 3: Haunted Database
+**Objective**: Use SQL injection to extract ALL data from `secret_data` table
+**Hint**: Use a complete SQL SELECT query: `SELECT * FROM secret_data`
+**Solution**: `sp00ky_p4ssw0rd` (found in the hints column)
 
-### Énigme 4 : C Maudit 
-**Objectif** : Corriger mentalement le code C et trouver le résultat
-**Solution** : `42`
+### Puzzle 4: Cursed Code Rebus
+**Objective**: Decode the rebus mixing programming terms and horror movie
+**Hint**: `import silence` + `class Of` + `lambs` = horror movie title
+**Solution**: `THESILENCEOFTHELAMBS`
 
-##  Personnalisation
+### Puzzle 5: Encrypted Message
+**Objective**: Download the `lettre_enigme.txt` file and find the password inside
+**Hint**: Click the download button, open the file, and read it carefully
+**Solution**: `FRI13TH`
 
-### Ajouter des images
+### Puzzle 6: Encrypted Archives
+**Objective**: Find 4 fragments hidden using CSS/HTML techniques
+**Techniques**: Invisible text (select with mouse), hidden elements (F12), microscopic text, camouflaged colors
+**Solution**: `DARK-CODE-2025-HORROR`
 
-Placez vos images dans `static/images/` et référencez-les dans les templates :
-```html
-<img src="{{ url_for('static', filename='images/votre-image.png') }}" alt="Description">
-```
+##  Customization
 
-### Ajouter des sons
+### Add or Modify Puzzles
 
-Placez vos fichiers audio dans `static/sounds/` :
-- `scream.mp3` : Son du screamer
-- `ambient.mp3` : Musique d'ambiance
-- `hover.mp3` : Son au survol
+**Edit room configurations** in `data/rooms.json`:
+- Add new rooms with custom puzzles
+- Modify existing room descriptions and missions
+- Customize atmosphere texts and clues
 
-Puis décommentez les balises audio dans `templates/base.html`.
-
-### Modifier les énigmes
-
-Éditez le dictionnaire `correct_answers` dans `app.py` :
+**Update answers** in `app.py`:
 ```python
 correct_answers = {
-    'puzzle1': 'Votre réponse',
-    'puzzle2': 'Votre réponse',
-    # ...
+    'puzzle1': 'POTION',
+    'puzzle2': 'HALLOWEEN2025',
+    # Add your new puzzles here...
 }
 ```
 
-##  Configuration de production
+### Add Images
 
-### Variables d'environnement
+Images are already included in `static/images/`. To add more:
+```html
+<img src="{{ url_for('static', filename='images/your-image.png') }}" alt="Description">
+```
 
-Créez un fichier `.env` :
+### Add Sounds
+
+Sound effects are already included in `static/sounds/`:
+- `scream-90747.mp3`: Main screamer sound
+- `Screamer1.wav`, `Screamer2.wav`: Alternative screamers
+- `door-creaking-335491.mp3`: Door sounds
+- `haunted-steps-428208.mp3`: Footsteps
+- And more ambient sounds
+
+The sounds are automatically played by the JavaScript code.
+
+##  Production Configuration
+
+### Environment Variables
+
+Create a `.env` file:
 ```env
 FLASK_ENV=production
-SECRET_KEY=votre-clé-secrète-très-longue-et-complexe
+SECRET_KEY=your-very-long-and-complex-secret-key
 ```
 
-### Modifier docker-compose.yml
+### Modify docker-compose.yml
 
-Remplacez `SECRET_KEY` par une valeur sécurisée dans `docker-compose.yml`.
+Replace `SECRET_KEY` with a secure value in `docker-compose.yml`.
 
-##  Dépannage
+##  Troubleshooting
 
-### Le port 5000 est déjà utilisé
+### Port 5000 is already in use
 
-Modifiez le port dans `docker-compose.yml` :
+Modify the port in `docker-compose.yml`:
 ```yaml
 ports:
-  - "8080:5000"  # Utiliser le port 8080 au lieu de 5000
+  - "8080:5000"  # Use port 8080 instead of 5000
 ```
 
-### Erreur de base de données
+### Database error
 
-Supprimez la base de données et relancez :
+Delete the database and restart:
 ```bash
 rm -rf data/
 docker-compose up --build
 ```
 
-### Permission denied sur Linux
+### Permission denied on Linux
 
 ```bash
 sudo chown -R $USER:$USER data/
@@ -207,35 +241,42 @@ sudo chown -R $USER:$USER data/
 
 ##  API Endpoints
 
-- `GET /` : Page d'accueil
-- `POST /register` : Inscription
-- `POST /login` : Connexion
-- `GET /game` : Page de jeu (authentifié)
-- `POST /api/check_answer` : Vérifier une réponse
-- `GET /api/progress` : Obtenir la progression
-- `POST /api/search_secrets` : Recherche dans la BDD (SQL)
-- `GET /api/leaderboard` : Classement des joueurs
+- `GET /`: Home page
+- `POST /register`: User registration
+- `POST /login`: User login (sets session)
+- `GET /logout`: Logout (clears session)
+- `GET /game`: Main game page (requires authentication)
+- `GET /puzzle5`: Puzzle 5 page (encrypted message)
+- `GET /puzzle6`: Puzzle 6 page (hidden archives)
+- `POST /api/check_answer`: Check a puzzle answer
+- `GET /api/progress`: Get current player progress
+- `POST /api/search_secrets`: SQL search (intentionally vulnerable for puzzle 3)
+- `GET /api/leaderboard`: Top 10 players leaderboard
+- `POST /api/reset_progress`: Reset player progress to start over
+- `GET /static/data/rooms.json`: Get room configurations
 
-##  Améliorations possibles
+##  Possible Improvements
 
-- [ ] Ajouter plus d'énigmes
-- [ ] Système de hints payants
-- [ ] Mode multijoueur
-- [ ] Timer pour chaque énigme
-- [ ] Achievements/Badges
-- [ ] Sons et musiques d'ambiance
-- [ ] Animations plus poussées
-- [ ] Mode histoire avec narration
-- [ ] Sauvegarde cloud
+- [ ] Add more puzzle rooms (currently 6)
+- [ ] Paid hint system with score deduction
+- [ ] Multiplayer/co-op mode
+- [ ] Timer for each puzzle with time bonuses
+- [ ] Achievements/Badges system
+- [ ] Background ambient music loop
+- [ ] More advanced CSS animations
+- [ ] Story mode with narration between rooms
+- [ ] Admin dashboard to manage players
+- [ ] Export/import progress
+- [ ] Difficulty levels (Easy/Normal/Hard)
 
-##  Contributeurs
+##  Contributors
 
-- Votre équipe de développeurs
+- Your development team
 
-##  Licence
+##  License
 
-MIT License - Libre d'utilisation
+MIT License - Free to use
 
-##  Happy Halloween ! 
+##  Happy Halloween! 
 
-Amusez-vous bien et n'ayez pas trop peur ! 
+Have fun and don't be too scared! 

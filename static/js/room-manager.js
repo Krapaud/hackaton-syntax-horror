@@ -174,22 +174,22 @@ class RoomManager {
             content += `
                 <div class="download-section">
                     <div class="download-instruction">
-                        <h4>📥 ÉTAPE 1 : TÉLÉCHARGER LE FICHIER</h4>
+                        <h4>ÉTAPE 1 : TÉLÉCHARGER LE FICHIER</h4>
                         <p>Cliquez sur le bouton ci-dessous pour télécharger le fichier crypté.</p>
                     </div>
                     <div class="download-button-container">
                         <a href="/static/images/lettre_enigme.txt" 
                            download="lettre_enigme.txt" 
                            class="btn-download">
-                            📄 TÉLÉCHARGER lettre_enigme.txt
+                            TÉLÉCHARGER lettre_enigme.txt
                         </a>
                     </div>
                     <div class="download-instruction">
-                        <h4>🔍 ÉTAPE 2 : LIRE LE FICHIER</h4>
+                        <h4>ÉTAPE 2 : LIRE LE FICHIER</h4>
                         <p>Ouvrez le fichier téléchargé avec un éditeur de texte et lisez-le attentivement.</p>
                     </div>
                     <div class="download-instruction">
-                        <h4>🔑 ÉTAPE 3 : TROUVER LE MOT DE PASSE</h4>
+                        <h4>ÉTAPE 3 : TROUVER LE MOT DE PASSE</h4>
                         <p>Le mot de passe est clairement indiqué dans le fichier. Entrez-le ci-dessous.</p>
                     </div>
                 </div>
@@ -199,7 +199,7 @@ class RoomManager {
         // Énigme (pour compatibilité, si besoin)
         if (room.enigma) {
             content += '<div class="enigma-box">';
-            content += '<div class="enigma-title">🔍 ÉNIGME</div>';
+            content += '<div class="enigma-title">ÉNIGME</div>';
             room.enigma.forEach(clue => {
                 content += `<div class="enigma-clue">${clue}</div>`;
             });
@@ -226,8 +226,8 @@ class RoomManager {
             // Ajouter le texte caché avec les fragments
             content += `
                 <div class="archive-text-container">
-                    <div class="archive-hint">💡 Sélectionnez le texte ci-dessous, inspectez avec F12, zoomez...</div>
-                    <div class="archive-text">
+                    <div class="archive-hint">Sélectionnez le texte ci-dessous, inspectez avec F12, zoomez...</div>
+                    <div class="archive-text">`
                         <span class="invisible-text">Fragment 1: DARK</span>
                         Les archives sont corrompues. Des données se cachent partout.
                         <span class="same-color-text">Fragment 2: CODE</span>

@@ -256,15 +256,15 @@ def search_secrets():
         dangerous_keywords = ['user', 'progress', 'drop', 'delete', 'update', 'insert', 'alter', 'create']
         for keyword in dangerous_keywords:
             if keyword in search_lower:
-                return jsonify({'hints': ['⚠️ ACCÈS REFUSÉ: Cette requête est interdite par le système de sécurité']})
+                return jsonify({'hints': ['ACCÈS REFUSÉ: Cette requête est interdite par le système de sécurité']})
         
         # Vérifier que c'est bien une requête SELECT
         if not search_lower.startswith('select'):
-            return jsonify({'hints': ['⚠️ Seules les requêtes SELECT sont autorisées']})
+            return jsonify({'hints': ['Seules les requêtes SELECT sont autorisées']})
         
         # Vérifier que la requête cible bien secret_data
         if 'secret_data' not in search_lower:
-            return jsonify({'hints': ['⚠️ Vous devez interroger la table secret_data']})
+            return jsonify({'hints': ['Vous devez interroger la table secret_data']})
         
         # Si c'est une requête SQL complète valide
         if search_term.upper().startswith('SELECT'):
@@ -284,7 +284,7 @@ def search_secrets():
             hints = [row[0] for row in result]
             return jsonify({'hints': hints if hints else ['Aucun résultat trouvé']})
     except Exception as e:
-        return jsonify({'hints': [f'❌ Erreur SQL: Syntaxe invalide']})
+        return jsonify({'hints': [f'Erreur SQL: Syntaxe invalide']})
 
 
 def init_db():
